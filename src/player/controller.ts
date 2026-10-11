@@ -14,7 +14,7 @@ export interface InputState {
 
 const EYE_STAND = 1.62;
 const EYE_SEAT = 1.28;
-const EYE_DUCK = 0.6;
+const EYE_DUCK = 0.5;
 const EYE_CROUCH = 1.05;
 const BASE_FOV = 70;
 const ZOOM_FOV = 44;
@@ -42,6 +42,15 @@ export class PlayerController {
   /** Seated: ducked under the sill. Standing: crouched. */
   ducked = false;
   zoomed = false;
+  /** Seated: C toggles getting under the desk. */
+  underDesk = false;
+  /** Seated: X brings you right up to the glass to look at the face. */
+  closeup = false;
+  /** A short camera move the game is playing (camfx.ts). While set, it owns the camera. */
+  override: { pos: THREE.Vector3; look: THREE.Vector3; fov: number; roll: number; blend: number } | null = null;
+  private underK = 0;
+  /** Tilt of the horizon, in radians, added on top of normal look. Low nerves tip the world over. */
+  dutch = 0;
 
   constructor(physics: Physics) {
     this.rig = physics.createPlayer(DESK_POS.x, 0.86, DESK_POS.z);
@@ -62,6 +71,8 @@ export class PlayerController {
   }
 
   stand(): void {
+    this.underDesk = false;
+    this.closeup = false;
     this.mode = 'floor';
     this.rig.body.setTranslation({ x: 0.2, y: 0.86, z: 1.15 }, true);
     this.yaw = 0;
@@ -88,17 +99,24 @@ export class PlayerController {
     this.yaw = this.smoothYaw;
     this.pitch = this.smoothPitch;
     this.stamina = Math.min(1, this.stamina + dt * 0.4);
-    this.ducked = input.keys.has('KeyC') || input.keys.has('ControlLeft') || input.keys.has('ControlRight');
-    this.zoomed = !this.ducked && !!input.zoom;
-    const eyeTarget = this.ducked ? EYE_DUCK : EYE_SEAT;
+    this.ducked = this.underDesk || input.keys.has('ControlLeft') || input.keys.has('ControlRight');
+    if (this.ducked) this.closeup = false;
+    this.zoomed = !this.ducked && (!!input.zoom || this.closeup);
+    const eyeTarget = this.ducked ? EYE_DUCK : this.closeup ? 1.42 : EYE_SEAT;
     this.eyeY += (eyeTarget - this.eyeY) * Math.min(1, dt * (this.ducked ? 9 : 5));
     const breath = Math.sin(performance.now() * 0.0011) * 0.004;
-    // leaning toward the glass when zoomed
-    const lean = this.zoomed ? 0.32 : 0;
-    this.leanZ += (lean - this.leanZ) * Math.min(1, dt * 6);
-    this.camera.position.set(DESK_POS.x, this.eyeY + breath, DESK_POS.z - this.leanZ);
-    this.camera.rotation.set(this.ducked ? 0.1 : this.pitch, this.yaw, 0, 'YXZ');
+    // leaning toward the glass when zoomed, right up to it for the face check
+    const lean = this.closeup ? 1.18 : this.zoomed ? 0.32 : 0;
+    this.leanZ += (lean - this.leanZ) * Math.min(1, dt * (this.closeup ? 3.5 : 6));
+    // under the desk you can only look about a little, out between the pedestals
+    const yaw = this.ducked ? this.yaw * 0.6 : this.closeup ? this.yaw * 0.35 : this.yaw;
+    const pitch = this.ducked ? -0.05 + this.pitch * 0.3 : this.closeup ? this.pitch * 0.3 + 0.07 : this.pitch;
+    this.underK += ((this.ducked ? 1 : 0) - this.underK) * Math.min(1, dt * 6);
+    // under the desk proper: into the knee hole, the desk top over your head, the hall a strip of light past the modesty board
+    this.camera.position.set(DESK_POS.x, this.eyeY + breath, DESK_POS.z - this.leanZ - this.underK * 0.92);
+    this.camera.rotation.set(pitch, yaw, this.dutch, 'YXZ');
     this.applyFov(dt);
+    this.applyOverride(dt);
     this.stepDelta = 0;
     this.sprinting = false;
   }
@@ -153,12 +171,32 @@ export class PlayerController {
     const bobX = moving ? Math.cos(this.bob * 0.5) * bobAmt * 0.5 : 0;
     this.eyeY += ((this.ducked ? EYE_CROUCH : EYE_STAND) - this.eyeY) * Math.min(1, dt * 7);
     this.camera.position.set(t.x + bobX * Math.cos(this.yaw), t.y - 0.85 + this.eyeY + bobY, t.z - bobX * Math.sin(this.yaw));
-    this.camera.rotation.set(this.pitch, this.yaw, moving ? Math.sin(this.bob * 0.5) * bobAmt * 0.25 : 0, 'YXZ');
+    this.camera.rotation.set(this.pitch, this.yaw, (moving ? Math.sin(this.bob * 0.5) * bobAmt * 0.25 : 0) + this.dutch, 'YXZ');
     this.applyFov(dt);
+    this.applyOverride(dt);
+  }
+
+  /** Blend from the player's own view into the shot the game is playing, and back. */
+  private applyOverride(_dt: number): void {
+    const o = this.override;
+    if (!o || o.blend <= 0) return;
+    const k = Math.min(1, o.blend);
+    const fromPos = this.camera.position.clone();
+    const fromQ = this.camera.quaternion.clone();
+    const m = new THREE.Matrix4().lookAt(o.pos, o.look, new THREE.Vector3(0, 1, 0));
+    const q = new THREE.Quaternion().setFromRotationMatrix(m);
+    q.multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), o.roll));
+    this.camera.position.copy(fromPos.lerp(o.pos, k));
+    this.camera.quaternion.copy(fromQ.slerp(q, k));
+    const fov = this.camera.fov + (o.fov - this.camera.fov) * k;
+    if (Math.abs(this.camera.fov - fov) > 0.01) {
+      this.camera.fov = fov;
+      this.camera.updateProjectionMatrix();
+    }
   }
 
   private applyFov(dt: number): void {
-    const target = this.zoomed ? ZOOM_FOV : this.sprinting ? BASE_FOV + 4 : BASE_FOV;
+    const target = this.closeup ? 30 : this.zoomed ? ZOOM_FOV : this.sprinting ? BASE_FOV + 4 : BASE_FOV;
     this.fov += (target - this.fov) * Math.min(1, dt * 8);
     if (Math.abs(this.camera.fov - this.fov) > 0.05) {
       this.camera.fov = this.fov;

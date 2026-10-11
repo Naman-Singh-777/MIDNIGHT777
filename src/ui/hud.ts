@@ -43,14 +43,19 @@ export class Hud {
       <div id="bars" class="hud">
         <div>nerves</div><div class="bar sanity"><i></i></div>
         <div class="stam" style="display:none">wind</div><div class="bar stam" style="display:none"><i></i></div>
+        <div class="tokens">tokens <b>0</b></div>
       </div>
+      <div id="coach" class="hud"><kbd></kbd><span></span></div>
+      <div id="under" class="hud"><span>Under the desk. Keep still. C to come up.</span></div>
+      <div id="closehint" class="hud">Up close. Look for the mark, the breath, the pulse in the throat. X to sit back.</div>
+      <div id="helpkey" class="hud">H &nbsp;controls</div>
       <div id="cross" class="hud"></div>
       <div id="prompt" class="hud"><span class="t"></span><span class="hold"></span></div>
       <div id="subtitle" class="hud"><span class="who"></span><span class="text"></span></div>
       <div id="flashlight" class="hud">F  flashlight</div>
       <div id="cards">
         <div class="card" id="slip"><h3>Admission form<small>What they handed you</small></h3><dl></dl><span class="received">RECEIVED</span></div>
-        <div class="card" id="logcard"><h3>notes</h3><div id="log"></div></div>
+        <div class="card" id="logcard"><h3>notes <small>scroll</small></h3><div id="log"></div></div>
       </div>
       <div id="ledgerwrap"><div class="card crt off" id="ledger"><h3>HOSPITAL RECORDS</h3><dl><dt>STATUS</dt><dd>Standing by</dd></dl></div></div>
       <div id="desk">
@@ -107,8 +112,10 @@ export class Hud {
     const o = $('#overlay');
     if (html === null) {
       o.style.display = 'none';
+      o.dataset.kind = '';
       return;
     }
+    o.dataset.kind = o.dataset.kind || 'sheet';
     o.style.display = 'flex';
     $('.box', o).innerHTML = html;
     const b = o.querySelector<HTMLButtonElement>('button[data-begin]');
@@ -119,6 +126,76 @@ export class Hud {
   setClock(minute: number): void {
     $('#clock .time').textContent = formatClock(minute);
   }
+  setTokens(n: number): void {
+    $('#bars .tokens b').textContent = String(n);
+  }
+  /** The tutorial's card: what to do next, and the key for it. The matching desk button glows. */
+  coach(text: string | null, key?: string): void {
+    const c = $('#coach');
+    for (const b of this.root.querySelectorAll('button.btn.coach')) b.classList.remove('coach');
+    if (!text) {
+      c.style.display = 'none';
+      return;
+    }
+    c.style.display = 'flex';
+    $('kbd', c).textContent = key ?? '';
+    ($('kbd', c) as HTMLElement).style.display = key ? 'inline-block' : 'none';
+    $('span', c).textContent = text;
+    if (key) for (const b of this.root.querySelectorAll<HTMLButtonElement>('button.btn')) if (b.querySelector('kbd')?.textContent === key) b.classList.add('coach');
+  }
+  /** A small note that fades: a token earned. */
+  coachFlash(text: string): void {
+    let t = this.root.querySelector<HTMLElement>('#toast');
+    if (!t) {
+      this.root.insertAdjacentHTML('beforeend', '<div id="toast" class="hud"></div>');
+      t = this.root.querySelector<HTMLElement>('#toast')!;
+    }
+    t.textContent = text;
+    t.classList.remove('on');
+    void t.offsetWidth;
+    t.classList.add('on');
+  }
+  setUnder(on: boolean): void {
+    this.root.classList.toggle('under', on);
+  }
+  setCloseup(on: boolean): void {
+    this.root.classList.toggle('closeup', on);
+  }
+  toggleHelp(): void {
+    const o = $('#overlay');
+    if (o.style.display === 'flex' && o.dataset.kind === 'help') {
+      o.style.display = 'none';
+      o.dataset.kind = '';
+      return;
+    }
+    this.overlay(HELP_HTML);
+    o.dataset.kind = 'help';
+    const b = o.querySelector<HTMLButtonElement>('button[data-close]');
+    if (b) b.onclick = () => this.toggleHelp();
+  }
+  get helpOpen(): boolean {
+    return $('#overlay').dataset.kind === 'help' && $('#overlay').style.display === 'flex';
+  }
+
+  /** The vending machine. Items, prices and what each one does. */
+  vendMenu(items: { id: string; name: string; cost: number; blurb: string; effect: string }[], tokens: number, buy: (id: string) => void, close: () => void): void {
+    const o = $('#overlay');
+    o.dataset.kind = 'vend';
+    this.overlay(`
+      <h1>Refresh</h1>
+      <h2>Vending machine &middot; you have ${tokens} token${tokens === 1 ? '' : 's'}</h2>
+      <div class="vend">${items
+        .map(
+          (it, i) => `<div class="vitem"><kbd>${i + 1}</kbd><div><b>${esc(it.name)}</b> <i>${esc(it.blurb)}</i><br>${esc(it.effect)}</div><button class="btn" data-buy="${it.id}" ${it.cost > tokens ? 'disabled' : ''}>${it.cost} token${it.cost === 1 ? '' : 's'}</button></div>`,
+        )
+        .join('')}</div>
+      <p class="note">You get a token for every right call and every job done.</p>
+      <button class="btn big" data-close>Walk away</button>`);
+    for (const b of o.querySelectorAll<HTMLButtonElement>('button[data-buy]')) b.onclick = () => buy(b.dataset.buy!);
+    const c = o.querySelector<HTMLButtonElement>('button[data-close]');
+    if (c) c.onclick = close;
+  }
+
   setTask(text: string): void {
     $('#clock .task').textContent = text;
   }
@@ -215,7 +292,8 @@ export class Hud {
     p.className = kind;
     p.textContent = kind === 'q' ? `asked: ${text.replace(/\?$/, '')}` : text;
     log.appendChild(p);
-    while (log.children.length > 9) log.removeChild(log.firstChild!);
+    while (log.children.length > 40) log.removeChild(log.firstChild!);
+    log.scrollTop = log.scrollHeight;
   }
 
   setLedger(e: RegistryEntry | null, reset = false, powerOn = true): void {
@@ -247,6 +325,22 @@ export class Hud {
     return this.patient;
   }
 }
+
+const HELP_HTML = `
+  <h1>Controls</h1>
+  <h2>Night intake</h2>
+  <div class="keys">
+    <b>AT THE DESK</b><br>
+    Mouse: look about &nbsp;&middot;&nbsp; Hold right mouse: lean in to the glass<br>
+    1 to 5: ask a question &nbsp;&middot;&nbsp; Z: look them up in the records &nbsp;&middot;&nbsp; X: right up to the glass, study the face<br>
+    A: let in &nbsp;&middot;&nbsp; O: hold for observation &nbsp;&middot;&nbsp; R: turn away &nbsp;&middot;&nbsp; T: trapdoor<br>
+    C: get under the desk (and back up) &nbsp;&middot;&nbsp; Space or click the phone: answer it<br>
+    Tab: push the papers aside &nbsp;&middot;&nbsp; Q: stand up<br><br>
+    <b>ON YOUR FEET</b><br>
+    W A S D: walk &nbsp;&middot;&nbsp; Shift: run (it can hear you) &nbsp;&middot;&nbsp; C: crouch (silent)<br>
+    E: use, open, talk &nbsp;&middot;&nbsp; F: torch &nbsp;&middot;&nbsp; M: mute &nbsp;&middot;&nbsp; Esc: pause &nbsp;&middot;&nbsp; H: this page
+  </div>
+  <button class="btn big" data-close>Back</button>`;
 
 const SHORT_Q: Record<QuestionId, string> = { name: 'Name', dob: 'Born', sender: 'Sent by', kin: 'Kin', memory: 'Tonight' };
 

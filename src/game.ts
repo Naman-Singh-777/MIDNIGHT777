@@ -1,8 +1,17 @@
 import * as THREE from 'three';
 import { AudioEngine } from './audio/engine';
 import { FixedClock } from './core/clock';
-import { PAUSE_HTML, SPEAKER_VOICE, TITLE_HTML, deathHtml, endHtml, greeting } from './data/dialogue';
-import { CAST_BY_ID } from './data/cast';
+import { PAUSE_HTML, SPEAKER_VOICE, deathHtml, demoEndHtml, endHtml, shiftCardHtml, titleHtml } from './data/dialogue';
+import { COMMON } from './data/common';
+import type { L } from './data/nightTypes';
+import { NIGHTS } from './data/nights';
+import { PERSON_BY_ID } from './data/persons';
+import { VEND_BY_ID, type VendId } from './data/vending';
+import { lineText } from './data/voiceStyle';
+import { VoiceBank } from './audio/voices';
+import { drawHallClock, drawNotice, drawVend } from './render/annex';
+import { CameraFx } from './render/camfx';
+import { Tutorial } from './ui/tutorial';
 import { CreatureView } from './render/creature';
 import { Physics } from './physics/world';
 import { PlayerController, type InputState } from './player/controller';
@@ -20,7 +29,7 @@ import { Hud, formatClock } from './ui/hud';
 const WINDOW_POS = { x: 0, y: 1.4, z: -1.5 };
 const WARD_B_DOOR = { x: 8.6, y: 1.5, z: 1.7 };
 const STAIN_POS = { x: 6.7, z: 1.0 };
-const FEMALE_STAFF = new Set(['Sister Imogen', 'Night Nurse Kessler', "Matron's Office", 'Ada Wren']);
+const FEMALE_STAFF = new Set(['Sister Imogen', 'Night Nurse Kessler', "Matron's Office", 'Ada Wren', 'Matron Agatha Thorne', 'Dr. Ines Abara']);
 
 /** Builds a canvas texture of something dark that was dragged toward the Ward B door. */
 function stainTexture(): THREE.CanvasTexture {
@@ -155,12 +164,32 @@ export class Game {
   private frameMs = 16;
   private speedUp = 1;
   private pendingTimers: number[] = [];
+  readonly night: number;
+  private cardShown = false;
+  private staffView!: PatientView;
+  private staffHit!: THREE.Mesh;
+  private staffT = 0;
+  private staffTalk: { person: string; lines: L[] } | null = null;
+  private voices!: VoiceBank;
+  private camfx!: CameraFx;
+  private tutorial!: Tutorial;
+  private leanT = 0;
+  private admitted = 0;
+  private backFake: { t: number; hit: boolean } | null = null;
+  private cornerT = 0;
+  private cornerDone = false;
+  private smileDone = false;
+  private smileT = 0;
+  private creatureBreathT = 4;
+  private vendOpen = false;
   /** Dev hook for automated checks. */
   debug = { frames: 0 };
 
   private constructor(private readonly canvas: HTMLCanvasElement, root: HTMLElement, physics: Physics, seed: number) {
     this.physics = physics;
-    this.sim = new Simulation(seed);
+    const qs0 = new URLSearchParams(location.search);
+    this.night = Math.max(1, Math.min(NIGHTS.length, Number(qs0.get('night')) || this.save.reached || 1));
+    this.sim = new Simulation(seed, { night: this.night, tokens: this.save.tokens });
     this.renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: 'high-performance', stencil: false });
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFShadowMap;
@@ -170,10 +199,28 @@ export class Game {
     this.player = new PlayerController(physics);
     this.view = new PatientView(this.env.patientSpawn, this.env.patientStand);
     this.env.scene.add(this.view.group, this.view.rig);
+    const ax = this.env.annex;
+    this.view.setPassage(ax.passagePath, ax.backSpot);
     this.view.onGlimpse = () => {
       this.audio.glitch();
       this.flashV = Math.max(this.flashV, 0.15);
     };
+    this.view.onReveal = (kind) => this.audio.entityReveal(kind, { x: this.view.group.position.x, y: 1.6, z: this.view.group.position.z });
+    this.view.onBackWindow = (p) => this.atBackWindow(p);
+    // staff in person: one body, moved to wherever they are needed
+    this.staffView = new PatientView(ax.backSpot.clone().add(new THREE.Vector3(-1.6, 0, 0)), ax.backSpot.clone());
+    this.env.scene.add(this.staffView.group); // no rig lights for staff: lights are the expensive part on a laptop
+    this.staffHit = new THREE.Mesh(new THREE.BoxGeometry(0.7, 1.9, 0.7), new THREE.MeshBasicMaterial({ visible: false }));
+    this.staffHit.userData.interact = { id: 'staff', prompt: 'Talk', range: 3.4 } satisfies Interact;
+    this.staffHit.visible = false;
+    this.env.scene.add(this.staffHit);
+    this.env.interactables.push(this.staffHit);
+    this.voices = new VoiceBank(() => this.audio.context, () => this.audio.voiceOut, () => this.audio.reverbSend);
+    this.camfx = new CameraFx(this.player);
+    this.tutorial = new Tutorial({
+      say: (line, from) => this.speakAs('pell', line, from === 'window' ? { pos: WINDOW_POS, glass: true, queue: true } : { pos: { x: ax.backSpot.x, y: 1.6, z: ax.backSpot.z }, glass: true, queue: true }, 'Orderly Pell'),
+      coach: (text, key) => this.hud.coach(text, key),
+    });
     this.buildTaskProps();
     this.env.scene.add(this.creature.group);
     // the mop, held low in front of you while you carry it
@@ -203,8 +250,13 @@ export class Game {
       begin: () => this.begin(),
     });
     this.hud.setTodo(this.sim.state.todo);
-    this.hud.overlay(TITLE_HTML);
+    this.hud.setTokens(this.sim.state.tokens);
+    this.hud.overlay(titleHtml(this.save.reached, false));
+    this.bindNightButtons();
     this.hud.setMode(true);
+    drawNotice(ax.notice, this.night);
+    drawHallClock(ax.hallClock, 0);
+    this.drawVendFront();
     this.bindSim();
     this.bindInput();
     this.resize();
@@ -239,13 +291,36 @@ export class Game {
   private begin(): void {
     this.audio.start();
     if (typeof speechSynthesis !== 'undefined') speechSynthesis.getVoices();
+    // the title says which night to continue; if it is not the one loaded, load it
+    const qs = new URLSearchParams(location.search);
+    if (!this.began && !qs.has('night') && this.night !== this.save.reached) return this.goNight(this.save.reached);
+    if (!this.began && !this.cardShown && !qs.has('autostart')) {
+      this.cardShown = true;
+      const fresh = this.sim.def.vending.map((id) => VEND_BY_ID[id as VendId]).filter(Boolean);
+      this.hud.overlay(shiftCardHtml(this.sim.def, fresh, this.sim.state.tokens));
+      return;
+    }
     this.hud.overlay(null);
     this.running = true;
     if (!this.began) {
       this.began = true;
       this.hud.setTask('Check each form against the records. Get to six.');
+      // the night opens with one slow turn round the booth. A click skips it.
+      if (!qs.has('autostart')) this.camfx.orbit(new THREE.Vector3(0, 1.3, 0.5), 9);
     }
     if (this.player.mode === 'floor') this.canvas.requestPointerLock?.();
+  }
+
+  private goNight(n: number): void {
+    const qs = new URLSearchParams(location.search);
+    qs.set('night', String(n));
+    qs.delete('seed');
+    qs.delete('autostart');
+    location.search = qs.toString();
+  }
+
+  private bindNightButtons(): void {
+    for (const b of document.querySelectorAll<HTMLButtonElement>('#overlay button[data-night]')) b.onclick = () => this.goNight(Number(b.dataset.night));
   }
 
   private pause(): void {
@@ -282,19 +357,17 @@ export class Game {
       this.drawCrt();
     });
     b.on('verdictResult', ({ verdict, patient }) => {
-      const c = patient.castId ? CAST_BY_ID[patient.castId] : null;
-      if (verdict === 'admit' && c?.bye && patient.truth === 'human')
-        this.pendingTimers.push(
-          window.setTimeout(() => {
-            const dur = this.say(patient, c.bye!);
-            this.hud.subtitle(patient.displayName, c.bye!, Math.max(3500, dur * 1000 + 500));
-          }, 700),
-        );
       if (verdict === 'admit') this.audio.stamp();
       else if (verdict === 'contain') {
         this.leverT = 1.4;
         this.audio.lever();
       } else this.audio.click();
+      // you watch them go: the camera follows them out of the hall toward the admissions door
+      if ((verdict === 'admit' || verdict === 'observe') && this.player.mode === 'desk' && !this.camfx.busy) {
+        this.admitted++;
+        this.camfx.follow(() => this.view.group.position.clone(), 2.0);
+      }
+      void patient;
     });
     b.on('cue', ({ cue, intensity }) => this.onCue(cue, intensity));
     b.on('powerChanged', ({ on }) => {
@@ -310,15 +383,41 @@ export class Game {
         this.refreshTaskLine(this.sim.state.todo);
       }
     });
-    b.on('story', ({ text, speaker, call, wrong }) => {
+    b.on('story', ({ text, speaker, call, wrong, person, line, where, talk }) => {
       const who = speaker ?? 'Intercom';
-      const v = SPEAKER_VOICE[who] ?? { pitch: 150, radio: true };
+      const per = person ?? 'pell';
+      const l: L = line ?? text;
+      const ax = this.env.annex;
       const speak = (): void => {
-        const dur = this.audio.voice(text, { pitch: v.pitch, radio: v.radio, female: FEMALE_STAFF.has(who), mimic: wrong ? 0.55 : 0 });
-        this.hud.subtitle(who, text, Math.max(4500, dur * 1000 + 800));
+        if (where === 'back' || where === 'corridor') {
+          // in person: they walk up to you, and they are there to talk to for a while after
+          const spot = where === 'back' ? ax.backSpot : ax.corridorSpot;
+          this.showStaff(per, spot, where, talk ?? []);
+          this.pendingTimers.push(window.setTimeout(() => this.speakAs(per, l, { pos: { x: spot.x, y: 1.6, z: spot.z }, glass: where === 'back', mimic: wrong ? 0.55 : 0, queue: true }, who), 2600));
+          return;
+        }
+        this.speakAs(per, l, { radio: true, mimic: wrong ? 0.55 : 0, queue: !call }, who);
       };
       if (call) this.ring(speak);
       else speak();
+    });
+    b.on('tokens', ({ tokens, gained, why }) => {
+      this.hud.setTokens(tokens);
+      this.drawVendFront();
+      if (gained > 0) this.hud.coachFlash(`+${gained} token: ${why}`);
+    });
+    b.on('hint', ({ text }) => this.hud.subtitle('Hollow Mints', text, 6500));
+    b.on('buff', ({ id, on }) => {
+      if (!on && id === 'tonic') this.hud.subtitle("Sister's Tonic", 'Your hand moves before you decide. The stamp comes down on its own.', 4000);
+    });
+    b.on('saved', () => {
+      // sweet tea: everything goes black, and you come round at the desk
+      this.flashV = 1;
+      this.audio.deathSting();
+      this.player.sit();
+      this.hud.setMode(true);
+      document.exitPointerLock?.();
+      this.hud.subtitle('', 'You black out. You come round at the desk with the taste of sugar in your mouth. Whatever it was, it has gone. For now.', 6000);
     });
     b.on('stalker', ({ event }) => {
       const st = this.sim.stalker;
@@ -373,7 +472,7 @@ export class Game {
       this.refreshTaskLine(items);
     });
     b.on('wardCounted', ({ id, count }) => {
-      if (id === 'count1') this.hud.subtitle('Your own handwriting', `Ward B, 00:30. Register ${count.register}. I counted ${this.lastTally}.`, 5200);
+      if (id === 'count1') this.hud.subtitle('Your own handwriting', `Ward B, 02:00. Register ${count.register}. I counted ${this.lastTally}.`, 5200);
     });
     b.on('stare', ({ on, hit }) => {
       this.view.setStare(on);
@@ -387,7 +486,7 @@ export class Game {
         this.audio.stareOn();
         if (!this.stareHinted) {
           this.stareHinted = true;
-          this.hud.subtitle('Your own handwriting', 'It is holding my eye. Look down. Or get under the sill.', 5200);
+          this.hud.subtitle('Your own handwriting', 'It is holding my eye. Look down. Or get under the desk.', 5200);
         }
       } else this.audio.stareOff(hit);
     });
@@ -404,11 +503,59 @@ export class Game {
       document.exitPointerLock?.();
       this.save.nights++;
       this.save.bestCorrect = Math.max(this.save.bestCorrect, score.correct);
+      if (this.deathCause) {
+        writeSave(this.save);
+        return;
+      }
+      this.save.reached = Math.max(this.save.reached, Math.min(NIGHTS.length, this.night + 1));
+      this.save.tokens = score.tokens;
       writeSave(this.save);
-      if (this.deathCause) return;
-      this.hud.overlay(endHtml(score, 'Officer on duty'));
-      this.bindRestart();
+      const def = this.sim.def;
+      const showEnd = (): void => {
+        this.hud.overlay(endHtml(score, 'Night officer', def.endings[score.ending], this.night === NIGHTS.length));
+        this.bindRestart();
+      };
+      if (def.demoEnd) this.demoScare(() => {
+        this.hud.overlay(endHtml(score, 'Night officer', def.endings[score.ending]) + `<div class="demoend">${demoEndHtml()}</div>`);
+        this.bindRestart();
+      });
+      else showEnd();
     });
+  }
+
+  /**
+   * The end of Night 1, and of the demo. As you turn away from the ward, the thing that wore your mother is right there.
+   * It looks straight into the lens, holds it, and comes through it.
+   */
+  private demoScare(after: () => void): void {
+    this.scare = true;
+    this.mini?.close(false);
+    const cam = this.player.camera;
+    const fwd = this.player.forward().setY(0).normalize();
+    const spot = cam.position.clone().addScaledVector(fwd, 1.0).setY(0);
+    const mum = { id: 'END', archetype: 'fluent_mimic', truth: 'understudy', registryId: 'R209', displayName: 'Ada Wren', docs: { slipName: '', slipDob: '', slipSender: '', wristband: '', photoMark: '' }, faceMark: 'a freckle under the left eye', answers: { name: '', dob: '', sender: '', kin: '', memory: '' }, tells: ['no_breath'], quirk: '', hue: 0.31, height: 0.95, sprite: 0, castId: 'ada', reveal: 'hollow', mother: true } as Patient;
+    this.view.spawn = spot.clone();
+    this.view.stand = spot.clone();
+    this.view.setPatient(mum, 7);
+    this.view.group.rotation.y = Math.atan2(cam.position.x - spot.x, cam.position.z - spot.z);
+    this.audio.stopVoice();
+    this.audio.presence();
+    // silence, then her face goes, then it comes for the lens
+    this.pendingTimers.push(window.setTimeout(() => this.speakAs('ada', ['There you are.', 'warm'], { pos: { x: spot.x, y: 1.5, z: spot.z } }, 'Ada Wren'), 500));
+    this.pendingTimers.push(window.setTimeout(() => {
+      this.view.revealing = 3;
+      this.camfx.lunge(() => this.view.group.position.clone().setY(cam.position.y - 0.05), 1.6);
+    }, 2300));
+    this.pendingTimers.push(window.setTimeout(() => {
+      this.audio.jumpscare();
+      this.flashV = 1;
+    }, 3300));
+    this.pendingTimers.push(window.setTimeout(() => {
+      this.scare = false;
+      this.view.setPatient(null);
+      this.hud.subtitle('', '', 1);
+      after();
+    }, 4100));
   }
 
   private onCue(cue: DirectorCue, intensity: number): void {
@@ -448,6 +595,10 @@ export class Game {
         break;
       case 'breath_behind':
         this.audio.breathBehind();
+        if (this.player.mode === 'desk' && !this.camfx.busy) {
+          this.audio.whoosh();
+          this.camfx.whip(new THREE.Vector3(0.25, 1.4, 1.8), 1.0);
+        }
         break;
       case 'window_tap':
         this.audio.windowTap(inBooth ? WINDOW_POS : { x: 7.4, y: 1.6, z: 1.8 });
@@ -459,10 +610,14 @@ export class Game {
         this.audio.chairCreak();
         break;
       case 'overhead_steps':
-        this.audio.overheadSteps();
+        // pigeons in the roof space over the hall scatter when something walks up there
+        if (Math.random() < 0.35) this.audio.pigeons({ x: 0, y: 3.4, z: -4.6 });
+        else this.audio.overheadSteps();
         break;
       case 'pipe_knock':
-        this.audio.pipeKnock({ x: camX + 5, y: 2.6, z: 0.4 });
+        // night 2 lost the heating: the radiators bang when it tries to come back. Pell says so on the intercom.
+        if (this.night === 2) this.audio.radiatorBang({ x: -3.88, y: 0.5, z: -5.8 });
+        else this.audio.pipeKnock({ x: camX + 5, y: 2.6, z: 0.4 });
         break;
       case 'child_hum':
         this.audio.childHum({ x: 11, y: 0.9, z: 2.2 });
@@ -491,6 +646,200 @@ export class Game {
   private stareHinted = false;
   private lastPace = 'calm';
 
+  // ------------------------------------------------------------------ the passage, the staff, the machine
+  /**
+   * Someone you let in has walked round to the wired window behind your chair.
+   * People say goodbye and wave. A fake stands there and looks at the back of your head.
+   * Either way the camera turns round to see: the dolly zoom, face held still while the passage stretches away.
+   */
+  private atBackWindow(p: Patient): void {
+    const ax = this.env.annex;
+    const face = new THREE.Vector3(ax.backSpot.x, 1.55 * (p.height || 1), ax.backSpot.z);
+    const pos = { x: ax.backSpot.x, y: 1.6, z: ax.backSpot.z };
+    if (p.tutorial) this.tutorial.atBack();
+    const seated = this.player.mode === 'desk';
+    if (p.truth === 'understudy') {
+      this.audio.backTap(pos, 3);
+      this.pendingTimers.push(window.setTimeout(() => this.audio.entityClicks(pos, 12), 900));
+      this.backFake = { t: 6, hit: false };
+      if (seated) {
+        this.audio.whoosh();
+        this.camfx.vertigo(face, 3.6, 0.12);
+      }
+      return;
+    }
+    const bye = p.lines?.bye;
+    if (bye && p.castId) {
+      const tut = p.tutorial;
+      this.pendingTimers.push(window.setTimeout(() => this.speakAs(p.castId!, bye, { pos, glass: true }, p.displayName), tut ? 400 : 300));
+    }
+    // the first few times, and always for the tutorial, the camera turns to watch them pass
+    if (seated && (this.admitted <= 3 || p.tutorial)) this.camfx.vertigo(face, p.tutorial ? 4.2 : 3.0, 0);
+  }
+
+  /** Staff in person, at the back window or in the corridor. They stay a while; E talks to them. */
+  private showStaff(person: string, spot: THREE.Vector3, where: string, talk: L[]): void {
+    const per = PERSON_BY_ID[person];
+    if (!per) return;
+    const v = this.staffView;
+    const from = where === 'back' ? spot.clone().add(new THREE.Vector3(-1.8, 0, 0)) : spot.clone().add(new THREE.Vector3(3, 0, 0));
+    v.spawn = from;
+    v.stand = spot.clone();
+    const rec = this.sim.state.registry.find((r) => r.id === `C_${person}`);
+    const pseudo = {
+      id: `S_${person}`, archetype: 'plain', truth: 'human', registryId: rec?.id ?? `C_${person}`, displayName: per.name,
+      docs: { slipName: per.name, slipDob: '', slipSender: '', wristband: '', photoMark: rec?.photoMark ?? '' },
+      faceMark: rec?.photoMark ?? '', answers: { name: '', dob: '', sender: '', kin: '', memory: '' }, tells: [], quirk: '',
+      hue: 0.37, height: 1, sprite: 0, castId: person, breathes: true,
+    } as Patient;
+    v.setPatient(pseudo, 0);
+    this.staffT = 36;
+    this.staffPhase = 'approaching';
+    this.staffPhaseT = 0;
+    this.staffTalk = { person, lines: [...talk] };
+    if (where === 'back') this.audio.passageStep({ x: spot.x - 1, y: 0, z: spot.z });
+  }
+  private staffPhase: 'none' | 'approaching' | 'present' = 'none';
+  private staffPhaseT = 0;
+
+  private tickStaff(dt: number): void {
+    const v = this.staffView;
+    if (this.staffPhase === 'none') {
+      this.staffHit.visible = false;
+      v.update(dt, 'none', this.player.camera.position, false);
+      return;
+    }
+    this.staffPhaseT += dt;
+    if (this.staffPhase === 'approaching' && this.staffPhaseT > 3.5) this.staffPhase = 'present';
+    this.staffT -= dt;
+    v.update(dt, this.staffPhase, this.player.camera.position, false);
+    this.staffHit.position.copy(v.group.position).setY(0.95);
+    this.staffHit.visible = this.staffPhase === 'present';
+    if (this.staffT <= 0 || this.sim.stalker.active) {
+      this.staffPhase = 'none';
+      this.staffTalk = null;
+      v.setPatient(null);
+    }
+  }
+
+  private talkToStaff(): void {
+    const t = this.staffTalk;
+    if (!t || this.staffPhase !== 'present') return;
+    const ax = this.env.annex;
+    const pos = this.staffView.group.position;
+    const line = t.lines.shift();
+    if (!line) {
+      this.speakAs(t.person, ["I've got to get back up. Mind yourself.", 'calm'], { pos: { x: pos.x, y: 1.6, z: pos.z }, glass: pos.distanceTo(ax.backSpot) < 0.5 });
+      this.staffT = Math.min(this.staffT, 5);
+      return;
+    }
+    this.staffView.speaking = this.speakAs(t.person, line, { pos: { x: pos.x, y: 1.6, z: pos.z }, glass: pos.distanceTo(ax.backSpot) < 0.5 });
+    this.staffT = Math.max(this.staffT, 14);
+  }
+
+  private drawVendFront(): void {
+    const stock = this.sim.vendStock().map((id) => VEND_BY_ID[id]);
+    drawVend(this.env.annex.vendScreen, stock, this.sim.state.tokens);
+  }
+
+  private openVend(): void {
+    const stock = this.sim.vendStock().map((id) => VEND_BY_ID[id]);
+    this.vendOpen = true;
+    document.exitPointerLock?.();
+    this.input.keys.clear();
+    const render = (): void =>
+      this.hud.vendMenu(stock, this.sim.state.tokens, (id) => this.buy(id as VendId, render), () => this.closeVend());
+    render();
+  }
+
+  private buy(id: VendId, rerender: () => void): void {
+    if (!this.sim.buy(id)) return;
+    this.audio.vend();
+    const item = VEND_BY_ID[id];
+    if (id === 'toffee') this.player.stamina = 1;
+    this.hud.subtitle(item.name, item.effect, 3500);
+    rerender();
+  }
+
+  private closeVend(): void {
+    this.vendOpen = false;
+    this.hud.overlay(null);
+    if (this.running && this.player.mode === 'floor') this.hud.subtitle('', 'Click to carry on.', 2500);
+  }
+
+  /** The things that are only there for the camera: the figure in the corner, the smile in the dark. */
+  private tickHauntings(dt: number): void {
+    const ax = this.env.annex;
+    const s = this.sim.state;
+    // the figure in the corner of the hall: no sound, no music, nobody mentions it. On the night's opening turn
+    // round the booth it stands there on the second pass (from night 2), and once later in the night, between visitors.
+    const orbit = this.camfx.kind === 'orbit' && this.camfx.progress > 0.55 && this.night >= 2;
+    if (!this.cornerDone && s.phase === 'none' && s.minute > 120 && this.sim.presRng.chance(dt * 0.02)) {
+      this.cornerDone = true;
+      this.cornerT = 22;
+    }
+    this.cornerT = Math.max(0, this.cornerT - dt);
+    let fig = orbit ? 0.85 : this.cornerT > 0 ? Math.min(0.85, this.cornerT, 22 - this.cornerT) : 0;
+    // look straight at it for too long through the lean, and it is gone with a tick of static
+    if (fig > 0.5 && this.player.zoomed && this.player.mode === 'desk') {
+      const to = ax.cornerFigure.position.clone().sub(this.player.camera.position).normalize();
+      if (to.dot(this.player.forward()) > 0.97) {
+        this.cornerT = 0;
+        fig = 0;
+        this.audio.glitch();
+      }
+    }
+    (ax.cornerFigure.material as THREE.MeshBasicMaterial).opacity = fig;
+    // the smile in the dark hall, once per power cut
+    if (!s.powerOn && !this.smileDone && this.player.mode === 'desk') {
+      this.smileT += dt;
+      if (this.smileT > 3) {
+        this.smileDone = true;
+        this.smileT = -3;
+        this.audio.entityClicks({ x: ax.smile.position.x, y: 1.6, z: ax.smile.position.z }, 6);
+      }
+    }
+    if (s.powerOn) this.smileDone = false;
+    const sm = this.smileT < 0 ? Math.min(1, -this.smileT) * (0.75 + Math.random() * 0.25) : 0;
+    if (this.smileT < 0) this.smileT = Math.min(0, this.smileT + dt);
+    (ax.smile.material as THREE.SpriteMaterial).opacity = sm;
+    // the tall one breathes and clicks while it is in the corridor
+    const st = this.sim.stalker;
+    if (st.active) {
+      this.creatureBreathT -= dt;
+      if (this.creatureBreathT <= 0) {
+        this.creatureBreathT = 5 + Math.random() * 4;
+        const pos = { x: st.x, y: 2.1, z: st.z };
+        if (Math.random() < 0.6) this.audio.creatureBreath(pos);
+        else this.audio.creatureClick(pos);
+      }
+    }
+    // a fake at the back window: turn and meet its eyes and it costs you
+    if (this.backFake) {
+      this.backFake.t -= dt;
+      const to = ax.backSpot.clone().setY(1.5).sub(this.player.camera.position).normalize();
+      const looking = to.dot(this.player.forward()) > 0.75 && !this.camfx.busy;
+      if (looking && !this.backFake.hit) {
+        this.backFake.hit = true;
+        this.sim.passageStare();
+        this.view.revealing = 1.2;
+        this.audio.stareHit();
+        this.flashV = Math.max(this.flashV, 0.3);
+      }
+      if (this.backFake.t <= 0) this.backFake = null;
+    }
+    // doors open as someone goes through them
+    const k = this.view.passageK;
+    const hallOpen = k > 0 && k < 0.42 ? 1 : 0;
+    ax.hallDoor.rotation.y += (hallOpen * 1.4 - ax.hallDoor.rotation.y) * Math.min(1, dt * 4);
+    const wardOpen = k > 0.82 ? 1 : 0;
+    ax.wardDoor.rotation.y += (-wardOpen * 1.3 - ax.wardDoor.rotation.y) * Math.min(1, dt * 4);
+    if (k > 0 && this.view.atBack === false && Math.random() < dt * 1.8) {
+      const gp = this.view.group.position;
+      this.audio.passageStep({ x: gp.x, y: 0, z: gp.z });
+    }
+  }
+
   // ------------------------------------------------------------------ desk actions
   private ask(q: QuestionId): void {
     const p = this.sim.state.current;
@@ -500,11 +849,11 @@ export class Game {
     this.hud.markAsked(q);
     this.hud.logLine('q', QUESTION_TEXT[q]);
     this.audio.clack();
+    this.tutorial.on({ kind: 'ask', q });
     const t = window.setTimeout(() => {
-      const dur = this.say(p, r.text);
+      const dur = this.say(p, r.text, r.line);
       this.view.speaking = dur;
       this.hud.logLine('a', `"${r.text}"`);
-      this.hud.subtitle(p.displayName, r.text, Math.max(3500, dur * 1000 + 600));
     }, r.delay * 1000);
     this.pendingTimers.push(t);
   }
@@ -513,12 +862,47 @@ export class Game {
     return p.archetype === 'voice_mimic' ? 208 : 105 + p.hue * 110;
   }
 
-  /** A patient speaking through the glass. The Understudy's voice sinks as it learns. */
-  private say(p: Patient, text: string): number {
-    const c = p.castId ? CAST_BY_ID[p.castId] : null;
-    const female = c ? c.female : FEMALE_NAMES.has(p.displayName.split(' ')[0] ?? '') || p.archetype === 'voice_mimic' || p.archetype === 'tragic';
-    const mimic = p.truth === 'understudy' ? (p.archetype === 'voice_mimic' ? 1 : Math.min(0.9, 0.15 + this.sim.state.stage * 0.1)) : 0;
-    return this.audio.voice(text, { pitch: c ? c.voice.pitch : this.voicePitch(p), radio: false, female, mimic, rate: c?.voice.rate });
+  /**
+   * Someone says a line. The recorded voice when there is one, the system voice when there is not.
+   * Subtitles are shown either way. Returns how long it lasts, in seconds.
+   */
+  private speakAs(person: string, line: L, o: { radio?: boolean; mimic?: number; pos?: { x: number; y: number; z: number }; glass?: boolean; queue?: boolean } = {}, who?: string): number {
+    // queued lines wait for whoever is talking to finish, so nobody is cut off mid sentence
+    const wait = o.queue ? Math.max(0, this.talkUntil - this.time) : 0;
+    if (wait > 0.05) {
+      const dur = this.voices.duration(person, line);
+      this.talkUntil = this.time + wait + dur + 0.3;
+      this.pendingTimers.push(window.setTimeout(() => this.speakAs(person, line, { ...o, queue: false }, who), wait * 1000));
+      return wait + dur;
+    }
+    const text = lineText(line);
+    const per = PERSON_BY_ID[person];
+    const name = who ?? per?.name ?? person;
+    let dur = this.voices.play(person, line, o);
+    if (dur === null) {
+      const v = SPEAKER_VOICE[name] ?? { pitch: per?.female ? 190 : 120, radio: !!o.radio };
+      dur = this.audio.voice(text, { pitch: v.pitch, radio: !!o.radio, female: per?.female ?? FEMALE_STAFF.has(name), mimic: o.mimic ?? 0 });
+    } else {
+      this.audio.duckFor(dur);
+      if (o.radio) this.audio.radioClick(dur);
+      if ((o.mimic ?? 0) > 0) this.audio.mimicUnder(dur, o.mimic!);
+    }
+    this.hud.subtitle(name, text, Math.max(3200, dur * 1000 + 700));
+    this.talkUntil = Math.max(this.talkUntil, this.time + dur + 0.3);
+    return dur;
+  }
+  private talkUntil = 0;
+
+  /** A visitor speaking through the glass. A fake's voice sits a little wrong, more so as it learns. */
+  private say(p: Patient, text: string, line?: L, queue = false): number {
+    const fake = p.truth === 'understudy';
+    const mimic = fake ? (p.archetype === 'voice_mimic' ? 0.8 : Math.min(0.75, 0.12 + this.sim.state.stage * 0.08)) : 0;
+    const person = p.castId ?? '';
+    if (line && person && this.voices.has(person, line)) return this.speakAs(person, line, { pos: WINDOW_POS, glass: true, mimic, queue }, p.displayName);
+    const female = FEMALE_NAMES.has(p.displayName.split(' ')[0] ?? '') || !!PERSON_BY_ID[person]?.female;
+    const dur = this.audio.voice(text, { pitch: this.voicePitch(p), radio: false, female, mimic });
+    this.hud.subtitle(p.displayName, text, Math.max(3500, dur * 1000 + 600));
+    return dur;
   }
 
   private lookup(): void {
@@ -531,14 +915,23 @@ export class Game {
     this.hud.setLedger(e, false, true);
     this.drawCrt(e);
     this.audio.ding();
+    this.tutorial.on({ kind: 'lookup' });
   }
 
+  /** X: right up to the glass. The visitor leans in too. Look for the mark, the breath, the pulse. X again to sit back. */
   private face(): void {
-    if (!this.running) return;
+    if (!this.running || this.player.mode !== 'desk') return;
+    if (this.player.closeup) {
+      this.player.closeup = false;
+      return;
+    }
     const m = this.sim.inspectFace();
+    this.player.closeup = true;
+    this.player.underDesk = false;
+    this.audio.chairCreak();
     if (m) {
       this.hud.logLine('face', `Face: ${m}.`);
-      this.audio.click();
+      this.tutorial.on({ kind: 'face' });
     }
   }
 
@@ -552,6 +945,8 @@ export class Game {
       if (v === 'contain') this.audio.lever();
       return;
     }
+    this.player.closeup = false;
+    this.tutorial.on({ kind: 'verdict', v });
     this.sim.verdict(v);
   }
 
@@ -569,6 +964,18 @@ export class Game {
         this.audio.muted = !this.audio.muted;
         this.save.muted = this.audio.muted;
         writeSave(this.save);
+      }
+      if (e.code === 'KeyH' && this.began && !this.vendOpen) {
+        this.hud.toggleHelp();
+        this.running = !this.hud.helpOpen && !this.ended;
+        return;
+      }
+      if (this.vendOpen) {
+        const n = Number(e.code.replace('Digit', ''));
+        const stock = this.sim.vendStock();
+        if (n >= 1 && n <= stock.length) document.querySelector<HTMLButtonElement>(`#overlay button[data-buy="${stock[n - 1]}"]`)?.click();
+        else if (e.code === 'Escape' || e.code === 'KeyE') this.closeVend();
+        return;
       }
       if (!this.running || this.mini) return;
       if (e.code === 'Tab') e.preventDefault();
@@ -595,12 +1002,17 @@ export class Game {
       }
     });
     this.canvas.addEventListener('click', () => {
+      if (this.camfx.busy) {
+        this.camfx.skip();
+        return;
+      }
       if (!this.running || this.mini) return;
       if (this.player.mode === 'floor') {
         if (document.pointerLockElement !== this.canvas) this.canvas.requestPointerLock?.();
       } else if (this.hovered?.id === 'lever') this.doVerdict('contain');
       else if (this.hovered?.id === 'phone') this.answer();
       else if (this.hovered?.id === 'photo') this.usePhoto();
+      else if (this.hovered?.id === 'staff') this.talkToStaff();
     });
     document.addEventListener('pointerlockchange', () => {
       if (this.player.mode === 'floor' && this.running && !this.mini && document.pointerLockElement !== this.canvas) this.pause();
@@ -624,12 +1036,18 @@ export class Game {
       if (qs[code]) this.ask(qs[code]);
       else if (code === 'KeyZ') this.lookup();
       else if (code === 'KeyX') this.face();
+      else if (code === 'KeyC') {
+        this.player.underDesk = !this.player.underDesk;
+        if (this.player.underDesk) this.player.closeup = false;
+        this.audio.chairCreak();
+      }
       else if (code === 'KeyA') this.doVerdict('admit');
       else if (code === 'KeyO') this.doVerdict('observe');
       else if (code === 'KeyR') this.doVerdict('refuse');
       else if (code === 'KeyT' || code === 'KeyL') this.doVerdict('contain');
       else if (code === 'Tab') this.hud.toggleAside();
       else if (code === 'KeyQ') {
+        if (this.tutorial.active) return; // Pell is still talking you through the window
         this.player.stand();
         this.hud.setMode(false);
         this.canvas.requestPointerLock?.();
@@ -695,6 +1113,10 @@ export class Game {
       );
     } else if (h.id === 'wardslot') {
       this.useWardSlot();
+    } else if (h.id === 'vending') {
+      this.openVend();
+    } else if (h.id === 'staff') {
+      this.talkToStaff();
     }
   }
 
@@ -866,7 +1288,8 @@ export class Game {
     for (const h of hits) {
       const it = h.object.userData.interact as Interact | undefined;
       if (it && h.distance <= it.range) {
-        if (this.player.mode === 'desk' && it.id !== 'lever' && it.id !== 'phone' && it.id !== 'photo') continue;
+        if (it.id === 'staff' && this.staffPhase !== 'present') continue;
+        if (this.player.mode === 'desk' && it.id !== 'lever' && it.id !== 'phone' && it.id !== 'photo' && it.id !== 'staff') continue;
         return it;
       }
     }
@@ -885,15 +1308,29 @@ export class Game {
 
     const sim = this.sim;
     if (this.dying > 0) this.deathFrame(dt);
+    this.camfx.update(dt);
     if (this.running) {
       for (let i = 0; i < this.speedUp; i++) sim.tick(dt);
       const steps = this.clock.advance(dt);
       for (let i = 0; i < steps; i++) this.physics.step();
       this.mopTick(dt);
       this.player.update(dt, this.input, document.pointerLockElement === this.canvas);
+      this.tutorial.update(dt);
+      this.tickHauntings(dt);
+      // leaning in counts once you have held it for a moment
+      this.leanT = this.player.mode === 'desk' && this.player.zoomed && !this.player.closeup ? this.leanT + dt : 0;
+      if (this.leanT > 0.7) this.tutorial.on({ kind: 'lean' });
     } else {
-      this.player.update(0, this.input, false);
+      this.player.update(this.scare ? dt : 0, this.input, false);
     }
+    this.tickStaff(dt);
+    const desk = this.player.mode === 'desk';
+    this.hud.setUnder(desk && this.player.ducked);
+    this.hud.setCloseup(desk && this.player.closeup);
+    this.view.closeup = desk && this.player.closeup;
+    // the horizon tips as your nerves go, and when something is holding your eye
+    const tilt = Math.pow(1 - sim.state.sanity / 100, 2) * 0.09 + (sim.state.stare ? 0.035 : 0) + (this.backFake ? 0.04 : 0);
+    this.player.dutch += (tilt * Math.sin(this.time * 0.37 + 1) - this.player.dutch) * Math.min(1, dt * 0.8);
 
     const s = sim.state;
     const seated = this.player.mode === 'desk';
@@ -913,7 +1350,7 @@ export class Game {
       if (s.phase === 'present' && s.current) this.onPatientPresent(s.current);
       this.lastPhase = s.phase;
     }
-    this.view.update(dt, s.phase, this.player.camera.position, s.powerOn && this.sim.director.quiet);
+    this.view.update(dt, this.scare ? 'present' : s.phase, this.player.camera.position, s.powerOn && this.sim.director.quiet);
     this.animateWorld(dt);
     this.updateHud();
 
@@ -1005,13 +1442,7 @@ export class Game {
         break;
       case 'pell_false_alarm':
         for (let i = 0; i < 7; i++) this.pendingTimers.push(window.setTimeout(() => this.audio.distantStep({ x: 13.5 - i * 0.6, y: 0, z: 0.9 }), i * 520));
-        this.pendingTimers.push(
-          window.setTimeout(() => {
-            const text = 'Only me! Only me. Sorry. I was checking the fuse box. Sorry. Going back now.';
-            const dur = this.audio.voice(text, { pitch: 118, radio: true, female: false });
-            this.hud.subtitle('Orderly Pell', text, Math.max(3500, dur * 1000 + 400));
-          }, 4200),
-        );
+        this.pendingTimers.push(window.setTimeout(() => this.speakAs('pell', COMMON.false_alarm, { pos: { x: 13, y: 1.6, z: 0.9 } }), 4200));
         break;
       case 'echo_steps':
         this.echo = { t: 0, stepT: 0.4, still: 0, real, done: false };
@@ -1046,20 +1477,8 @@ export class Game {
       case 'dead_line_call':
         this.ring(() => {
           this.audio.breathBehind();
-          const text = 'Night intake.';
-          this.pendingTimers.push(
-            window.setTimeout(() => {
-              this.audio.voice(text, { pitch: 150, radio: true, female: false, mimic: 0.6 });
-              this.hud.subtitle('Your own voice', text, 2600);
-            }, 2200),
-          );
-          this.pendingTimers.push(
-            window.setTimeout(() => {
-              const t2 = "Pell. Did your phone just ring? The lines on this floor have been dead since the storm. Who were you talking to?";
-              const dur = this.audio.voice(t2, { pitch: 118, radio: true, female: false });
-              this.hud.subtitle('Orderly Pell', t2, Math.max(4000, dur * 1000));
-            }, 9000),
-          );
+          this.pendingTimers.push(window.setTimeout(() => this.speakAs('officer', COMMON.dead_you, { radio: true, mimic: 0.6 }, 'Your own voice'), 2200));
+          this.pendingTimers.push(window.setTimeout(() => this.speakAs(this.night >= 5 ? 'imogen' : 'pell', COMMON.dead_pell, { radio: true }), 9000));
         });
         break;
       case 'lamp_out':
@@ -1185,10 +1604,13 @@ export class Game {
   }
 
   private bindRestart(): void {
+    for (const n of document.querySelectorAll<HTMLButtonElement>('#overlay button[data-next]')) n.onclick = () => this.goNight(Math.min(NIGHTS.length, this.night + 1));
     const b = document.querySelector<HTMLButtonElement>('#overlay button[data-restart]');
     if (!b) return;
     b.onclick = () => {
+      if (this.night === NIGHTS.length && this.ended && !this.deathCause) return this.goNight(1);
       const qs = new URLSearchParams(location.search);
+      qs.set('night', String(this.night));
       qs.set('autostart', '1');
       qs.delete('seed');
       location.search = qs.toString();
@@ -1239,7 +1661,7 @@ export class Game {
     }
     if (this.mopProgress >= 1) {
       this.sim.completeTask('mop');
-      this.hud.subtitle('Your own handwriting', 'Not rust. Rust does not have fingers. And the trail goes under the Ward B door.', 4200);
+      this.hud.subtitle('Your own handwriting', 'Not rust. Rust does not have fingers. The trail goes under the Ward B door.', 4200);
     }
   }
 
@@ -1247,10 +1669,13 @@ export class Game {
     this.hud.showPatient(p);
     this.drawSlip(p);
     this.drawCrt();
-    const line = greeting(p, this.patientsSeen);
-    const dur = this.say(p, line);
+    const line = p.lines?.greet ?? p.greet ?? 'Evening.';
+    const dur = this.say(p, lineText(line), p.lines?.greet, true);
     this.view.speaking = dur;
-    this.hud.subtitle(p.displayName, line, Math.max(4000, dur * 1000 + 700));
+    if (p.tutorial) this.tutorial.start(dur);
+    else if (!this.tutorial.done && !this.tutorial.active && this.night === 1) this.tutorial.done = true;
+    // the next answers are fetched now so they play on time
+    if (p.castId && p.lines) for (const q of Object.values(p.lines.say)) this.voices.preload(p.castId, q);
   }
 
   private animateWorld(dt: number): void {
@@ -1292,6 +1717,18 @@ export class Game {
       (L.corridorBulbs[i].material as THREE.MeshBasicMaterial).color.set(emergency ? 0x5a0d08 : 0xcfeee0);
     });
 
+    // the passage bulbs and the machine run off the same mains
+    const ax = this.env.annex;
+    ax.passageLights.forEach((l, i) => {
+      const buzz = Math.sin(this.time * 0.6 + i * 3) > 0.985 ? 0.15 : 1;
+      l.intensity = s.powerOn ? 2.4 * buzz * (this.flickerT > 0 ? lampMul : 1) : 0.18;
+      l.color.set(s.powerOn ? 0xd8e4c0 : 0xff3a2a);
+    });
+    if (Math.floor(s.minute) !== this.lastClockMin) {
+      this.lastClockMin = Math.floor(s.minute);
+      drawHallClock(ax.hallClock, s.minute);
+    }
+
     // lightning
     this.lightningT -= dt;
     if (this.lightningT <= 0) {
@@ -1331,6 +1768,8 @@ export class Game {
     this.flashlight.intensity = this.flashlightOn && this.player.mode === 'floor' ? 28 : 0;
   }
   private doorOpen = 0;
+  private lastClockMin = -1;
+  private scare = false;
 
   private updateHud(): void {
     const s = this.sim.state;
@@ -1344,7 +1783,7 @@ export class Game {
     const h = this.hovered;
     const heldE = this.input.keys.has('KeyE');
     if (this.player.mode === 'desk') {
-      this.hud.prompt(h?.id === 'lever' ? 'Click: open the trapdoor under them' : h?.id === 'phone' ? (this.call ? 'Click: answer the phone' : 'The desk phone') : h?.id === 'photo' ? 'Click: pick up the photograph' : null);
+      this.hud.prompt(h?.id === 'lever' ? 'Click: open the trapdoor under them' : h?.id === 'phone' ? (this.call ? 'Click: answer the phone' : 'The desk phone') : h?.id === 'photo' ? 'Click: pick up the photograph' : h?.id === 'staff' ? 'Click: talk to them' : null);
       this.breakerHold = 0;
       return;
     }
@@ -1381,6 +1820,14 @@ export class Game {
     }
     if (h?.id === 'wardslot') {
       this.hud.prompt('E: look through the slot in the Ward B door');
+      return;
+    }
+    if (h?.id === 'vending') {
+      this.hud.prompt(`E: the vending machine (${this.sim.state.tokens} token${this.sim.state.tokens === 1 ? '' : 's'})`);
+      return;
+    }
+    if (h?.id === 'staff') {
+      this.hud.prompt(`E: talk to ${PERSON_BY_ID[this.staffTalk?.person ?? '']?.name ?? 'them'}`);
       return;
     }
     if (h?.id === 'door') this.hud.prompt(`E: ${this.env.boothDoor.open ? 'close' : 'open'} the booth door`);

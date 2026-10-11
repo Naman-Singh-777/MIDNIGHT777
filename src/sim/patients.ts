@@ -73,12 +73,14 @@ export interface MakeCtx {
   previous: Patient[];
   quirk: string;
   seq: number;
+  /** Authored tells. When given, nothing is rolled. */
+  tells?: import('./types').TellId[];
 }
 
 export function makePatient(ctx: MakeCtx): Patient {
   const { rng, entry, archetype, stage, previous, quirk, seq } = ctx;
   const mimic = archetype === 'slipping_mimic' || archetype === 'fluent_mimic' || archetype === 'voice_mimic';
-  const tells: TellId[] = mimic ? tellsForStage(rng, stage, archetype) : [];
+  const tells: TellId[] = ctx.tells ? [...ctx.tells] : mimic ? tellsForStage(rng, stage, archetype) : [];
   if (archetype === 'strange_innocent') tells.push('clerk_typo');
 
   const docs = {
@@ -154,10 +156,4 @@ export function makePatient(ctx: MakeCtx): Patient {
   };
 }
 
-export const QUESTION_TEXT: Record<QuestionId, string> = {
-  name: 'Name for the ledger?',
-  dob: 'Date of birth?',
-  sender: 'Who sent you?',
-  kin: 'Who should we call?',
-  memory: 'What do you remember of tonight?',
-};
+export { QUESTION_TEXT } from '../data/questions';

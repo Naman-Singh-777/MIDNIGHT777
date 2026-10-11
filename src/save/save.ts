@@ -6,9 +6,13 @@ export interface SaveData {
   bestCorrect: number;
   nights: number;
   muted: boolean;
+  /** Furthest night unlocked, 1 to 6. */
+  reached: number;
+  /** Tokens carried from night to night. */
+  tokens: number;
 }
 
-const DEFAULT: SaveData = { version: 1, bestCorrect: 0, nights: 0, muted: false };
+const DEFAULT: SaveData = { version: 1, bestCorrect: 0, nights: 0, muted: false, reached: 1, tokens: 0 };
 
 export function loadSave(): SaveData {
   try {

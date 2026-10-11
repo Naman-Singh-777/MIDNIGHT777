@@ -1,41 +1,43 @@
 import { Bus } from '../core/events';
 import { Rng } from '../core/rng';
-import { SHIFT00, SHIFT00_BREAKER_AT, SHIFT00_END, SHIFT00_FINALE_AT } from '../data/shift00';
-import { BEATS } from '../data/story';
-import { MOTHER_ENTRY, MOTHER_ID, TODO, WARD_B_START } from '../data/motive';
-import { CAST, CAST_BY_ID, COPY_GREET } from '../data/cast';
-import { Stalker, type StalkerInput } from './stalker';
-import { FearDirector } from './fear';
-import { swapDigits } from './patients';
+import { COMMON, PELL_STANDIN } from '../data/common';
+import { MOTHER_ID, WARD_B_START } from '../data/motive';
+import { nightDef } from '../data/nights';
+import type { BeatDef, L, NightDef, VisitorDef } from '../data/nightTypes';
+import { PACING } from '../data/pacing';
+import { PERSON_BY_ID, recordOf } from '../data/persons';
+import { QUESTION_TEXT } from '../data/questions';
+import { VEND_BY_ID, type VendId } from '../data/vending';
+import { lineText } from '../data/voiceStyle';
 import { Director } from './director';
+import { FearDirector } from './fear';
+import { makePatient, makeRegistry } from './patients';
 import { distortionFor } from './perception';
-import { QUESTION_TEXT, makePatient, makeRegistry } from './patients';
-import type {
-  Consequence,
-  Patient,
-  QuestionId,
-  RegistryEntry,
-  ShiftScore,
-  DeathCause,
-  ShiftSlot,
-  TaskId,
-  TodoItem,
-  WardCount,
-  SimEvents,
-  Verdict,
-} from './types';
+import { Stalker, type StalkerInput } from './stalker';
+import type { Consequence, DeathCause, Patient, QuestionId, RegistryEntry, ShiftScore, SimEvents, TaskId, TodoItem, Verdict, WardCount } from './types';
 
-/** Shift minutes that pass per real second. 300 minutes is about 22 real minutes. */
+/** Kept for older callers: about the old fixed pace. The night now waits for its roster. */
 export const MINUTES_PER_SECOND = 1 / 4.5;
 
 export type PatientPhase = 'none' | 'approaching' | 'present' | 'leaving';
 export type Zone = 'booth' | 'corridor' | 'breaker';
 
+export interface Buffs {
+  coffee: boolean; // next visitor waits twice as long
+  barley: number; // seconds your steps are silent
+  tonic: boolean; // next verdict makes itself
+  tea: boolean; // one death turns into a blackout
+  mint: boolean; // a hint about the next visitor
+  toffee: number; // seconds of free running
+}
+
 export interface SimState {
+  night: number;
   minute: number;
   ended: boolean;
   powerOn: boolean;
   breakerTripped: boolean;
+  breakersDone: number;
   zone: Zone;
   flashlight: boolean;
   registry: RegistryEntry[];
@@ -50,9 +52,10 @@ export interface SimState {
   history: Patient[];
   queue: Patient[]; // patients coming back
   slotIndex: number;
+  gap: number; // real seconds left before the next visitor knocks
   finaleDone: boolean;
   consequences: Consequence[];
-  stage: number; // Understudy stage 0..7
+  stage: number; // how much the fakes have learned, 0..7
   sanity: number;
   fear: number;
   stare: boolean; // the patient is holding your eye
@@ -61,20 +64,33 @@ export interface SimState {
   todo: TodoItem[];
   admittedHumans: number;
   motherTaken: boolean;
+  selfTaken: boolean;
   dead: DeathCause | null;
   breach: { phase: 'crack' | 'inside'; t: number } | null;
   dawn: { t: number; figure: boolean } | null;
   hollisIn: boolean; // the porter you let in walks the corridor with you at six
   wardLocked: boolean; // you reported the count; Pell locked himself in with them
   pellGone: boolean;
+  tokens: number;
+  buffs: Buffs;
+  quietT: number; // seconds since anything happened
 }
 
 export interface AskResult {
   text: string;
+  line: L;
   delay: number; // seconds before the patient speaks
 }
 
 const clamp = (v: number, a: number, b: number): number => Math.max(a, Math.min(b, v));
+const ORDER: QuestionId[] = ['name', 'dob', 'sender', 'kin', 'memory'];
+
+export interface SimOptions {
+  night?: number;
+  tokens?: number;
+  /** Tests: start the roster after the tutorial visitor. */
+  skipTutorial?: boolean;
+}
 
 export class Simulation {
   readonly bus = new Bus<SimEvents>();
@@ -82,6 +98,7 @@ export class Simulation {
   /** Separate stream for presentation-only randomness so truth stays deterministic. */
   readonly presRng: Rng;
   readonly director: Director;
+  readonly def: NightDef;
   state: SimState;
   private hallT = 5;
   private storyDone = new Set<string>();
@@ -91,21 +108,28 @@ export class Simulation {
   private stareHit = false;
   private ducked = false;
   private gazing = false;
+  private roster: VisitorDef[];
 
-  constructor(readonly seed: number) {
+  constructor(readonly seed: number, opts: SimOptions = {}) {
+    this.def = nightDef(opts.night ?? 1);
     this.rng = new Rng(seed);
     this.presRng = new Rng(seed ^ 0x9e3779b9);
     this.director = new Director(new Rng(seed ^ 0x51ed270b));
     this.gazeRng = new Rng(seed ^ 0x2545f491);
     this.fearDir = new FearDirector(new Rng(seed ^ 0x6f1d33));
+    this.roster = [...this.def.visitors].sort((a, b) => a.at - b.at);
+    if (opts.skipTutorial) this.roster = this.roster.filter((v) => !v.tutorial);
+    const night = this.def.n;
     this.state = {
+      night,
       minute: 0,
       ended: false,
       powerOn: true,
       breakerTripped: false,
+      breakersDone: 0,
       zone: 'booth',
       flashlight: false,
-      registry: [...makeRegistry(this.rng, 14), { ...MOTHER_ENTRY }],
+      registry: makeRegistry(this.rng, 14),
       current: null,
       phase: 'none',
       phaseTime: 0,
@@ -117,34 +141,41 @@ export class Simulation {
       history: [],
       queue: [],
       slotIndex: 0,
+      gap: 4,
       finaleDone: false,
       consequences: [],
-      stage: 0,
+      stage: this.def.stageStart,
       sanity: 100,
       fear: 0,
       stare: false,
-      score: { correct: 0, wrong: 0, admittedUnderstudies: 0, refusedHumans: 0, sanity: 100, ending: 'absent', tasksDone: 0, tasksMissed: 0 },
+      score: { correct: 0, wrong: 0, admittedUnderstudies: 0, refusedHumans: 0, sanity: 100, ending: 'absent', tasksDone: 0, tasksMissed: 0, night, tokens: opts.tokens ?? 0 },
       seq: 0,
-      todo: TODO.map((t) => ({ ...t, shown: false, done: false, missed: false })),
+      todo: this.def.todo.map((t) => ({ ...t, shown: false, done: false, missed: false })),
       admittedHumans: 0,
       motherTaken: false,
+      selfTaken: false,
       dead: null,
       breach: null,
       dawn: null,
       hollisIn: false,
       wardLocked: false,
-      pellGone: false,
+      pellGone: night >= 5,
+      tokens: opts.tokens ?? 0,
+      buffs: { coffee: false, barley: 0, tonic: false, tea: false, mint: false, toffee: 0 },
+      quietT: 0,
     };
-    this.addCastRecords();
-  }
-
-  /** Records for the named visitors, so a copy of someone pulls up the same record. */
-  private addCastRecords(): void {
-    const filler = makeRegistry(this.rng, CAST.length);
-    CAST.forEach((c, i) => {
-      const f = filler[i];
-      this.state.registry.push({ ...f, id: `C_${c.id}`, name: c.name, photoMark: c.mark, note: c.note ?? '', alive: !c.dead });
-    });
+    // the hospital's records for everyone who can come to the window
+    const seen = new Set<string>();
+    for (const n of [1, 2, 3, 4, 5, 6])
+      for (const v of nightDef(n).visitors) {
+        if (seen.has(v.person)) continue;
+        seen.add(v.person);
+        const r = recordOf(v.person);
+        if (v.person === 'ada') r.id = MOTHER_ID;
+        this.state.registry.push(r);
+      }
+    // the voice at the gate pulls up Imogen's staff card
+    this.state.registry.push({ ...recordOf('imogen'), id: 'R900' });
   }
 
   readonly stalker = new Stalker();
@@ -154,7 +185,8 @@ export class Simulation {
 
   /** Where the player is and how loud they are. Presentation calls this every frame. */
   setPlayer(i: StalkerInput): void {
-    this.stalkerIn = i;
+    // barley sugar: for a minute your steps make no sound
+    this.stalkerIn = this.state.buffs.barley > 0 ? { ...i, noise: 0, noiseRange: 0 } : i;
   }
 
   /** Brings the tall one into the corridor. */
@@ -165,6 +197,16 @@ export class Simulation {
   die(cause: DeathCause): void {
     const s = this.state;
     if (s.ended) return;
+    if (s.buffs.tea) {
+      // sweet tea: you black out instead, and wake at the desk
+      s.buffs.tea = false;
+      s.breach = null;
+      s.sanity = 40;
+      s.fear = 0.3;
+      this.stalker.dismiss();
+      this.bus.emit('saved', { cause });
+      return;
+    }
     s.dead = cause;
     s.ended = true;
     this.bus.emit('death', { cause });
@@ -207,6 +249,7 @@ export class Simulation {
     if (!e) return;
     const real = e === 'echo_steps' && this.fearDir.realEcho;
     this.bus.emit('fear', { event: e, real });
+    this.touch();
     if (real) {
       // when the steps stop, it is standing where they were
       const x = i.x - 6 > 2.6 ? i.x - 6 : i.x + 6;
@@ -235,8 +278,8 @@ export class Simulation {
     const s = this.state;
     if (!report) return;
     s.wardLocked = true;
+    if (!s.pellGone) this.common('pell_lock', 'pell', true);
     s.pellGone = true;
-    this.say('pell_lock', "Right. Right. I'll lock it from this side then. Someone has to. Don't come to the door, whatever you hear. Don't.", 'Orderly Pell', true);
   }
 
   /** A fake left waiting too long at the glass does not leave. It comes through. Duck under the desk and stay down. */
@@ -272,13 +315,44 @@ export class Simulation {
     return this.state.registry.find((r) => r.id === p.registryId)!;
   }
 
+  /** Something happened the player can see or hear. Resets the dead air clock. */
+  private touch(): void {
+    this.state.quietT = 0;
+  }
+
   // ---------------------------------------------------------------- time
+  /**
+   * There is no timer. The clock on the wall follows the roster: it creeps while someone is at the glass,
+   * runs on between visitors, and only reaches six once everybody on tonight's list has been dealt with.
+   */
+  private advanceClock(dt: number): void {
+    const s = this.state;
+    const was = s.minute;
+    const next = this.roster[s.slotIndex];
+    const waiting = s.phase !== 'none' || s.queue.length > 0;
+    if (s.dawn) s.minute += dt * PACING.dawnRate;
+    else if (next) {
+      if (waiting || !s.powerOn) s.minute = Math.min(next.at - 0.5, s.minute + dt * PACING.visitRate);
+      else {
+        // between visitors: get to the next one's time within the gap
+        s.gap -= dt;
+        const left = Math.max(0.2, s.gap);
+        s.minute = Math.min(next.at, s.minute + Math.max(dt * PACING.visitRate, ((next.at - s.minute) * dt) / left));
+      }
+    } else if (s.phase === 'none' && s.queue.length === 0) s.minute = Math.min(this.def.end, s.minute + dt * PACING.tailRate);
+    else s.minute = Math.min(this.def.end - 15, s.minute + dt * PACING.visitRate);
+    s.minute = Math.max(was, s.minute); // the clock never runs backwards
+  }
+
   tick(dt: number): void {
     const s = this.state;
     if (s.ended) return;
     const prevMinute = s.minute;
-    s.minute += dt * MINUTES_PER_SECOND;
+    this.advanceClock(dt);
     if (Math.floor(s.minute) !== Math.floor(prevMinute)) this.bus.emit('clock', { minute: s.minute });
+    s.buffs.barley = Math.max(0, s.buffs.barley - dt);
+    s.buffs.toffee = Math.max(0, s.buffs.toffee - dt);
+    s.quietT += dt;
 
     s.fear = Math.max(0, s.fear - dt * 0.15);
     this.updateSanity(dt);
@@ -297,7 +371,7 @@ export class Simulation {
     this.runDirector(dt);
     this.runHallucinations(dt);
 
-    if (s.minute >= SHIFT00_END && !s.ended) this.finish();
+    if (s.minute >= this.def.end && !s.ended) this.finish();
   }
 
   /** Ends the night. The ending depends on what got through the gate and whether you went to see her. */
@@ -307,7 +381,8 @@ export class Simulation {
     s.ended = true;
     const dawn = s.todo.find((t) => t.id === 'count_dawn')!;
     s.score.sanity = Math.round(s.sanity);
-    s.score.ending = !dawn.done ? 'absent' : s.motherTaken ? 'taken' : s.score.admittedUnderstudies > 0 ? 'crowded' : 'clean';
+    s.score.tokens = s.tokens;
+    s.score.ending = !dawn.done ? 'absent' : s.motherTaken || s.selfTaken ? 'taken' : s.score.admittedUnderstudies > 0 ? 'crowded' : 'clean';
     this.bus.emit('shiftEnded', { score: s.score });
   }
 
@@ -323,6 +398,8 @@ export class Simulation {
           s.dawn = { t: 0, figure: false };
           this.stalker.dismiss();
           this.bus.emit('dawn', { phase: 'start' });
+          const d = s.pellGone ? this.def.dawn.wrong : this.def.dawn.pell;
+          this.beat(d);
         }
       }
       if (t.shown && !t.done && !t.missed && s.minute >= t.due && t.id !== 'count_dawn') {
@@ -330,17 +407,14 @@ export class Simulation {
         changed = true;
         s.score.tasksMissed++;
         this.spike(0.15, 4);
-        const line =
-          t.id === 'count1'
-            ? "Pell. Nobody did the head count. So nobody knows how many are in there. I'm not going to be the one who checks."
-            : "Matron's office. Your list was on the desk, Officer. It is still on the desk.";
-        this.say(`miss_${t.id}`, line, t.id === 'count1' ? 'Orderly Pell' : "Matron's Office");
+        if (t.id === 'count1') this.common('miss_count', this.pellWho());
+        else this.common('miss_task', 'matron');
       }
     }
     if (changed) this.bus.emit('todo', { items: s.todo });
   }
 
-  /** Bodies on Ward B against the paperwork. Every Understudy you admitted is lying in a bed. */
+  /** Bodies on Ward B against the paperwork. Every fake you admitted is lying in a bed. */
   wardCount(): WardCount {
     const s = this.state;
     const register = WARD_B_START + s.admittedHumans;
@@ -354,9 +428,13 @@ export class Simulation {
     const t = s.todo.find((x) => x.id === id);
     if (!t || !t.shown || t.done || s.ended) return false;
     t.done = true;
-    if (!t.missed) s.score.tasksDone++;
+    if (!t.missed) {
+      s.score.tasksDone++;
+      if (id !== 'count_dawn') this.earn(1, 'job done');
+    }
     s.sanity = clamp(s.sanity + 3, 0, 100);
     this.bus.emit('todo', { items: s.todo });
+    this.touch();
     if (id === 'count1' || id === 'count_dawn') {
       const count = this.wardCount();
       this.bus.emit('wardCounted', { id, count });
@@ -364,8 +442,8 @@ export class Simulation {
         this.bus.emit('choice', { id: 'report_count' });
         if (count.extras > 0) {
           this.spike(0.6, 8);
-          this.say('count1_res', `You got ${count.actual}? My sheet says ${count.register}. Don't count again. Get back to your desk and shut the door.`, 'Orderly Pell', true);
-        } else this.say('count1_res', `${count.register}. Same as my sheet. Good. Good. I'll stop counting now.`, 'Orderly Pell', true);
+          this.common('count_more', this.pellWho(), true);
+        } else this.common('count_same', this.pellWho(), true);
       }
     }
     return true;
@@ -400,18 +478,111 @@ export class Simulation {
     s.sanity = clamp(s.sanity - sanityHit, 0, 100);
   }
 
+  // ---------------------------------------------------------------- tokens and the vending machine
+  private earn(n: number, why: string): void {
+    const s = this.state;
+    s.tokens += n;
+    s.score.tokens = s.tokens;
+    this.bus.emit('tokens', { tokens: s.tokens, gained: n, why });
+  }
+
+  /** Items the machine sells tonight. */
+  vendStock(): VendId[] {
+    return (Object.keys(VEND_BY_ID) as VendId[]).filter((id) => VEND_BY_ID[id].night <= this.state.night);
+  }
+
+  /** Buy something. Returns false if it is not in stock or you cannot pay. */
+  buy(id: VendId): boolean {
+    const s = this.state;
+    const item = VEND_BY_ID[id];
+    if (!item || item.night > s.night || s.tokens < item.cost || s.ended) return false;
+    s.tokens -= item.cost;
+    s.score.tokens = s.tokens;
+    const b = s.buffs;
+    switch (id) {
+      case 'cola':
+        s.sanity = clamp(s.sanity + 30, 0, 100);
+        s.fear = Math.max(0, s.fear - 0.3);
+        break;
+      case 'toffee':
+        b.toffee = 60;
+        break;
+      case 'mint':
+        b.mint = true;
+        if (s.current && s.phase === 'present') this.giveHint(s.current);
+        break;
+      case 'coffee':
+        b.coffee = true;
+        break;
+      case 'barley':
+        b.barley = 60;
+        break;
+      case 'tonic':
+        b.tonic = true;
+        break;
+      case 'tea':
+        b.tea = true;
+        break;
+    }
+    this.bus.emit('tokens', { tokens: s.tokens, gained: -item.cost, why: item.name });
+    this.bus.emit('buff', { id, on: true });
+    return true;
+  }
+
+  /** Hollow mints: name one thing that is off about this visitor. */
+  private giveHint(p: Patient): void {
+    const s = this.state;
+    s.buffs.mint = false;
+    const r = this.registryOf(p);
+    const said: Partial<Record<string, string>> = {
+      dob_swap: 'The date of birth they give does not match the records.',
+      kin_wrong: 'Ask who to call. It will not match the records.',
+      sender_wrong: 'Ask who sent them. It will not match the records.',
+      echo: 'It will say your own words back to you.',
+      deceased: 'Check the records. Look at the status line.',
+      wristband: 'Compare the wristband number with the records.',
+      photo: `The photo shows ${r.photoMark}. Look at the face.`,
+      no_breath: 'Watch the glass in front of its mouth.',
+      too_fast: 'It answers before a person would.',
+      borrowed_memory: 'Its memory of tonight belongs to somebody else.',
+      no_blink: 'Watch the eyes. Count to ten.',
+      ahead: 'It answers the question you have not asked yet.',
+      mirror: 'The mark is on the wrong side of the face.',
+      no_pulse: 'Get close. Look at the throat.',
+      still_breath: 'Watch its breath on the glass. Does it fade?',
+    };
+    const real = p.tells.filter((t) => said[t]);
+    const text = p.truth === 'human' || !real.length ? 'You chew the mint and look hard. Nothing about this one is wrong.' : said[real[0]]!;
+    this.bus.emit('hint', { text });
+  }
+
   // ---------------------------------------------------------------- story
-  private say(id: string, text: string, speaker = 'Sister Imogen', call = false, wrong = false): void {
+  private pellWho(): string {
+    return this.state.pellGone && this.state.night >= 5 ? PELL_STANDIN : 'pell';
+  }
+
+  private emitLine(id: string, person: string, line: L, call = false, wrong = false, where?: BeatDef['where'], talk?: L[]): void {
     if (this.storyDone.has(id)) return;
     this.storyDone.add(id);
-    this.bus.emit('story', { id, text, speaker, call, wrong });
+    const speaker = PERSON_BY_ID[person]?.name ?? person;
+    this.touch();
+    this.bus.emit('story', { id, text: lineText(line), speaker, call, wrong, person, line, where: where ?? (call ? 'phone' : 'intercom'), talk });
+  }
+
+  private common(key: keyof typeof COMMON, person: string, once = false, idSuffix = ''): void {
+    const id = once ? key : `${key}${idSuffix || `_${this.state.seq}_${Math.floor(this.state.minute)}`}`;
+    this.emitLine(id, person, COMMON[key]);
+  }
+
+  private beat(b: BeatDef): void {
+    this.emitLine(b.id, b.who, b.text, b.where === 'phone', b.wrong ?? false, b.where, b.talk);
   }
 
   private runStory(): void {
     const s = this.state;
-    for (const b of BEATS) {
+    for (const b of this.def.beats) {
       if (this.storyDone.has(b.id) || s.minute < b.at) continue;
-      if (b.id === 'breaker_warn' && s.breakerTripped) {
+      if (/breaker/.test(b.id) && s.breakerTripped && !s.powerOn) {
         this.storyDone.add(b.id);
         continue;
       }
@@ -419,26 +590,27 @@ export class Simulation {
         if (s.minute > b.at + 40) this.storyDone.add(b.id);
         continue;
       }
-      if (b.needsFinale && !s.finaleDone) continue;
-      if (b.id === 'dawn' && s.pellGone) {
-        // Pell locked himself in at two. Whoever is holding the door now, it is using his voice.
-        this.say(b.id, "It's six. Come on. I'm holding the door. Come on. Come on.", 'Orderly Pell', false, true);
-        return;
+      // Pell's lines go to someone else once he has locked himself in
+      if (b.who === 'pell' && s.pellGone && s.night < 5 && b.id !== 'pell2') {
+        this.storyDone.add(b.id);
+        continue;
       }
       // never talk over the officer's own interview; wait for a gap
       if (s.phase === 'present' && s.asked.length > 0 && s.minute < b.at + 8) continue;
-      this.say(b.id, b.text, b.who, b.call ?? false, b.wrong ?? false);
+      // nobody walks into the booth while something is hunting in the corridor
+      if ((b.where === 'back' || b.where === 'corridor') && this.stalker.active) continue;
+      this.beat(b);
       return;
     }
   }
 
   // ---------------------------------------------------------------- the stare rule
-  /** Seated player ducked below the sill. */
+  /** Seated player ducked below the desk. */
   setDuck(on: boolean): void {
     this.ducked = on;
   }
 
-  /** Seated player is zoomed on the patient's face. */
+  /** Seated player is leaning in on the patient's face. */
   setGaze(on: boolean): void {
     this.gazing = on;
   }
@@ -447,10 +619,7 @@ export class Simulation {
     const s = this.state;
     const p = s.current;
     const eligible =
-      !!p &&
-      s.phase === 'present' &&
-      s.powerOn &&
-      ((p.truth === 'understudy' && (s.stage >= 1 || p.archetype !== 'slipping_mimic')) || p.archetype === 'strange_innocent');
+      !!p && !p.tutorial && s.phase === 'present' && s.powerOn && ((p.truth === 'understudy' && (s.stage >= 1 || p.archetype !== 'slipping_mimic')) || p.archetype === 'strange_innocent');
     if (!eligible) {
       if (s.stare) this.endStare();
       this.stareT = Math.max(this.stareT, 7);
@@ -468,6 +637,7 @@ export class Simulation {
         s.stare = true;
         this.stareLeft = this.gazeRng.range(4, 6.5);
         this.stareHit = false;
+        this.touch();
         this.bus.emit('stare', { on: true, hit: false });
       }
     }
@@ -480,7 +650,7 @@ export class Simulation {
     this.bus.emit('stare', { on: false, hit: this.stareHit });
   }
 
-  /** Eye contact during a stare. Only the Understudy punishes it. */
+  /** Eye contact during a stare. Only a fake punishes it. */
   private contact(): void {
     const s = this.state;
     if (!s.stare || this.stareHit || this.ducked || !s.current) return;
@@ -490,12 +660,21 @@ export class Simulation {
     this.bus.emit('stare', { on: true, hit: true });
   }
 
+  /** A fake you let in has stopped at the window behind your chair, and you turned round and looked at it. */
+  passageStare(): void {
+    this.spike(0.5, 7);
+    this.touch();
+  }
+
   // ---------------------------------------------------------------- breaker
   private runBreaker(): void {
     const s = this.state;
-    if (!s.breakerTripped && s.minute >= SHIFT00_BREAKER_AT && s.powerOn) {
+    const at = this.def.breakerAt[s.breakersDone];
+    if (at !== undefined && s.minute >= at && s.powerOn && !s.dawn) {
+      s.breakersDone++;
       s.breakerTripped = true;
       s.powerOn = false;
+      this.touch();
       this.bus.emit('powerChanged', { on: false });
       this.bus.emit('taskChanged', { id: 'breaker', text: 'Power is out. Get to the fuse box at the far end of the corridor. Something is out there. Crouch.', done: false });
       this.spike(0.5, 4);
@@ -507,6 +686,7 @@ export class Simulation {
     const s = this.state;
     if (s.powerOn || s.zone !== 'breaker') return false;
     s.powerOn = true;
+    this.touch();
     this.bus.emit('powerChanged', { on: true });
     this.bus.emit('taskChanged', { id: 'breaker', text: 'Power restored.', done: true });
     this.bus.emit('cue', { cue: 'power_back', intensity: 0.5 });
@@ -529,34 +709,35 @@ export class Simulation {
     s.phaseTime += dt;
 
     if (s.phase === 'none') {
-      if (!s.powerOn) return;
-      const finaleDue = s.minute >= SHIFT00_FINALE_AT && !s.finaleDone;
-      if (finaleDue) {
-        s.finaleDone = true;
-        this.spawn(this.makeFinale());
-      } else if (s.queue.length && s.minute > 20) {
+      if (!s.powerOn || s.dawn) return;
+      if (s.queue.length && s.minute > 20) {
         this.spawn(s.queue.shift()!);
-      } else {
-        const slot = SHIFT00[s.slotIndex];
-        if (slot && s.minute >= slot.at) {
-          s.slotIndex++;
-          this.spawn(slot.special === 'mother' ? this.makeMother(slot.quirk ?? '') : slot.cast ? this.makeCast(slot) : this.makeFromSlot(slot.archetype, slot.quirk ?? ''));
-        }
+        return;
+      }
+      const next = this.roster[s.slotIndex];
+      if (next && s.minute >= next.at) {
+        s.slotIndex++;
+        if (next.gate) s.finaleDone = true;
+        this.spawn(this.makeVisitor(next));
       }
     } else if (s.phase === 'approaching' && s.phaseTime > 3.5) {
       s.phase = 'present';
       s.phaseTime = 0;
+      if (s.buffs.mint && s.current) this.giveHint(s.current);
     } else if (s.phase === 'present') {
       const p = s.current;
       if (!p) {
         s.phase = 'none';
         return;
       }
+      if (p.tutorial) return; // Pell waits as long as it takes
       const angry = p.truth === 'understudy' && s.stage >= 2;
-      if (s.powerOn && !s.breach) s.patience -= dt / (angry ? 110 : s.asked.length ? 330 : 170);
+      const slow = s.buffs.coffee ? 2 : 1;
+      if (s.powerOn && !s.breach) s.patience -= dt / ((angry ? 110 : s.asked.length ? 330 : 170) * slow);
       if (s.patience <= 0 && !s.breach) {
         if (angry) {
           s.breach = { phase: 'crack', t: 0 };
+          this.touch();
           this.bus.emit('breach', { phase: 'crack' });
           this.spike(0.5, 3);
         } else this.leave('timeout');
@@ -565,79 +746,33 @@ export class Simulation {
       s.phase = 'none';
       s.phaseTime = 0;
       s.current = null;
+      s.gap = this.rng.range(PACING.gapMin, PACING.gapMax);
     }
   }
 
-  /** A named visitor, or a fake wearing one. */
-  private makeCast(slot: ShiftSlot): Patient {
+  /** Someone on tonight's roster, real or wearing a real person. */
+  private makeVisitor(v: VisitorDef): Patient {
     const s = this.state;
-    const c = CAST_BY_ID[slot.cast!];
-    const entry = s.registry.find((r) => r.id === `C_${c.id}`)!;
-    const p = makePatient({ rng: this.rng, entry, archetype: slot.archetype, stage: s.stage, previous: s.history, quirk: c.quirk, seq: ++s.seq });
-    p.castId = c.id;
-    p.greet = slot.copy ? COPY_GREET[c.id] ?? c.greet : c.greet;
-    if (c.typo && p.truth === 'human') {
-      p.docs.slipDob = swapDigits(entry.dob);
-      if (!p.tells.includes('clerk_typo')) p.tells.push('clerk_typo');
-    }
-    const fill = (t: string): string => t.replace(/\{dob\}/g, p.answers.dob).replace(/\{sender\}/g, p.answers.sender).replace(/\{kin\}/g, p.answers.kin);
-    for (const q of ['name', 'dob', 'sender', 'kin'] as QuestionId[]) {
-      const t = c.say[q];
-      if (t) p.answers[q] = fill(t);
-    }
-    if (c.say.memory && !p.tells.includes('borrowed_memory')) p.answers.memory = c.say.memory;
-    if (slot.copy) p.quirk = `${c.quirk} Bone dry.`;
-    return p;
-  }
-
-  private makeFromSlot(archetype: Patient['archetype'], quirk: string): Patient {
-    const s = this.state;
-    const used = new Set(s.history.map((p) => p.registryId));
-    const pool = s.registry.filter((r) => r.id !== MOTHER_ID && r.id !== 'R900' && !r.id.startsWith('C_') && !used.has(r.id) && !s.queue.some((q) => q.registryId === r.id));
-    const entry = pool[this.rng.int(0, pool.length - 1)];
-    if (archetype === 'tragic') {
-      entry.kin = `${entry.name.split(' ')[0]} Jr.`;
-      entry.note = 'Next of kin deceased, 1958.';
-    }
-    return makePatient({ rng: this.rng, entry, archetype, stage: s.stage, previous: s.history, quirk, seq: ++s.seq });
-  }
-
-  /** Her face, her name, her wristband. But the ledger says she has not left her bed, and the hall is freezing. */
-  private makeMother(quirk: string): Patient {
-    const s = this.state;
-    const entry = s.registry.find((r) => r.id === MOTHER_ID)!;
-    const p = makePatient({ rng: this.rng, entry, archetype: 'fluent_mimic', stage: Math.max(4, s.stage), previous: s.history, quirk, seq: ++s.seq });
-    p.tells = ['no_breath', 'borrowed_memory'];
-    p.faceMark = entry.photoMark;
-    p.docs = { slipName: entry.name, slipDob: entry.dob, slipSender: entry.sender, wristband: entry.wristband, photoMark: entry.photoMark };
-    p.answers = {
-      name: 'Ada. Ada Wren. You know my name, love.',
-      dob: entry.dob,
-      sender: 'Nobody sent me. I walked. I wanted to see you.',
-      kin: 'You. Who else would I put down.',
-      memory: 'You used to count the headlights on the ceiling with me. Let me in. It is so cold out here.',
-    };
-    p.height = 0.95;
-    return p;
-  }
-
-  private makeFinale(): Patient {
-    const s = this.state;
-    const entry: RegistryEntry = {
-      id: 'R900',
-      name: 'Sister Imogen',
-      dob: '03/02/1911',
-      sender: "Matron's Office",
-      kin: 'None on file',
-      wristband: 'STAFF-01',
-      alive: true,
-      photoMark: 'a freckle under the left eye',
-      note: 'Night staff. On the premises.',
-    };
-    s.registry.push(entry);
-    const p = makePatient({ rng: this.rng, entry, archetype: 'voice_mimic', stage: 7, previous: s.history, quirk: 'The voice on the gate intercom is warm and exactly right. Almost.', seq: ++s.seq });
-    p.answers.memory = "I looked in on your mam, pet. She's grand. Open up now, it's perishing out here.";
-    p.greet = "It's Imogen, pet. I've locked myself out, would you believe it. Open the gate for me.";
+    const entry = this.state.registry.find((r) => r.id === (v.person === 'ada' ? MOTHER_ID : v.gate ? 'R900' : `C_${v.person}`))!;
+    const archetype = v.archetype ?? (v.fake ? 'slipping_mimic' : 'plain');
+    const p = makePatient({ rng: this.rng, entry, archetype, stage: s.stage, previous: s.history, quirk: v.quirk, seq: ++s.seq, tells: v.fake ? [...(v.tells ?? [])] : [] });
+    p.castId = v.person;
+    p.vid = v.id;
+    p.truth = v.fake ? 'understudy' : 'human';
+    // a fake does not breathe until night 5; after that it breathes, but not quite right
+    if (v.fake && s.night <= 4 && !p.tells.includes('no_breath')) p.tells.push('no_breath');
+    p.breathes = !v.fake || s.night >= 5;
+    if (v.form) Object.assign(p.docs, v.form);
+    if (v.form?.slipDob && !v.fake) p.tells.push('clerk_typo');
+    if (v.face) p.faceMark = v.face;
+    p.lines = { greet: v.greet, say: v.say, bye: v.bye };
+    p.greet = lineText(v.greet);
+    for (const q of ORDER) p.answers[q] = lineText(v.say[q]);
+    p.reveal = v.reveal;
+    p.tutorial = v.tutorial;
+    p.mother = v.mother;
+    p.gate = v.gate;
+    if (v.mother && v.fake) p.height = 0.95;
     return p;
   }
 
@@ -653,14 +788,16 @@ export class Simulation {
     s.faceChecked = false;
     s.stare = false;
     this.stareT = this.gazeRng.range(9, 16);
+    this.touch();
     this.bus.emit('patientArrived', { patient: p });
   }
 
-  /** Query the registry on the CRT. Needs power. */
+  /** Query the registry on the green screen. Needs power. */
   lookup(): RegistryEntry | null {
     const s = this.state;
     if (!s.current || s.phase !== 'present' || !s.powerOn) return null;
     s.lookedUp = true;
+    this.touch();
     return this.registryOf(s.current);
   }
 
@@ -669,6 +806,7 @@ export class Simulation {
     if (!s.current || s.phase !== 'present') return null;
     s.faceChecked = true;
     this.contact();
+    this.touch();
     return s.current.faceMark;
   }
 
@@ -676,13 +814,21 @@ export class Simulation {
     const s = this.state;
     const p = s.current;
     if (!p || s.phase !== 'present' || s.asked.includes(q)) return null;
-    let text = p.answers[q];
-    if (p.tells.includes('echo') && s.lastLine) text = s.lastLine;
+    let line: L = p.lines?.say[q] ?? p.answers[q];
+    if (p.tells.includes('echo') && s.lastLine) line = [s.lastLine, 'flat'];
+    else if (p.tells.includes('ahead')) {
+      // it answers the question you were going to ask next
+      const nextQ = ORDER.find((x, i) => i > ORDER.indexOf(q) && !s.asked.includes(x)) ?? ORDER.find((x) => x !== q && !s.asked.includes(x));
+      if (nextQ && p.lines) line = p.lines.say[nextQ];
+    }
     s.asked.push(q);
     s.lastLine = QUESTION_TEXT[q];
-    const delay = p.tells.includes('too_fast') ? 0.05 : 0.9 + this.presRng.next() * 0.9;
+    const fast = p.tells.includes('too_fast') || p.tells.includes('ahead') || p.tells.includes('echo');
+    const delay = fast ? 0.05 : 0.9 + this.presRng.next() * 0.9;
+    const text = lineText(line);
+    this.touch();
     this.bus.emit('questionAnswered', { patientId: p.id, q, text });
-    return { text, delay };
+    return { text, line, delay };
   }
 
   /** Visible without any action: does breath show in the cold air? */
@@ -695,8 +841,15 @@ export class Simulation {
     const s = this.state;
     const p = s.current;
     if (!p || s.phase !== 'present') return;
-    if (v === 'contain' && !s.powerOn) return; // the lever is electric
+    if (v === 'contain' && !s.powerOn) return; // the trapdoor is electric
     const mimic = p.truth === 'understudy';
+    if (s.buffs.tonic) {
+      // the tonic decides for you, and it is never wrong
+      s.buffs.tonic = false;
+      v = mimic ? (s.powerOn ? 'contain' : 'refuse') : 'admit';
+      this.bus.emit('buff', { id: 'tonic', on: false });
+    }
+    s.buffs.coffee = false;
     let wrong = false;
 
     if (v === 'admit' && !mimic) {
@@ -705,13 +858,14 @@ export class Simulation {
       e.note = `${e.note ? e.note + ' ' : ''}LET IN TONIGHT. ON THE WARD NOW.`;
     }
     if (s.breach) s.breach = null;
-    if (v === 'admit' && p.registryId === MOTHER_ID) s.motherTaken = true;
+    if (v === 'admit' && mimic && p.mother) s.motherTaken = true;
+    if (v === 'admit' && mimic && p.castId === 'officer') s.selfTaken = true;
     if (v === 'admit' && p.castId === 'hollis' && !mimic) s.hollisIn = true;
     if (!mimic) {
       if (v === 'refuse') {
         wrong = true;
         s.score.refusedHumans++;
-        this.schedule('window_return', p, 28);
+        this.schedule('window_return', p, 22);
         this.spike(0.2, 6);
       } else if (v === 'contain') {
         wrong = true;
@@ -726,14 +880,15 @@ export class Simulation {
         wrong = true;
         s.score.admittedUnderstudies++;
         this.bumpStage();
-        this.schedule('ward_incident', p, 22);
+        this.schedule('passage_stare', p, 0.1);
+        this.schedule('ward_incident', p, 18);
         this.spike(0.1, 5);
       } else if (v === 'observe') {
-        this.schedule('observation_breach', p, 18);
+        this.schedule('observation_breach', p, 16);
         this.spike(0.15, 2);
       } else if (v === 'refuse') {
         this.bumpStage();
-        this.schedule('window_return', p, 34);
+        this.schedule('window_return', p, 26);
         this.spike(0.1, 1);
       } else if (v === 'contain') {
         this.schedule('clean_catch', p, 2);
@@ -741,7 +896,10 @@ export class Simulation {
       }
     }
     if (wrong) s.score.wrong++;
-    else if (!(v === 'observe' || (mimic && v === 'refuse'))) s.score.correct++;
+    else if (!(v === 'observe' || (mimic && v === 'refuse'))) {
+      s.score.correct++;
+      if (!p.tutorial) this.earn(1, 'right call');
+    }
     this.bus.emit('verdictResult', { patient: p, verdict: v, correct: !wrong });
     s.history.push(p);
     this.leave(v);
@@ -753,11 +911,12 @@ export class Simulation {
     if (!p) return;
     if (v === 'timeout') {
       s.history.push(p);
-      if (p.truth === 'human') this.schedule('window_return', p, 20);
+      if (p.truth === 'human') this.schedule('window_return', p, 18);
       this.spike(0.1, 2);
     }
     s.phase = 'leaving';
     s.phaseTime = 0;
+    this.touch();
     this.bus.emit('patientLeft', { patient: p, verdict: v });
   }
 
@@ -775,7 +934,7 @@ export class Simulation {
       if (!p) continue;
       switch (c.kind) {
         case 'ward_incident':
-          this.say(`inc_${p.id}`, "Pell! The one you sent up asked me my name, then said it back before I'd answered. It's gone out into the corridor. Shut your door.", 'Orderly Pell');
+          this.common(s.night >= 5 ? 'inc_imogen' : 'inc', s.night >= 5 ? PELL_STANDIN : 'pell', false, `_${p.id}`);
           this.spike(0.7, 8);
           this.bus.emit('cue', { cue: 'overhead_steps', intensity: 0.8 });
           this.bus.emit('cue', { cue: 'whisper', intensity: 0.8 });
@@ -783,17 +942,24 @@ export class Simulation {
           break;
         case 'observation_breach':
           this.bumpStage();
-          this.say(`obs_${p.id}`, 'Kessler. The observation room is open. Nobody forced the door. Close yours.', 'Night Nurse Kessler');
+          this.common('obs', 'kessler', false, `_${p.id}`);
           this.spike(0.8, 8);
           this.bus.emit('cue', { cue: 'door_creak', intensity: 0.9 });
           break;
         case 'window_return':
-          this.say(`ret_${p.id}`, p.truth === 'understudy' ? `Someone's at your window again. Looks like ${p.displayName}. Soaking. No, wait. Bone dry.` : `${p.displayName} is back at your window. Soaked through. Says there's nowhere else to go.`, 'Orderly Pell');
+          this.common(p.truth === 'understudy' ? 'ret_fake' : 'ret_human', this.pellWho(), false, `_${p.id}`);
           this.spike(0.3, 3);
           this.bus.emit('cue', { cue: p.truth === 'understudy' ? 'window_tap' : 'knock', intensity: 0.7 });
           if (p.truth === 'understudy') {
             const entry = this.registryOf(p);
-            this.state.queue.push(makePatient({ rng: this.rng, entry, archetype: 'slipping_mimic', stage: s.stage, previous: s.history, quirk: 'Back at the window. Knows what you asked last time.', seq: ++s.seq }));
+            const back = makePatient({ rng: this.rng, entry, archetype: 'slipping_mimic', stage: s.stage, previous: s.history, quirk: 'Back at the window. Knows what you asked last time.', seq: ++s.seq });
+            back.castId = p.castId;
+            back.reveal = p.reveal;
+            back.breathes = s.night >= 5;
+            if (s.night <= 4 && !back.tells.includes('no_breath')) back.tells.push('no_breath');
+            back.greet = 'Good evening. Good evening, Officer. Good evening.';
+            back.lines = p.lines ? { greet: ['Good evening. Good evening, Officer. Good evening.', 'flat'], say: p.lines.say } : undefined;
+            this.state.queue.push(back);
           } else {
             this.state.queue.push({ ...p, id: `P${String(++s.seq).padStart(2, '0')}`, quirk: 'Soaked. Quiet now. Looks at the floor.' });
           }
@@ -805,6 +971,8 @@ export class Simulation {
         case 'clean_catch':
           s.sanity = clamp(s.sanity + 6, 0, 100);
           break;
+        case 'passage_stare':
+          break;
       }
       this.bus.emit('consequence', { c, patient: p });
     }
@@ -815,7 +983,7 @@ export class Simulation {
     const s = this.state;
     const cues = this.director.tick(dt, {
       minute: s.minute,
-      shiftLength: SHIFT00_END,
+      shiftLength: this.def.end,
       fear: s.fear,
       sanity: s.sanity,
       stage: s.stage,
@@ -825,7 +993,14 @@ export class Simulation {
     });
     for (const c of cues) {
       this.spike(c.intensity * 0.35);
+      this.touch();
       this.bus.emit('cue', c);
+    }
+    // nothing has happened for too long: the building makes itself heard
+    if (s.quietT > PACING.maxQuiet && s.phase !== 'present' && !this.stalker.active) {
+      const pool = ['distant_step', 'pipe_knock', 'scratch', 'knock', 'chair_creak', 'overhead_steps'] as const;
+      this.touch();
+      this.bus.emit('cue', { cue: this.presRng.pick(pool), intensity: 0.35 });
     }
   }
 
@@ -833,7 +1008,7 @@ export class Simulation {
     this.hallT -= dt;
     if (this.hallT > 0) return;
     const rate = this.distortion.hallucinationRate; // per minute
-    this.hallT = rate > 0 ? 60 / rate * this.presRng.range(0.6, 1.4) : 10;
+    this.hallT = rate > 0 ? (60 / rate) * this.presRng.range(0.6, 1.4) : 10;
     if (rate <= 0) return;
     const kinds = ['phantom_step', 'phantom_knock', 'whisper_name', 'shadow_figure'] as const;
     this.bus.emit('hallucination', { kind: this.presRng.pick(kinds) });

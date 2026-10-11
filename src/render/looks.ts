@@ -69,6 +69,36 @@ export const CAST_LOOKS: Record<string, Partial<Look>> = {
   hollis: { age: 55, height: 1.92, build: 1.32, hunch: 0.15, hair: 'bald', hairColor: '#2a2420', outfit: 'work', top: '#2c3a46', bottom: '#2a2a2a', facial: 'stubble', pose: 'rest', skin: SKIN[3], face: { jaw: 1, brow: 1, chin: 0.5, asym: 0.45, sunken: 0.3 }, nose: 1.4 },
   june: { female: true, age: 68, height: 1.6, build: 0.9, hair: 'curls', hairColor: '#d8d2c8', outfit: 'overcoat', top: '#6a5a6e', bottom: '#4a4048', prop: 'none', pose: 'folded', barefoot: false, lipstick: true, shoes: '#d99aa6', face: { jaw: -0.3, cheek: 0.4, asym: 0.1 }, nose: 0.9 },
   edie: { female: true, age: 60, height: 1.65, build: 0.95, hair: 'bun', hairColor: '#8a8478', hat: 'cloche', outfit: 'overcoat', top: '#8a6a44', bottom: '#4a3a2a', accent: '#e8e2d2', lipstick: true, prop: 'handbag', pose: 'bag', eye: EYES[2] , face: { jaw: -0.3, cheek: 0.5, chin: 0.3, sunken: 0.3, asym: 0.1 }, nose: 0.9 },
+  // ---------------------------------------------------------------- staff and family
+  pell: { age: 27, height: 1.78, build: 0.88, hunch: 0.1, hair: 'short', hairColor: '#6b4a2e', outfit: 'uniform', top: '#e4e2da', bottom: '#d8d6ce', accent: '#2a2620', prop: 'cigarette', pose: 'rest', eye: EYES[2], face: { jaw: -0.4, cheek: -0.3, brow: 0.2, asym: 0.2 }, nose: 1.2 },
+  imogen: { female: true, age: 52, height: 1.64, build: 1.05, hair: 'bun', hairColor: '#8a5a3a', hat: 'nurse', outfit: 'uniform', top: '#22305a', bottom: '#22305a', accent: '#f0eee6', pose: 'folded', eye: EYES[1], face: { jaw: 0.1, cheek: 0.8, asym: 0.1 }, nose: 1.0 },
+  kessler: { female: true, age: 49, height: 1.72, build: 0.9, hair: 'bun', hairColor: '#c8c0a8', hat: 'nurse', outfit: 'uniform', top: '#3a4a5a', bottom: '#3a4a5a', accent: '#f0eee6', pose: 'folded', eye: '#7a8a9a', face: { jaw: 0.4, chin: 0.6, cheek: -0.5, sunken: 0.6, asym: 0.05 }, nose: 1.15 },
+  matron: { female: true, age: 61, height: 1.69, build: 1.12, hair: 'bun', hairColor: '#9a968e', hat: 'nurse', outfit: 'uniform', top: '#5a5a58', bottom: '#5a5a58', accent: '#f0eee6', glasses: true, prop: 'folder', pose: 'hold', eye: EYES[4], face: { jaw: 0.6, chin: 0.4, brow: 0.6, asym: 0.1 }, nose: 1.1 },
+  officer: { age: 26, height: 1.76, build: 0.95, hair: 'short', hairColor: '#3a2a1e', outfit: 'overcoat', top: '#2c2e30', bottom: '#2a2a2a', pose: 'rest', eye: EYES[1], face: { jaw: -0.1, cheek: -0.2, sunken: 0.5, asym: 0.1 }, nose: 1.0 },
+
+  // ---------------------------------------------------------------- nights 2 to 6
+  nell: { female: true, age: 19, height: 1.6, build: 0.82, hair: 'long', hairColor: '#4a3222', outfit: 'raincoat', top: '#7a6a4a', bottom: '#3a3a40', pose: 'folded', eye: EYES[2], face: { jaw: -0.6, cheek: 0.2, asym: 0.1 }, nose: 0.9 },
+  danny: { age: 6, height: 1.14, build: 0.9, hair: 'short', hairColor: '#7a3b1c', hat: 'flat', outfit: 'cardigan', top: '#5a5a4a', bottom: '#3a3a36', pose: 'rest', barefoot: true, eye: EYES[1], face: { jaw: -0.9, cheek: 0.6, chin: -0.6, asym: 0.05 }, nose: 0.8 },
+  abara: { female: true, age: 46, height: 1.76, build: 0.9, hair: 'bun', hairColor: '#141010', outfit: 'overcoat', top: '#1e2026', bottom: '#1e2026', skin: SKIN[4], prop: 'umbrella', pose: 'hold', eye: EYES[4], face: { jaw: 0.2, chin: 0.5, cheek: 0.7, asym: 0.05 }, nose: 1.05 },
+  voss: { age: 44, height: 1.8, build: 1.1, hair: 'slick', hairColor: '#2b1d14', outfit: 'work', top: '#5a3a24', bottom: '#2a2824', facial: 'moustache', pose: 'rest', eye: EYES[0], face: { jaw: 0.5, brow: 0.4, asym: 0.1 }, nose: 1.25 },
+  thorne: { age: 39, height: 1.79, build: 1.08, hair: 'short', hairColor: '#2b2420', hat: 'flat', outfit: 'raincoat', top: '#1e2a3a', bottom: '#1e2a3a', pose: 'rest', eye: EYES[3], face: { jaw: 0.6, cheek: 0.2, asym: 0.2 }, nose: 1.3 },
+  winifred: { female: true, age: 77, height: 1.5, build: 0.8, hunch: 0.5, hair: 'scarf', hairColor: '#d8d4ca', outfit: 'overcoat', top: '#4a3a2a', bottom: '#3a3028', prop: 'handbag', pose: 'bag', eye: EYES[1], face: { jaw: -0.5, cheek: -0.3, sunken: 0.9, asym: 0.25 }, nose: 1.05 },
+  crane: { age: 45, height: 1.82, build: 0.9, hunch: 0.15, hair: 'slick', hairColor: '#6b6560', outfit: 'suit', top: '#5a4a32', bottom: '#4a3e2c', glasses: true, prop: 'folder', pose: 'hold', eye: EYES[3], face: { jaw: -0.2, chin: 0.7, cheek: -0.4, asym: 0.05 }, nose: 1.3 },
+  dray: { age: 33, height: 1.85, build: 1.12, hair: 'short', hairColor: '#1a1410', outfit: 'raincoat', top: '#12161e', bottom: '#12161e', accent: '#c0b080', pose: 'hold', eye: EYES[0], face: { jaw: 0.8, brow: 0.6, asym: 0.15 }, nose: 1.35 },
+  vale: { age: 63, height: 1.73, build: 1.0, hunch: 0.25, hair: 'short', hairColor: '#b8b4aa', outfit: 'overcoat', top: '#2a2e2a', bottom: '#2a2a28', glasses: true, prop: 'folder', pose: 'hold', grime: 0.3, eye: EYES[1], face: { jaw: -0.3, cheek: -0.5, sunken: 0.8, asym: 0.1 }, nose: 1.2 },
+  lisle: { female: true, age: 23, height: 1.66, build: 0.86, hair: 'long', hairColor: '#b39a63', outfit: 'nightgown', top: '#ece8de', bottom: '#ece8de', accent: '#f4f2ea', lipstick: true, pose: 'folded', eye: EYES[1], face: { jaw: -0.5, cheek: 0.3, asym: 0.05 }, nose: 0.85 },
+  odette: { female: true, age: 37, height: 1.7, build: 0.92, hair: 'bun', hairColor: '#2b1d14', outfit: 'overcoat', top: '#2e4a32', bottom: '#2a2a28', lipstick: true, prop: 'handbag', pose: 'bag', eye: EYES[2], face: { jaw: 0.0, cheek: 0.5, chin: 0.2, asym: 0.0 }, nose: 0.95 },
+  fenwick: { age: 66, height: 1.68, build: 0.9, hunch: 0.4, hair: 'bald', hairColor: '#c8c4ba', outfit: 'cardigan', top: '#6a6a5a', bottom: '#3a3a34', pose: 'rest', eye: EYES[3], face: { jaw: -0.2, cheek: -0.4, sunken: 0.7, asym: 0.2 }, nose: 1.4 },
+  hargrave: { age: 41, height: 1.75, build: 1.18, hair: 'slick', hairColor: '#4a3222', hat: 'trilby', outfit: 'raincoat', top: '#7a6a4a', bottom: '#3a3226', prop: 'handbag', pose: 'bag', facial: 'moustache', eye: EYES[0], face: { jaw: 0.3, cheek: 0.7, asym: 0.1 }, nose: 1.2 },
+  corbin: { age: 58, height: 1.72, build: 1.2, hair: 'short', hairColor: '#8a8478', hat: 'flat', outfit: 'uniform', top: '#e8e6dc', bottom: '#2a2a2a', accent: '#2a2a2a', pose: 'hold', eye: EYES[2], face: { jaw: 0.4, cheek: 0.6, asym: 0.15 }, nose: 1.35 },
+  liesl: { female: true, age: 17, height: 1.62, build: 0.8, hair: 'long', hairColor: '#c8a870', outfit: 'nightgown', top: '#d8d4c4', bottom: '#d8d4c4', pose: 'rest', barefoot: true, eye: '#7a8a9a', face: { jaw: -0.6, cheek: 0.1, sunken: 0.4, asym: 0.05 }, nose: 0.9 },
+  imelda: { female: true, age: 55, height: 1.58, build: 1.05, hair: 'scarf', hairColor: '#4a4040', outfit: 'cardigan', top: '#4a5a6a', bottom: '#3a3a3a', pose: 'folded', eye: EYES[0], face: { jaw: 0.2, cheek: 0.3, sunken: 0.4, asym: 0.2 }, nose: 1.1 },
+  mabel: { female: true, age: 32, height: 1.65, build: 0.9, hair: 'curls', hairColor: '#6b4a2e', outfit: 'raincoat', top: '#8a7a50', bottom: '#3a3a36', prop: 'handbag', pose: 'bag', eye: EYES[3], face: { jaw: -0.3, cheek: 0.4, asym: 0.1 }, nose: 1.0 },
+  percy: { age: 27, height: 1.8, build: 0.88, hair: 'short', hairColor: '#b39a63', outfit: 'nightgown', top: '#7a8a9a', bottom: '#7a8a9a', pose: 'rest', barefoot: true, eye: EYES[1], face: { jaw: -0.2, cheek: -0.2, asym: 0.1 }, nose: 1.05 },
+  maddox: { age: 60, height: 1.83, build: 1.15, hunch: 0.3, hair: 'short', hairColor: '#6b6560', hat: 'flat', outfit: 'work', top: '#2a2e22', bottom: '#2a2a22', facial: 'beard', pose: 'hold', grime: 0.6, eye: EYES[3], face: { jaw: 0.7, brow: 0.8, sunken: 0.6, asym: 0.3 }, nose: 1.45 },
+  halloway: { female: true, age: 50, height: 1.66, build: 1.0, hair: 'bun', hairColor: '#3a2a1e', hat: 'nurse', outfit: 'overcoat', top: '#1a2236', bottom: '#1a2236', pose: 'hug', eye: EYES[4], face: { jaw: 0.1, cheek: 0.5, asym: 0.05 }, nose: 1.0 },
+  lionel: { age: 50, height: 1.83, build: 1.0, hair: 'slick', hairColor: '#1b1613', outfit: 'suit', top: '#25272c', bottom: '#25272c', accent: '#ecebe4', pose: 'rest', grime: 0.2, eye: EYES[1], face: { jaw: 0.4, chin: 0.6, cheek: 0.2, asym: 0.0 }, nose: 1.15 },
+  clem: { age: 49, height: 1.77, build: 1.1, hair: 'short', hairColor: '#4a4038', hat: 'flat', outfit: 'work', top: '#1e2226', bottom: '#2a2a28', prop: 'lamp', pose: 'hold', facial: 'stubble', eye: EYES[2], face: { jaw: 0.6, brow: 0.5, asym: 0.2 }, nose: 1.3 },
 };
 
 export function lookFor(p: Patient): Look {
@@ -76,7 +106,8 @@ export function lookFor(p: Patient): Look {
   if (p.registryId === 'R209') {
     return { ...base, face: { jaw: -0.4, cheek: 0.2, sunken: 0.7, asym: 0.15 }, female: true, age: 64, height: 1.6, build: 0.84, hunch: 0.2, hair: 'bun', hairColor: '#b8b4aa', outfit: 'nightgown', top: '#6b5c4a', bottom: '#d8d2c2', accent: '#d8d2c2', eye: EYES[1], prop: 'none', pose: 'folded', barefoot: true };
   }
-  if (p.archetype === 'voice_mimic') {
+  if (p.castId && CAST_LOOKS[p.castId] && p.castId !== 'imogen') return { ...base, ...CAST_LOOKS[p.castId] };
+  if (p.archetype === 'voice_mimic' && (!p.castId || p.castId === 'imogen')) {
     return { ...base, female: true, age: 52, height: 1.68, build: 0.95, hair: 'habit', outfit: 'habit', top: '#14161f', bottom: '#14161f', accent: '#ecebe4', pose: 'folded', eye: EYES[1] };
   }
   if (p.castId && CAST_LOOKS[p.castId]) return { ...base, ...CAST_LOOKS[p.castId] };

@@ -37,3 +37,17 @@
 20. The booth scene now has more triangles from the telephone. If Iris Xe struggles, the coiled cord and the dial are the first things to simplify.
 21. Visitors still have shell hair. Strand cards like the tall one's would suit them, at a cost per visitor.
 22. Upper teeth are hidden by the upper lip even when a mouth is open; a small upper-lip lift on reveal would show them.
+
+## Logged in round 6
+
+Map edits made because the brief asked for them (the window, the entry room, the passage):
+
+17. The booth back wall was split into four pieces to fit the wired window behind the chair.
+18. The hall wainscot was cut for the admissions door.
+19. The booth glass now has its own material (opacity 0.07) so it is clearer. Smudges and scratches were lowered.
+20. New entry room props and the admissions passage live in `src/render/annex.ts`, not in `environment.ts`.
+
+Left alone:
+
+21. The light count went from 13 to 14. Worth checking on Iris Xe before adding any more.
+22. The east corridor and the Ward B door were not touched. The tall one's corridor could use the same prop density as the entry room.

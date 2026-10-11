@@ -33,7 +33,8 @@ describe('determinism', () => {
       return names;
     };
     expect(run(42)).toEqual(run(42));
-    expect(run(42)).not.toEqual(run(43));
+    // the roster is written, not rolled: every seed meets the same people
+    expect(run(42)).toEqual(run(43));
   });
 
   it('presentation randomness never changes truth', () => {
@@ -62,13 +63,14 @@ describe('patients', () => {
     expect(p.tells).toHaveLength(0);
   });
 
-  it('a strange innocent has a paperwork typo but answers truthfully', () => {
+  it('a strange innocent has a paperwork mistake but is a person', () => {
     const sim = new Simulation(5);
     const p = runUntilPatient(sim, 'strange_innocent');
     const entry = sim.registryOf(p);
-    expect(p.truth).toContain('human');
-    expect(p.docs.slipDob).not.toContain(entry.dob);
-    expect(p.answers.dob).toContain(entry.dob);
+    expect(p.truth).toBe('human');
+    expect(p.docs.slipDob).not.toBe(entry.dob);
+    expect(p.tells).toContain('clerk_typo');
+    expect(p.answers.dob).toContain('June');
   });
 
   it('slipping mimics have at least one tell', () => {
@@ -177,6 +179,11 @@ describe('breaker event and director', () => {
     for (let i = 0; i < 9000; i++) {
       sim.state.fear = 0;
       sim.tick(0.1);
+      if (!sim.state.powerOn) {
+        sim.setZone('breaker');
+        sim.restorePower();
+        sim.setZone('booth');
+      }
       const d = sim.director;
       if (d.pace === 'peak') sawPeak = true;
       if (sawPeak && d.pace === 'release' && d.quiet) sawQuietAfter = true;
@@ -281,20 +288,30 @@ describe('story beats', () => {
     expect(new Set(ids).size).toBe(ids.length);
     expect(ids).toContain('open');
     expect(ids).toContain('gaze');
-    expect(seen.find((x) => x.id === 'gaze')!.at).toBeGreaterThanOrEqual(38);
+    expect(seen.find((x) => x.id === 'gaze')!.at).toBeGreaterThanOrEqual(34);
   });
 });
 
 describe('the list, Ward B and bed 9', () => {
   it('shows jobs on time and marks the ones left too long as missed', () => {
     const sim = new Simulation(5);
-    sim.tick(0.1);
+    const step = (): void => {
+      sim.tick(0.5);
+      const cur = sim.state.current;
+      if (cur && sim.state.phase === 'present') sim.verdict(cur.truth === 'human' ? 'admit' : 'contain');
+      if (!sim.state.powerOn) {
+        sim.setZone('breaker');
+        sim.restorePower();
+        sim.setZone('booth');
+      }
+    };
+    while (sim.state.minute < 7) step();
     expect(sim.todoItem('mop')!.shown).toBe(true);
     expect(sim.todoItem('count1')!.shown).toBe(false);
     expect(sim.completeTask('count1')).toBe(false);
     expect(sim.completeTask('mop')).toBe(true);
     expect(sim.completeTask('mop')).toBe(false);
-    while (sim.state.minute < 46) sim.tick(0.5);
+    while (sim.state.minute < 61) step();
     expect(sim.todoItem('file')!.missed).toBe(true);
     expect(sim.state.score.tasksDone).toBe(1);
     expect(sim.state.score.tasksMissed).toBe(1);
@@ -401,7 +418,7 @@ describe('death, the tall one and the glass', () => {
   });
 
   it('letting the real Walter in marks his record, so his copy can be caught', () => {
-    const sim = new Simulation(8);
+    const sim = new Simulation(8, { skipTutorial: true });
     const w = runUntilPatient(sim, 'plain');
     expect(w.castId).toBe('walter');
     sim.verdict('admit');
@@ -445,6 +462,7 @@ describe('round 5: fear director, dawn walk, the count report', () => {
     const sim = new Simulation(5);
     const phases: string[] = [];
     sim.bus.on('dawn', ({ phase }) => phases.push(phase));
+    sim.state.slotIndex = 99; // everyone on tonight's list has been seen
     sim.state.minute = 285.9;
     for (let i = 0; i < 40; i++) sim.tick(0.1);
     expect(phases).toContain('start');

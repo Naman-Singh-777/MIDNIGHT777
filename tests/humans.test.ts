@@ -9,8 +9,11 @@ const bin = readFileSync('public/characters/humans.bin');
 const buf = bin.buffer.slice(bin.byteOffset, bin.byteOffset + bin.byteLength);
 
 describe('baked human bodies', () => {
-  it('has a body for every named visitor, the mother and the sister', () => {
-    for (const id of [...Object.keys(CAST_LOOKS), 'ada', 'sister']) expect(json.cast[id], id).toBeTruthy();
+  it('has a body for every visitor it was baked for, and stock bodies for everyone else', () => {
+    const baked = ['walter', 'bernard', 'dolly', 'tobias', 'ivor', 'mae', 'penhale', 'rosa', 'marsh', 'gus', 'hester', 'hollis', 'june', 'edie', 'ada', 'sister'];
+    for (const id of baked) expect(json.cast[id], id).toBeTruthy();
+    for (const id of ['m_young', 'm_old', 'f_young', 'f_old']) expect(json.cast[id], id).toBeTruthy();
+    expect(Object.keys(CAST_LOOKS).length).toBeGreaterThan(baked.length);
   });
 
   it('skin weights add up to one on every vertex', () => {

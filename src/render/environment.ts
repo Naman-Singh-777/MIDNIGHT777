@@ -5,9 +5,10 @@ import type { Physics, DynamicProp } from '../physics/world';
 import { DrawSurface, StaticBatch, makeMaterials, type Mats } from './materials';
 import { Rain } from './rain';
 import { buildDesk } from './desk';
+import { buildAnnex, type Annex } from './annex';
 
 export interface Interact {
-  id: 'door' | 'lever' | 'breaker' | 'chair' | 'phone' | 'prop' | 'stain' | 'cabinet' | 'wardslot' | 'photo';
+  id: 'door' | 'lever' | 'breaker' | 'chair' | 'phone' | 'prop' | 'stain' | 'cabinet' | 'wardslot' | 'photo' | 'vending' | 'staff';
   prompt: string;
   range: number;
 }
@@ -51,6 +52,7 @@ export interface Env {
   figure: THREE.Mesh;
   rainHall: Rain;
   rainYard: Rain;
+  annex: Annex;
   update(dt: number): void;
 }
 
@@ -81,7 +83,11 @@ export function buildEnvironment(physics: Physics): Env {
   solid(mats.woodDark, 2.7, 0.06, 0.2, 0, 0.98, -1.2, false);
   solid(mats.woodDark, 2.7, 0.06, 0.2, 0, 2.17, -1.2, false);
   // back + west walls
-  solid(mats.cream, 3.6 + T, H, T, 0, H / 2, 1.8);
+  // back wall, cut for the wired window onto the admissions passage (x -0.35 to 0.85, y 1.0 to 1.75)
+  solid(mats.cream, 1.525 + T / 2, H, T, -1.1125 - T / 4, H / 2, 1.8);
+  solid(mats.cream, 1.025 + T / 2, H, T, 1.3625 + T / 4, H / 2, 1.8);
+  solid(mats.cream, 1.2, 1.0, T, 0.25, 0.5, 1.8);
+  solid(mats.cream, 1.2, H - 1.75, T, 0.25, 1.75 + (H - 1.75) / 2, 1.8);
   solid(mats.cream, T, H, 3.0, -1.8, H / 2, 0.3);
   // east wall with door opening z 0.4..1.3, height 2.1
   solid(mats.cream, T, H, 1.6, 1.8, H / 2, -0.4);
@@ -104,7 +110,9 @@ export function buildEnvironment(physics: Physics): Env {
   solid(mats.cream, 3.3, 3.4, T, -2.35, 1.7, -8.2);
   solid(mats.cream, 3.3, 3.4, T, 2.35, 1.7, -8.2);
   solid(mats.cream, 1.4, 0.6, T, 0, 3.1, -8.2, false);
-  solid(mats.woodDark, 8, 1.0, 0.05, 0, 0.5, -1.35, false); // hall side of booth wainscot
+  // hall side of booth wainscot, with a gap for the admissions door (annex.ts)
+  solid(mats.woodDark, 1.0, 1.0, 0.05, -3.5, 0.5, -1.35, false);
+  solid(mats.woodDark, 6.1, 1.0, 0.05, 0.95, 0.5, -1.35, false);
   solid(mats.woodDark, 3.2, 0.5, 0.4, -2.6, 0.25, -4.6); // bench
   solid(mats.woodDark, 0.3, 1.6, 0.3, 3.5, 0.8, -2.2); // coat rack post
 
@@ -133,9 +141,11 @@ export function buildEnvironment(physics: Physics): Env {
   const world = batch.build((g) => mergeGeometries(g, false));
   scene.add(world);
   corridorDecals(scene);
+  const annex = buildAnnex(scene, physics, mats);
 
   // ---------------------------------------------------------------- glass
-  const glass = new THREE.Mesh(new THREE.PlaneGeometry(2.7, 1.25), mats.glass);
+  // the intake glass is cleaner than the rest, so the face on the other side is easy to read
+  const glass = new THREE.Mesh(new THREE.PlaneGeometry(2.7, 1.25), new THREE.MeshPhongMaterial({ color: 0xc8dcd8, transparent: true, opacity: 0.07, shininess: 60, specular: 0x222222, depthWrite: false }));
   glass.position.set(0, 1.575, -1.22);
   scene.add(glass);
   physics.addStaticBox(0, 1.575, -1.22, 1.35, 0.625, 0.02);
@@ -151,7 +161,7 @@ export function buildEnvironment(physics: Physics): Env {
     scr.ctx.stroke();
   }
   scr.touch();
-  const scratches = new THREE.Mesh(new THREE.PlaneGeometry(2.7, 1.25), new THREE.MeshBasicMaterial({ map: scr.texture, transparent: true, opacity: 0.5, depthWrite: false, blending: THREE.AdditiveBlending }));
+  const scratches = new THREE.Mesh(new THREE.PlaneGeometry(2.7, 1.25), new THREE.MeshBasicMaterial({ map: scr.texture, transparent: true, opacity: 0.2, depthWrite: false, blending: THREE.AdditiveBlending }));
   scratches.position.set(0, 1.575, -1.215);
   scene.add(scratches);
   // smudges on the booth glass: hand and face prints from the hall side where people lean in, a wiped arc, dust.
@@ -200,7 +210,7 @@ export function buildEnvironment(physics: Physics): Env {
     }
   }
   smg.touch();
-  const smudges = new THREE.Mesh(new THREE.PlaneGeometry(2.7, 1.25), new THREE.MeshBasicMaterial({ map: smg.texture, transparent: true, depthWrite: false, opacity: 0.5 }));
+  const smudges = new THREE.Mesh(new THREE.PlaneGeometry(2.7, 1.25), new THREE.MeshBasicMaterial({ map: smg.texture, transparent: true, depthWrite: false, opacity: 0.22 }));
   smudges.position.set(0, 1.575, -1.218);
   scene.add(smudges);
 
@@ -410,7 +420,7 @@ export function buildEnvironment(physics: Physics): Env {
   addBoxProp(mats.woodDark, 0.5, 0.4, 0.5, 8.8, 0.65, 0.55, 5, 'Crate');
   addBoxProp(mats.rust, 0.3, 0.3, 0.3, 12.2, 0.2, 1.4, 2, 'Tin box');
 
-  const interactables: THREE.Object3D[] = [leverHit, chairHit, doorHit, breakerHit, ...props.map((p) => p.mesh), ...desk.hits];
+  const interactables: THREE.Object3D[] = [leverHit, chairHit, doorHit, breakerHit, ...props.map((p) => p.mesh), ...desk.hits, ...annex.hits];
 
   // ---------------------------------------------------------------- floor collider (big, thick)
   physics.addStaticBox(5, -0.5, -2, 14, 0.5, 9);
@@ -439,6 +449,7 @@ export function buildEnvironment(physics: Physics): Env {
     figure,
     rainHall,
     rainYard,
+    annex,
     update(dt: number) {
       for (const p of props) {
         const t = p.phys.body.translation();

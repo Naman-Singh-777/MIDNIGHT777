@@ -267,7 +267,10 @@ export interface SculptInfo {
 export function bodyFor(castId: string | undefined, registryId: string, archetype: string, female: boolean, age: number, hue: number): Pick<HumanOpts, 'body' | 'blend'> {
   const cast = shared?.json.cast ?? {};
   if (registryId === 'R209') return { body: 'ada' };
-  if (archetype === 'voice_mimic') return { body: 'sister' };
+  // the same people under other names: the real Lionel Marsh has the fake's body, Imogen is the sister
+  const alias: Record<string, string> = { lionel: 'marsh', imogen: 'sister' };
+  if (castId && alias[castId] && cast[alias[castId]]) return { body: alias[castId] };
+  if (archetype === 'voice_mimic' && (!castId || castId === 'imogen')) return { body: 'sister' };
   if (castId && cast[castId]) return { body: castId };
   // a stock body for their age, mixed a third of the way toward one of the named people of the same sex,
   // so strangers get a face of their own without another file to load

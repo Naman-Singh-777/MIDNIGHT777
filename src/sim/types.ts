@@ -24,7 +24,12 @@ export type TellId =
   | 'no_breath' // no breath fog in the cold
   | 'too_fast' // answers before the question ends
   | 'borrowed_memory' // quotes a memory that belongs to an earlier patient
-  | 'clerk_typo'; // harmless paperwork error (human)
+  | 'clerk_typo' // harmless paperwork error (human)
+  | 'no_blink' // the eyes never close
+  | 'ahead' // answers the question you were about to ask
+  | 'mirror' // the mark is on the wrong side of the face
+  | 'no_pulse' // nothing moves in the throat (close up)
+  | 'still_breath'; // the breath on the glass does not fade
 
 export interface RegistryEntry {
   id: string;
@@ -62,6 +67,16 @@ export interface Patient {
   sprite: number; // body shape variant
   castId?: string;
   greet?: string;
+  /** Night roster entry this visitor came from. */
+  vid?: string;
+  /** The lines with how they are said, for the recorded voices. */
+  lines?: { greet: import('../data/nightTypes').L; say: Record<QuestionId, import('../data/nightTypes').L>; bye?: import('../data/nightTypes').L };
+  reveal?: import('../data/nightTypes').RevealKind;
+  tutorial?: boolean;
+  mother?: boolean;
+  gate?: boolean;
+  /** A fake breathes (nights 5 and 6). */
+  breathes?: boolean;
 }
 
 export interface ShiftSlot {
@@ -96,6 +111,7 @@ export interface WardCount {
 }
 
 export type Ending = 'clean' | 'crowded' | 'taken' | 'absent';
+export type { VendId } from '../data/vending';
 export type DeathCause = 'stalker' | 'breach' | 'nerves';
 
 export type ConsequenceKind =
@@ -103,7 +119,8 @@ export type ConsequenceKind =
   | 'window_return' // refused a real person
   | 'observation_breach' // held an understudy too long
   | 'guilt' // contained a real person
-  | 'clean_catch'; // contained an understudy
+  | 'clean_catch' // contained an understudy
+  | 'passage_stare'; // a fake you let in stops behind your chair
 
 export interface Consequence {
   kind: ConsequenceKind;
@@ -146,7 +163,11 @@ export type SimEvents = {
   consequence: { c: Consequence; patient: Patient };
   powerChanged: { on: boolean };
   taskChanged: { id: string; text: string; done: boolean };
-  story: { id: string; text: string; speaker?: string; call?: boolean; wrong?: boolean };
+  story: { id: string; text: string; speaker?: string; call?: boolean; wrong?: boolean; person?: string; line?: import('../data/nightTypes').L; where?: import('../data/nightTypes').Where; talk?: import('../data/nightTypes').L[] };
+  tokens: { tokens: number; gained: number; why: string };
+  buff: { id: import('../data/vending').VendId; on: boolean };
+  hint: { text: string };
+  saved: { cause: DeathCause };
   stare: { on: boolean; hit: boolean };
   hallucination: { kind: 'phantom_step' | 'phantom_knock' | 'whisper_name' | 'shadow_figure' };
   shiftEnded: { score: ShiftScore };
@@ -169,4 +190,6 @@ export interface ShiftScore {
   ending: Ending;
   tasksDone: number;
   tasksMissed: number;
+  night: number;
+  tokens: number;
 }

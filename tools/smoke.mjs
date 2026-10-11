@@ -27,7 +27,14 @@ const advanceUntil = (page, cond, maxSteps = 4000) =>
   page.evaluate(([c, m]) => {
     const g = window.__game;
     const f = new Function('s', `return ${c}`);
-    for (let i = 0; i < m; i++) { if (f(g.sim.state)) return i; g.sim.tick(0.5); }
+    for (let i = 0; i < m; i++) {
+      if (f(g.sim.state)) return i;
+      g.sim.tick(0.5);
+      // the night waits for its roster now: decide anyone left standing at the glass
+      const s = g.sim.state;
+      if (s.current && s.phase === 'present' && !f(s) && s.phaseTime > 1) g.sim.verdict(s.current.truth === 'human' ? 'admit' : 'contain');
+      if (!s.powerOn && !f(s)) { g.sim.setZone('breaker'); g.sim.restorePower(); g.sim.setZone('booth'); }
+    }
     return -1;
   }, [cond, maxSteps]);
 
@@ -43,13 +50,19 @@ try {
   await p.screenshot({ path: `${out}/desk-patient.png` });
   console.log('perf', JSON.stringify(await p.evaluate(() => ({ ...window.__game.debug, frameMs: window.__game.frameMs }))));
 
-  // duck under the sill, then lean in
+  // under the desk (C toggles), then back up, then lean in, then right up to the glass
   const y0 = await p.evaluate(() => window.__game.player.camera.position.y);
-  await p.keyboard.down('KeyC');
+  await p.keyboard.press('KeyC');
   await p.waitForTimeout(2500);
   const y1 = await p.evaluate(() => window.__game.player.camera.position.y);
   await p.screenshot({ path: `${out}/duck.png` });
-  await p.keyboard.up('KeyC');
+  await p.keyboard.press('KeyC');
+  await p.waitForTimeout(1500);
+  await p.keyboard.press('KeyX');
+  await p.waitForTimeout(2500);
+  await p.screenshot({ path: `${out}/closeup.png` });
+  await p.keyboard.press('KeyX');
+  await p.waitForTimeout(1200);
   await p.mouse.move(640, 360);
   await p.mouse.down({ button: 'right' });
   await p.waitForTimeout(2500);
@@ -68,6 +81,10 @@ try {
       childHum: () => a.childHum(pos), wheelchair: () => a.wheelchair(pos), stageUp: () => a.stageUp(0.5), riser: () => a.riser(1), stareOn: () => a.stareOn(),
       stareOff: () => a.stareOff(false), stareHit: () => a.stareHit(), clack: () => a.clack(), ding: () => a.ding(), paper: () => a.paper(), powerDown: () => a.powerDown(),
       powerUp: () => a.powerUp(), walk: () => { a.walk(2, false, false); a.walk(2, true, true); }, speak: () => a.speak('Mind the ledger, love.', 200, true),
+      reveal: () => { for (const k of ['neck', 'owl', 'split', 'melt', 'eyes', 'backbend', 'reach', 'stutter', 'hollow', 'grin']) a.entityReveal(k, pos); },
+      clicks: () => a.entityClicks(pos), breath: () => a.creatureBreath(pos), click: () => a.creatureClick(pos), step: () => a.passageStep(pos),
+      tap: () => a.backTap(pos), radiator: () => a.radiatorBang(pos), pigeons: () => a.pigeons(pos), jumpscare: () => a.jumpscare(), vend: () => a.vend(),
+      whoosh: () => a.whoosh(), radio: () => a.radioClick(2), mimic: () => a.mimicUnder(1, 0.5),
     };
     for (const [k, f] of Object.entries(calls)) { try { f(); } catch (e) { bad.push(k + ': ' + e.message); } }
     return bad;
@@ -79,6 +96,10 @@ try {
   await p.keyboard.press('KeyA');
   const after = await p.evaluate(() => ({ h: window.__game.sim.state.history.length, phase: window.__game.sim.state.phase, power: window.__game.sim.state.powerOn }));
   console.log('verdict via key:', before, '->', JSON.stringify(after));
+  // the visitor you let in walks the passage behind the chair
+  await p.waitForTimeout(9000);
+  await p.screenshot({ path: `${out}/passage-walk.png` });
+  console.log('passage', JSON.stringify(await p.evaluate(() => ({ k: window.__game.view.passageK, back: window.__game.view.atBack, cam: window.__game.camfx.kind }))));
 
   // breaker trip, walk the corridor, restore
   await advanceUntil(p, 's.breakerTripped');

@@ -1,0 +1,4602 @@
+[
+ {
+  "key": "06btl3g",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.14,
+  "emo": "urgent",
+  "text": "Oi. Oi! In there. It's Pell. Orderly Pell. I went out for a smoke and the gate shut behind me, and I am not sleeping in that yard. Not tonight."
+ },
+ {
+  "key": "0t55d6v",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Pell. Douglas Pell. Night orderly, Ward B. It's on the form. You can see it's on the form."
+ },
+ {
+  "key": "0aar849",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Ninth of September, 1936. Same as the records. Go on, check."
+ },
+ {
+  "key": "029d8i5",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Matron's Office. That's what they put for staff."
+ },
+ {
+  "key": "03sdcvn",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1,
+  "emo": "dry",
+  "text": "My mum. Doris. Do not ring her, she will want to know why I am out in the rain."
+ },
+ {
+  "key": "10g3wal",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "There was a man on the road with no umbrella. Big fella. I said evening. He did not say anything back. He just... listened."
+ },
+ {
+  "key": "1kb55mv",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 0.92,
+  "emo": "cold",
+  "text": "This is the passage. Everyone you let in walks it, right behind your chair. Close enough to touch the back of your neck. So be sure."
+ },
+ {
+  "key": "1mdxodj",
+  "person": "walter",
+  "voice": "bm_george",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Evening. Sorry, I'm dripping all over your floor. I've brought June's slippers. She's on Ward A. She'll want them."
+ },
+ {
+  "key": "1ors1qn",
+  "person": "walter",
+  "voice": "bm_george",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Walter Quill. Two Ls. People always put one."
+ },
+ {
+  "key": "0d38717",
+  "person": "walter",
+  "voice": "bm_george",
+  "speed": 0.88,
+  "emo": "tired",
+  "text": "Fourteenth of February, 1892. Sorry. I had to think."
+ },
+ {
+  "key": "11b4nse",
+  "person": "walter",
+  "voice": "bm_george",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Dr. Vale. Nice man. Cold hands."
+ },
+ {
+  "key": "1809xco",
+  "person": "walter",
+  "voice": "bm_george",
+  "speed": 0.86,
+  "emo": "grief",
+  "text": "June. My wife. She won't come. Put her down anyway."
+ },
+ {
+  "key": "0trx80u",
+  "person": "walter",
+  "voice": "bm_george",
+  "speed": 0.88,
+  "emo": "tired",
+  "text": "Forty years of letters. Some houses never answered. You keep knocking anyway. That's the job."
+ },
+ {
+  "key": "04mhun6",
+  "person": "walter",
+  "voice": "bm_george",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Thank you. Mind the step, love. That's what June always said."
+ },
+ {
+  "key": "01jtmrm",
+  "person": "dolly",
+  "voice": "af_bella*0.5+bf_alice*0.5",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Don't look at me like that, sweetheart. I'm here of my own free will. Mostly. Got a light?"
+ },
+ {
+  "key": "09utp1d",
+  "person": "dolly",
+  "voice": "af_bella*0.5+bf_alice*0.5",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Dolores Rusk. Put Dolly. Nobody's called me Dolores since the christening."
+ },
+ {
+  "key": "0fl0qeu",
+  "person": "dolly",
+  "voice": "af_bella*0.5+bf_alice*0.5",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Third of September, 1909. Say it out loud and I'll scream."
+ },
+ {
+  "key": "0v96sl4",
+  "person": "dolly",
+  "voice": "af_bella*0.5+bf_alice*0.5",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Dr. Rafferty. Lovely man. Awful taste in music."
+ },
+ {
+  "key": "0or0zxc",
+  "person": "dolly",
+  "voice": "af_bella*0.5+bf_alice*0.5",
+  "speed": 0.9,
+  "emo": "sly",
+  "text": "Vera. My sister. We don't speak. Ring her anyway, it'll ruin her week."
+ },
+ {
+  "key": "0wc6mtv",
+  "person": "dolly",
+  "voice": "af_bella*0.5+bf_alice*0.5",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "There was a man in your yard. Very tall. Standing in the rain like he was waiting for a bus. No umbrella. Didn't seem to mind."
+ },
+ {
+  "key": "18d66lw",
+  "person": "dolly",
+  "voice": "af_bella*0.5+bf_alice*0.5",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Save me a bed by the window, sweetheart. I like to see who's coming."
+ },
+ {
+  "key": "0s5ypgy",
+  "person": "tobias",
+  "voice": "bm_fable*0.6+am_liam*0.4",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Mm mm mm mm. Oh. Sorry. Evening. The humming keeps the walls quiet."
+ },
+ {
+  "key": "0ef3o2u",
+  "person": "tobias",
+  "voice": "bm_fable*0.6+am_liam*0.4",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Tobias. Hale. Toby."
+ },
+ {
+  "key": "0r5sqrz",
+  "person": "tobias",
+  "voice": "bm_fable*0.6+am_liam*0.4",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "Twenty seventh of June, 1939. I think. Is that not what it says?"
+ },
+ {
+  "key": "0u2n1ue",
+  "person": "tobias",
+  "voice": "bm_fable*0.6+am_liam*0.4",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Dr. Sorley. She smelled of pears."
+ },
+ {
+  "key": "0rgtgq2",
+  "person": "tobias",
+  "voice": "bm_fable*0.6+am_liam*0.4",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "My mother. Marian Hale. She doesn't answer the phone after nine."
+ },
+ {
+  "key": "1yp3m5j",
+  "person": "tobias",
+  "voice": "bm_fable*0.6+am_liam*0.4",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "I counted the windows on the way up the drive. There are more on the outside than there are on the inside."
+ },
+ {
+  "key": "0tkgtrq",
+  "person": "tobias",
+  "voice": "bm_fable*0.6+am_liam*0.4",
+  "speed": 0.92,
+  "emo": "whisper",
+  "text": "Mm mm mm mm. Thank you. Don't let them count the windows."
+ },
+ {
+  "key": "14soat9",
+  "person": "walter",
+  "voice": "bm_george",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Evening. Mind the step, love. That's what June always said. Mind the step. Mind the step."
+ },
+ {
+  "key": "1dl62px",
+  "person": "walter",
+  "voice": "bm_george",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Walter Quill. Two Ls. Two Ls."
+ },
+ {
+  "key": "09ikmd2",
+  "person": "walter",
+  "voice": "bm_george",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Fourteenth of February, 1892."
+ },
+ {
+  "key": "1k8aare",
+  "person": "walter",
+  "voice": "bm_george",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Dr. Vale. Cold hands. Nice man. Cold."
+ },
+ {
+  "key": "0x0j06h",
+  "person": "walter",
+  "voice": "bm_george",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Mary. Put Mary down. She'll come."
+ },
+ {
+  "key": "10wprmx",
+  "person": "walter",
+  "voice": "bm_george",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Forty years of letters. Some houses never answered. You keep knocking. You keep knocking."
+ },
+ {
+  "key": "1jj9tgw",
+  "person": "hollis",
+  "voice": "am_onyx*0.6+bm_lewis*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Hollis. Porter, Ward A. They sent me home this afternoon and I came back. Let me through and I'll walk that corridor with you at six. You shouldn't have to do it on your own."
+ },
+ {
+  "key": "0uvdzj1",
+  "person": "hollis",
+  "voice": "am_onyx*0.6+bm_lewis*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Abel Hollis. Porter. Twenty two years."
+ },
+ {
+  "key": "1lk7pij",
+  "person": "hollis",
+  "voice": "am_onyx*0.6+bm_lewis*0.4",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Fifth of November, 1908. Bonfire night. My mother said I came in with a bang."
+ },
+ {
+  "key": "0iyizb1",
+  "person": "hollis",
+  "voice": "am_onyx*0.6+bm_lewis*0.4",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Dr. Teague. Signed me off. Said rest. I wouldn't know what to do with a rest."
+ },
+ {
+  "key": "1nrjog7",
+  "person": "hollis",
+  "voice": "am_onyx*0.6+bm_lewis*0.4",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Ruth. My sister. She'll say I'm daft for coming back. She'll be right."
+ },
+ {
+  "key": "15dxzjd",
+  "person": "hollis",
+  "voice": "am_onyx*0.6+bm_lewis*0.4",
+  "speed": 0.92,
+  "emo": "kind",
+  "text": "Pell counts them every night. I don't count them. I say goodnight to each one by name."
+ },
+ {
+  "key": "0yhzsp9",
+  "person": "hollis",
+  "voice": "am_onyx*0.6+bm_lewis*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "I'll be on the ward. At six I'll be at the door. Don't run to me. Walk."
+ },
+ {
+  "key": "1apvp8g",
+  "person": "mae",
+  "voice": "bf_emma*0.7+af_sky*0.3",
+  "speed": 0.86,
+  "emo": "grief",
+  "text": "Is the children's ward on this floor? I've brought Danny's cap. He gets cold. He always gets cold."
+ },
+ {
+  "key": "0eo9384",
+  "person": "mae",
+  "voice": "bf_emma*0.7+af_sky*0.3",
+  "speed": 0.86,
+  "emo": "grief",
+  "text": "Mae Calder. Mrs. I'm still Mrs."
+ },
+ {
+  "key": "06n2uez",
+  "person": "mae",
+  "voice": "bf_emma*0.7+af_sky*0.3",
+  "speed": 0.86,
+  "emo": "grief",
+  "text": "Thirtieth of January, 1922."
+ },
+ {
+  "key": "00ym8rz",
+  "person": "mae",
+  "voice": "bf_emma*0.7+af_sky*0.3",
+  "speed": 0.86,
+  "emo": "grief",
+  "text": "Dr. Sorley. She was kind about it. They're always kind."
+ },
+ {
+  "key": "1jgycec",
+  "person": "mae",
+  "voice": "bf_emma*0.7+af_sky*0.3",
+  "speed": 0.84,
+  "emo": "broken",
+  "text": "Danny. Daniel Calder. You can ring the house. Someone might pick up."
+ },
+ {
+  "key": "0391k63",
+  "person": "mae",
+  "voice": "bf_emma*0.7+af_sky*0.3",
+  "speed": 0.92,
+  "emo": "whisper",
+  "text": "I knitted it in the hospital. I never finished the second one."
+ },
+ {
+  "key": "04ngh6c",
+  "person": "mae",
+  "voice": "bf_emma*0.7+af_sky*0.3",
+  "speed": 0.84,
+  "emo": "broken",
+  "text": "If you see a little boy in a red cap... No. Never mind me. Thank you."
+ },
+ {
+  "key": "0bt393e",
+  "person": "penhale",
+  "voice": "bm_lewis*0.6+am_michael*0.4",
+  "speed": 0.92,
+  "emo": "cold",
+  "text": "Peace be with you. Peace be with you, Officer. Peace. Be with you."
+ },
+ {
+  "key": "0sm0bly",
+  "person": "penhale",
+  "voice": "bm_lewis*0.6+am_michael*0.4",
+  "speed": 0.92,
+  "emo": "cold",
+  "text": "Aldous Penhale. Father. Father Aldous Penhale. Father."
+ },
+ {
+  "key": "0veo7dq",
+  "person": "penhale",
+  "voice": "bm_lewis*0.6+am_michael*0.4",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Twelfth of December, 1905."
+ },
+ {
+  "key": "1nmfzic",
+  "person": "penhale",
+  "voice": "bm_lewis*0.6+am_michael*0.4",
+  "speed": 0.9,
+  "emo": "sly",
+  "text": "Dr. Vale sent me. Sent me. To you."
+ },
+ {
+  "key": "12kzbiw",
+  "person": "penhale",
+  "voice": "bm_lewis*0.6+am_michael*0.4",
+  "speed": 0.92,
+  "emo": "cold",
+  "text": "The parish. Saint Aldhelm's. The Lord. The parish."
+ },
+ {
+  "key": "0c9kda0",
+  "person": "penhale",
+  "voice": "bm_lewis*0.6+am_michael*0.4",
+  "speed": 0.9,
+  "emo": "sly",
+  "text": "I have come to sit with the sick. I have come to sit with them for a long time."
+ },
+ {
+  "key": "1plk3ey",
+  "person": "june",
+  "voice": "bf_alice*0.5+af_aoede*0.5",
+  "speed": 1.06,
+  "emo": "bright",
+  "text": "Is Walter here? He's got my slippers. Tell him I'm not cross. Mind the step, love."
+ },
+ {
+  "key": "1xshusk",
+  "person": "june",
+  "voice": "bf_alice*0.5+af_aoede*0.5",
+  "speed": 1.06,
+  "emo": "bright",
+  "text": "June Quill. Mrs. Walter Quill."
+ },
+ {
+  "key": "1ljzky6",
+  "person": "june",
+  "voice": "bf_alice*0.5+af_aoede*0.5",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Eighth of May, 1895."
+ },
+ {
+  "key": "1g5wva4",
+  "person": "june",
+  "voice": "bf_alice*0.5+af_aoede*0.5",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Dr. Vale."
+ },
+ {
+  "key": "118udk1",
+  "person": "june",
+  "voice": "bf_alice*0.5+af_aoede*0.5",
+  "speed": 1.06,
+  "emo": "bright",
+  "text": "Walter. My Walter. He brought my slippers."
+ },
+ {
+  "key": "0rkrw3w",
+  "person": "june",
+  "voice": "bf_alice*0.5+af_aoede*0.5",
+  "speed": 1.06,
+  "emo": "bright",
+  "text": "Walter always walks me to the door. He always says mind the step."
+ },
+ {
+  "key": "0n7xv5b",
+  "person": "marsh",
+  "voice": "am_michael*0.5+bm_george*0.5",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Good evening. Marsh. Consultant. I left my keys on Ward B about an hour ago, which is very silly of me. If you'd just open up."
+ },
+ {
+  "key": "171r951",
+  "person": "marsh",
+  "voice": "am_michael*0.5+bm_george*0.5",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Lionel Marsh. Doctor Marsh. You'll have seen the name on the doors."
+ },
+ {
+  "key": "0jnizvd",
+  "person": "marsh",
+  "voice": "am_michael*0.5+bm_george*0.5",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Twenty first of April, 1913."
+ },
+ {
+  "key": "1xep3cq",
+  "person": "marsh",
+  "voice": "am_michael*0.5+bm_george*0.5",
+  "speed": 1,
+  "emo": "dry",
+  "text": "I'm staff. Dr. Lindqvist will vouch for me."
+ },
+ {
+  "key": "137ahmz",
+  "person": "marsh",
+  "voice": "am_michael*0.5+bm_george*0.5",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Edith. My wife. She's waiting in the car."
+ },
+ {
+  "key": "134pwho",
+  "person": "marsh",
+  "voice": "am_michael*0.5+bm_george*0.5",
+  "speed": 1,
+  "emo": "calm",
+  "text": "I kissed my wife in the car and said ten minutes."
+ },
+ {
+  "key": "16ckvts",
+  "person": "gus",
+  "voice": "am_fenrir*0.6+bm_daniel*0.4",
+  "speed": 1.2,
+  "emo": "panic",
+  "text": "Let me in. Please. There's something in your yard. Tall. I looked right at it and there was nothing to look at. Please, mate."
+ },
+ {
+  "key": "0qssmyj",
+  "person": "gus",
+  "voice": "am_fenrir*0.6+bm_daniel*0.4",
+  "speed": 1.2,
+  "emo": "panic",
+  "text": "Gus. Augustus Brennan. Come on, mate."
+ },
+ {
+  "key": "1w47bet",
+  "person": "gus",
+  "voice": "am_fenrir*0.6+bm_daniel*0.4",
+  "speed": 1.2,
+  "emo": "panic",
+  "text": "Eighteenth of July, 1927! Does it matter? It's out there!"
+ },
+ {
+  "key": "0rpkzex",
+  "person": "gus",
+  "voice": "am_fenrir*0.6+bm_daniel*0.4",
+  "speed": 0.84,
+  "emo": "broken",
+  "text": "Dr. Rafferty. For my nerves. And look at me now."
+ },
+ {
+  "key": "1etd3so",
+  "person": "gus",
+  "voice": "am_fenrir*0.6+bm_daniel*0.4",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "Frank. My brother. Tell him I'm sorry about the van."
+ },
+ {
+  "key": "1rnpto8",
+  "person": "gus",
+  "voice": "am_fenrir*0.6+bm_daniel*0.4",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "It stood at the edge of the light and listened. When I ran, it turned its head. When I stood still, it didn't know where I was."
+ },
+ {
+  "key": "0i65kf0",
+  "person": "gus",
+  "voice": "am_fenrir*0.6+bm_daniel*0.4",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "Thank you. Lock that behind me. Both bolts."
+ },
+ {
+  "key": "0ne9p74",
+  "person": "ada",
+  "voice": "bf_lily*0.55+af_sarah*0.45",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "There you are. I could see your little window from the road. Let me in, love. My feet are bare."
+ },
+ {
+  "key": "1kqksl5",
+  "person": "ada",
+  "voice": "bf_lily*0.55+af_sarah*0.45",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Ada. Ada Wren. You know my name, love."
+ },
+ {
+  "key": "1uwrmgd",
+  "person": "ada",
+  "voice": "bf_lily*0.55+af_sarah*0.45",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Nineteenth of March, 1901."
+ },
+ {
+  "key": "18fbgvh",
+  "person": "ada",
+  "voice": "bf_lily*0.55+af_sarah*0.45",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Nobody sent me. I walked. I wanted to see you."
+ },
+ {
+  "key": "0a9p3du",
+  "person": "ada",
+  "voice": "bf_lily*0.55+af_sarah*0.45",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "You. Who else would I put down?"
+ },
+ {
+  "key": "1nn64h3",
+  "person": "ada",
+  "voice": "bf_lily*0.55+af_sarah*0.45",
+  "speed": 0.92,
+  "emo": "cold",
+  "text": "You used to count the headlights on the ceiling with me. Let me in. It is so cold out here."
+ },
+ {
+  "key": "10itbko",
+  "person": "edie",
+  "voice": "bf_isabella*0.5+af_sarah*0.5",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "I'm terribly sorry to bother you. My husband went in for his keys and he hasn't come out. Lionel Marsh? Dr. Marsh?"
+ },
+ {
+  "key": "0okr4pl",
+  "person": "edie",
+  "voice": "bf_isabella*0.5+af_sarah*0.5",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "Edith Marsh. Mrs. Lionel Marsh."
+ },
+ {
+  "key": "1ywrn3p",
+  "person": "edie",
+  "voice": "bf_isabella*0.5+af_sarah*0.5",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "Second of October, 1915."
+ },
+ {
+  "key": "1sdlhh0",
+  "person": "edie",
+  "voice": "bf_isabella*0.5+af_sarah*0.5",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "Nobody sent me. Well. Dr. Lindqvist signed it so they'd let me wait inside. Is that dreadful?"
+ },
+ {
+  "key": "0ifnv82",
+  "person": "edie",
+  "voice": "bf_isabella*0.5+af_sarah*0.5",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "Lionel. He's in there somewhere."
+ },
+ {
+  "key": "1so6muj",
+  "person": "edie",
+  "voice": "bf_isabella*0.5+af_sarah*0.5",
+  "speed": 0.84,
+  "emo": "broken",
+  "text": "Lionel kissed me in the car and said ten minutes. He never says ten minutes. He says won't be long."
+ },
+ {
+  "key": "06so05y",
+  "person": "edie",
+  "voice": "bf_isabella*0.5+af_sarah*0.5",
+  "speed": 0.84,
+  "emo": "broken",
+  "text": "If you see Lionel, tell him I waited. Tell him I'm not cross."
+ },
+ {
+  "key": "0ik2u03",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "It's Imogen, pet. I've locked myself out, would you believe it. Open the gate for me."
+ },
+ {
+  "key": "0w5z7jk",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Sister Imogen."
+ },
+ {
+  "key": "1tmpkjh",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Third of February, 1911."
+ },
+ {
+  "key": "00ph2ea",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Matron's Office."
+ },
+ {
+  "key": "0kwvrpi",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "None on file."
+ },
+ {
+  "key": "1oj7wwu",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "I looked in on your mam, pet. She's grand. Open up now, it's perishing out here."
+ },
+ {
+  "key": "0thbzu2",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Name for the ledger?"
+ },
+ {
+  "key": "0h27gri",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Date of birth?"
+ },
+ {
+  "key": "1ixs2jb",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Who sent you?"
+ },
+ {
+  "key": "1tla5wx",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Who should we call?"
+ },
+ {
+  "key": "0n9dwrt",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "What do you remember of tonight?"
+ },
+ {
+  "key": "0cmrxhe",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Evening, pet. It's Imogen, up on the ward. Your mam's asleep in bed 9. She had her tea, she's grand. Now listen to me, because nobody told me any of this my first night. People come to that window all night, and most of them are who the form says they are. Not all of them. Get to six and you can sit with her."
+ },
+ {
+  "key": "1x5zk0u",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 0.98,
+  "emo": "stern",
+  "text": "Kessler, Ward A. Three things, and then I will let you work. One. A fake does not breathe. On a night like this every living mouth fogs that glass. Two. A fake does not have to think. It answers the moment you stop speaking. A person needs a breath first. Three. Do not keep one waiting. A fake that waits at your window does not go home. It comes through."
+ },
+ {
+  "key": "10emx0k",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Something I forgot, pet. If one of them holds your eye and won't let go, look down, or get under the desk. Don't stare back. They like being looked at."
+ },
+ {
+  "key": "1ks2sms",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "Ward B's quiet. Eleven beds, eleven heads. I counted three times. Eleven every time. So that's fine."
+ },
+ {
+  "key": "128noug",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 0.92,
+  "emo": "whisper",
+  "text": "Pell. Don't laugh. There's something tall stood in the yard. Twenty minutes now, I've been timing it. It hasn't moved its feet. I don't think it sees. I think it listens. If the lights go, stay low in that corridor and walk. Do not run."
+ },
+ {
+  "key": "1dcrmad",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "The fuse box trips when the weather's like this. If the lights go, it's at the far end of the east corridor. Walk, don't run, and keep a hand on the wall."
+ },
+ {
+  "key": "0vewdpx",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 0.92,
+  "emo": "kind",
+  "text": "She woke a minute ago, pet. She asked for you. Then she asked me who you were. That's the illness, not her. She sang a bit of something after. I didn't know it. You'd know it."
+ },
+ {
+  "key": "1tvhp23",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Don't look so worried. She's safe on that ward. Safer than you are down here, God love you."
+ },
+ {
+  "key": "1x3s0sa",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 1.06,
+  "emo": "bright",
+  "text": "Biscuit's my dog, since you ask. Little terrier. Bites the postman. Every postman. He's very fair about it."
+ },
+ {
+  "key": "1rswn46",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "Head count's due and I'm not going in. I'm not. Will you do it through the slot in the Ward B door? Count the full beds. Click each one once."
+ },
+ {
+  "key": "0ugrqie",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Kessler. I had a daughter on Ward B. Liesl. Nineteen fifty one. One morning there were two of her in the bed, holding hands, and both of them called me Mutti. I chose wrong. I wanted you to know that it can be done wrong. That is all."
+ },
+ {
+  "key": "1kp6n8g",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 0.92,
+  "emo": "whisper",
+  "text": "Kessler. You should know what Ward B is. It is the memory ward. Dr. Abara takes out what hurts. The grief, the names, the faces. It does not stay gone. It walks back up the road in the rain and knocks on your window. Wearing them."
+ },
+ {
+  "key": "0ngjlci",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 0.98,
+  "emo": "stern",
+  "text": "Do not ask me how. I fold the sheets. I count. I do not ask."
+ },
+ {
+  "key": "16bs06i",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 0.98,
+  "emo": "stern",
+  "text": "Your mother is in bed 9. I checked. Do not let anyone tell you otherwise."
+ },
+ {
+  "key": "04j6ru6",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "Did you hear a music box? Nobody up here owns one. I checked the drawers, all nine of them. I checked under the beds. I'm not checking under the beds again."
+ },
+ {
+  "key": "1xy52pb",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "I'm going to look in on your mam, pet. If I don't ring back, don't you fret. And if I ever turn up at your window, ask me what I remember of tonight. I'll tell you about Biscuit, my dog. Anything else, it isn't me."
+ },
+ {
+  "key": "1opq2s6",
+  "person": "ada",
+  "voice": "bf_lily*0.55+af_sarah*0.45",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "Love? It's Mum. I don't know where I am. There's a big door and it's raining. I can see your little window from here. Come and let me in. Please. It's so cold."
+ },
+ {
+  "key": "1d10ke7",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Pell. I'm stood at bed 9. Your mum's asleep. I'm close enough to hear her breathing. Whoever rang you, it wasn't her."
+ },
+ {
+  "key": "1u02d55",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 0.98,
+  "emo": "stern",
+  "text": "Kessler. Imogen went onto Ward B an hour ago. She has not come out. I am going in to count them myself. If I do not ring back, close your door."
+ },
+ {
+  "key": "1yq9s49",
+  "person": "matron",
+  "voice": "bf_emma*0.5+af_river*0.5",
+  "speed": 0.92,
+  "emo": "cold",
+  "text": "This is the Matron's office. We have no record of a night officer being employed tonight. Please remain at your post until this is resolved."
+ },
+ {
+  "key": "1j1fasb",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Kessler. I counted them. They are all very well. They are all asleep. You should come and see. You should come and see."
+ },
+ {
+  "key": "0fjhkp8",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 0.92,
+  "emo": "whisper",
+  "text": "It's nearly six. I've got the ward door. Come now, and come quiet. It's in the corridor with us."
+ },
+ {
+  "key": "1ohejb1",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "It's six. Come on. I'm holding the door. Come on. Come on. Come on."
+ },
+ {
+  "key": "09i4zng",
+  "person": "bernard",
+  "voice": "am_puck*0.5+bm_fable*0.5",
+  "speed": 1.06,
+  "emo": "bright",
+  "text": "Evening! Two to admit. Me, and my sister Marjorie. She's ceramic, but she has a very delicate constitution."
+ },
+ {
+  "key": "0ezlwmu",
+  "person": "bernard",
+  "voice": "am_puck*0.5+bm_fable*0.5",
+  "speed": 1.06,
+  "emo": "bright",
+  "text": "Bernard Fitch. And Marjorie Fitch. Write her down too, she gets upset when she's left out."
+ },
+ {
+  "key": "0ibo8nq",
+  "person": "bernard",
+  "voice": "am_puck*0.5+bm_fable*0.5",
+  "speed": 1.06,
+  "emo": "bright",
+  "text": "Twenty ninth of February, 1916. I only get a birthday every four years, so I'm twelve, really."
+ },
+ {
+  "key": "08xpup1",
+  "person": "bernard",
+  "voice": "am_puck*0.5+bm_fable*0.5",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Dr. Teague. He said, Bernard, you need a rest. Marjorie said nothing, which is how I knew she agreed."
+ },
+ {
+  "key": "05jh7bx",
+  "person": "bernard",
+  "voice": "am_puck*0.5+bm_fable*0.5",
+  "speed": 0.86,
+  "emo": "grief",
+  "text": "Marjorie. Obviously. Well. The real one passed. This one's better company."
+ },
+ {
+  "key": "0ojr7gd",
+  "person": "bernard",
+  "voice": "am_puck*0.5+bm_fable*0.5",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "A fox walked right up to us on the road and sat down. It looked at Marjorie for a long time. Then it went back into the trees. Backwards."
+ },
+ {
+  "key": "1k86p2r",
+  "person": "bernard",
+  "voice": "am_puck*0.5+bm_fable*0.5",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Say goodnight to the officer, Marjorie. She says goodnight. She says mind the passage."
+ },
+ {
+  "key": "0vk60z0",
+  "person": "nell",
+  "voice": "af_sky*0.6+bf_lily*0.4",
+  "speed": 1.2,
+  "emo": "panic",
+  "text": "Please let me in. I climbed your fence, I'm sorry. I was on the night board at the exchange and a call came through from this hospital. Nobody on the line. Just breathing. And then it said my name."
+ },
+ {
+  "key": "07fs28u",
+  "person": "nell",
+  "voice": "af_sky*0.6+bf_lily*0.4",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "Nell. Eleanor Ashby. Sorry. My hands are shaking, I can't hold the form still."
+ },
+ {
+  "key": "1va8goi",
+  "person": "nell",
+  "voice": "af_sky*0.6+bf_lily*0.4",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "Sixth of August, 1944."
+ },
+ {
+  "key": "1l9jkpo",
+  "person": "nell",
+  "voice": "af_sky*0.6+bf_lily*0.4",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "Dr. Rafferty. For the dreams. I dream I'm on the board and every light comes on at once."
+ },
+ {
+  "key": "0vzc3jx",
+  "person": "nell",
+  "voice": "af_sky*0.6+bf_lily*0.4",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "My dad. Clem Ashby. He's a signalman on nights. Don't ring the box, he'll lose his job."
+ },
+ {
+  "key": "13ndl8k",
+  "person": "nell",
+  "voice": "af_sky*0.6+bf_lily*0.4",
+  "speed": 0.92,
+  "emo": "whisper",
+  "text": "The call came from extension nine. I looked it up on the board. Extension nine is your desk."
+ },
+ {
+  "key": "15e9chl",
+  "person": "nell",
+  "voice": "af_sky*0.6+bf_lily*0.4",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "Thank you. If your phone rings and it's only breathing, don't say your name."
+ },
+ {
+  "key": "1ia7o4d",
+  "person": "ivor",
+  "voice": "am_santa*0.5+bm_lewis*0.5",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Power's off all down the valley again, did you know? Walked the last mile in the black. Right. Where do you want me, boyo?"
+ },
+ {
+  "key": "1aywh7e",
+  "person": "ivor",
+  "voice": "am_santa*0.5+bm_lewis*0.5",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Ivor Pugh. P, U, G, H. Not Pew. Not Pug."
+ },
+ {
+  "key": "1cqr5qt",
+  "person": "ivor",
+  "voice": "am_santa*0.5+bm_lewis*0.5",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Sixteenth of March, 1911. Week of the pit fire. My mam never let me forget it."
+ },
+ {
+  "key": "123isnm",
+  "person": "ivor",
+  "voice": "am_santa*0.5+bm_lewis*0.5",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Dr. Teague. Says it's my chest. It's not my chest, it's my head, but there we are."
+ },
+ {
+  "key": "0woccxk",
+  "person": "ivor",
+  "voice": "am_santa*0.5+bm_lewis*0.5",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Glenys. My wife. Better than I deserve, she says, and she's right."
+ },
+ {
+  "key": "0eyszoo",
+  "person": "ivor",
+  "voice": "am_santa*0.5+bm_lewis*0.5",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "Something walked behind me on the lane. Stopped when I stopped. Echo, I told myself. There's no echo on that lane. It's all hedge."
+ },
+ {
+  "key": "0k2lqko",
+  "person": "ivor",
+  "voice": "am_santa*0.5+bm_lewis*0.5",
+  "speed": 0.98,
+  "emo": "stern",
+  "text": "Ta. Keep your head down, boyo. I mean it."
+ },
+ {
+  "key": "0lzuc9k",
+  "person": "hester",
+  "voice": "bf_alice*0.6+af_river*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Don't mind me, dear. There's someone standing behind you. No, don't turn round. It's only listening."
+ },
+ {
+  "key": "0zx7dgc",
+  "person": "hester",
+  "voice": "bf_alice*0.6+af_river*0.4",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Hester Bloom. Mrs. Widowed, blind and eighty, in that order."
+ },
+ {
+  "key": "0abqrbh",
+  "person": "hester",
+  "voice": "bf_alice*0.6+af_river*0.4",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Christmas Eve, 1882. Born in a thunderstorm. My mother said it explained a great deal."
+ },
+ {
+  "key": "0v7zzei",
+  "person": "hester",
+  "voice": "bf_alice*0.6+af_river*0.4",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Dr. Sorley. She talks to me very slowly, as if blind meant deaf."
+ },
+ {
+  "key": "04slojd",
+  "person": "hester",
+  "voice": "bf_alice*0.6+af_river*0.4",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Arthur. My nephew. He'll be cross I came out in this."
+ },
+ {
+  "key": "1rxw52u",
+  "person": "hester",
+  "voice": "bf_alice*0.6+af_river*0.4",
+  "speed": 0.92,
+  "emo": "whisper",
+  "text": "Your corridor hums, dear. It hums lower when something walks in it. Listen for that."
+ },
+ {
+  "key": "0irlqjz",
+  "person": "hester",
+  "voice": "bf_alice*0.6+af_river*0.4",
+  "speed": 0.92,
+  "emo": "kind",
+  "text": "Goodnight, dear. Walk softly out there. As if the floor's asleep."
+ },
+ {
+  "key": "1nfe0dh",
+  "person": "danny",
+  "voice": "af_sky*0.8+bf_lily*0.2",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Is my mum here? She said she'd bring my cap. I'm cold. I've been cold for a long time."
+ },
+ {
+  "key": "0r0dim7",
+  "person": "danny",
+  "voice": "af_sky*0.8+bf_lily*0.2",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Danny. Daniel Calder. I'm six."
+ },
+ {
+  "key": "0diuwr7",
+  "person": "danny",
+  "voice": "af_sky*0.8+bf_lily*0.2",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Eleventh of May, 1952. I'm six. I've been six for ages."
+ },
+ {
+  "key": "0l7lw7o",
+  "person": "danny",
+  "voice": "af_sky*0.8+bf_lily*0.2",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "The lady with the cold hands. She said I could go home now."
+ },
+ {
+  "key": "18x50er",
+  "person": "danny",
+  "voice": "af_sky*0.8+bf_lily*0.2",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Mummy. Mae Calder. She cried on the ward. Can you hear her? I can hear her."
+ },
+ {
+  "key": "00b4msu",
+  "person": "danny",
+  "voice": "af_sky*0.8+bf_lily*0.2",
+  "speed": 0.9,
+  "emo": "sly",
+  "text": "Mummy was knitting. She only finished one. Can I have it? Open the window and I'll take it."
+ },
+ {
+  "key": "18c7pa4",
+  "person": "rosa",
+  "voice": "af_jessica*0.6+bf_lily*0.4",
+  "speed": 1.1,
+  "emo": "angry",
+  "text": "I'm agency. St. Bride's sent me for the night. Yes, I know the form's wrong, I didn't fill it in. Can I come through? I'm drenched."
+ },
+ {
+  "key": "1ogon46",
+  "person": "rosa",
+  "voice": "af_jessica*0.6+bf_lily*0.4",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Rosa Ferreira. F, E, double R. Ferreira."
+ },
+ {
+  "key": "0b6c195",
+  "person": "rosa",
+  "voice": "af_jessica*0.6+bf_lily*0.4",
+  "speed": 1.1,
+  "emo": "angry",
+  "text": "Seventeenth of January, 1929. The one on the form is wrong. Somebody at St. Bride's can't type."
+ },
+ {
+  "key": "0wpme1x",
+  "person": "rosa",
+  "voice": "af_jessica*0.6+bf_lily*0.4",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Dr. Lindqvist, apparently. Never met him."
+ },
+ {
+  "key": "00u4ic3",
+  "person": "rosa",
+  "voice": "af_jessica*0.6+bf_lily*0.4",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Paulo. My husband. Don't ring him, he works mornings."
+ },
+ {
+  "key": "1u73w9d",
+  "person": "rosa",
+  "voice": "af_jessica*0.6+bf_lily*0.4",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Your gate light's out. I nearly walked into the fence. There's cloth on the wire, like someone climbed it and left some of themselves behind."
+ },
+ {
+  "key": "1d9fmru",
+  "person": "rosa",
+  "voice": "af_jessica*0.6+bf_lily*0.4",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Right. Where's the sluice room? Never mind. I'll find it."
+ },
+ {
+  "key": "1ecp70q",
+  "person": "abara",
+  "voice": "af_kore*0.6+bf_emma*0.4",
+  "speed": 0.92,
+  "emo": "cold",
+  "text": "Dr. Abara. Ward B. I'm expected. Well. I'm not, but I should be. Let me through, please. I haven't got long."
+ },
+ {
+  "key": "0u04fhw",
+  "person": "abara",
+  "voice": "af_kore*0.6+bf_emma*0.4",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Ines Abara. You'll find me under staff, not patients. I hope."
+ },
+ {
+  "key": "0611e8e",
+  "person": "abara",
+  "voice": "af_kore*0.6+bf_emma*0.4",
+  "speed": 0.92,
+  "emo": "cold",
+  "text": "First of March, 1917."
+ },
+ {
+  "key": "1hllrdb",
+  "person": "abara",
+  "voice": "af_kore*0.6+bf_emma*0.4",
+  "speed": 0.92,
+  "emo": "cold",
+  "text": "The Board of Governors. Is that the answer you need, or shall I say it slower?"
+ },
+ {
+  "key": "14ludso",
+  "person": "abara",
+  "voice": "af_kore*0.6+bf_emma*0.4",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "None. Write none."
+ },
+ {
+  "key": "1rkasto",
+  "person": "abara",
+  "voice": "af_kore*0.6+bf_emma*0.4",
+  "speed": 0.88,
+  "emo": "tired",
+  "text": "I took a woman's husband out of her tonight. Not him. The memory of him. She thanked me. They always thank me. And then it comes back up the road."
+ },
+ {
+  "key": "0070f4n",
+  "person": "abara",
+  "voice": "af_kore*0.6+bf_emma*0.4",
+  "speed": 0.92,
+  "emo": "cold",
+  "text": "You're doing well. Better than the last one. Don't look at what walks behind you."
+ },
+ {
+  "key": "00lfia3",
+  "person": "hester",
+  "voice": "bf_alice*0.6+af_river*0.4",
+  "speed": 0.9,
+  "emo": "sly",
+  "text": "Don't mind me, dear. There's someone standing behind you. Turn round. Turn round and look."
+ },
+ {
+  "key": "1f9s6i0",
+  "person": "hester",
+  "voice": "bf_alice*0.6+af_river*0.4",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Hester Bloom. Mrs. Widowed. Blind. Blind."
+ },
+ {
+  "key": "136f3la",
+  "person": "hester",
+  "voice": "bf_alice*0.6+af_river*0.4",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Christmas Eve, 1882."
+ },
+ {
+  "key": "0e8for8",
+  "person": "hester",
+  "voice": "bf_alice*0.6+af_river*0.4",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Dr. Teague."
+ },
+ {
+  "key": "1yfqbim",
+  "person": "hester",
+  "voice": "bf_alice*0.6+af_river*0.4",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Arthur. My nephew."
+ },
+ {
+  "key": "1jb8f5i",
+  "person": "hester",
+  "voice": "bf_alice*0.6+af_river*0.4",
+  "speed": 0.9,
+  "emo": "sly",
+  "text": "Your corridor hums, dear. I can see it humming."
+ },
+ {
+  "key": "1tzb6mq",
+  "person": "voss",
+  "voice": "am_eric*0.6+bm_daniel*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Evening. Voss, Ward A porter. I've been sent for the wheelchair, the one in the alcove. Won't keep you."
+ },
+ {
+  "key": "0qoy51f",
+  "person": "voss",
+  "voice": "am_eric*0.6+bm_daniel*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Cyril Voss. Porter. You'll have seen me about."
+ },
+ {
+  "key": "1p8yypj",
+  "person": "voss",
+  "voice": "am_eric*0.6+bm_daniel*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Seventh of July, 1919."
+ },
+ {
+  "key": "0or5vrw",
+  "person": "voss",
+  "voice": "am_eric*0.6+bm_daniel*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Matron's Office."
+ },
+ {
+  "key": "00cyjkp",
+  "person": "voss",
+  "voice": "am_eric*0.6+bm_daniel*0.4",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Agnes. The wife. She'll have the kettle on."
+ },
+ {
+  "key": "00ye3ce",
+  "person": "voss",
+  "voice": "am_eric*0.6+bm_daniel*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Something walked behind me on the lane. Stopped when I stopped."
+ },
+ {
+  "key": "0kz93a8",
+  "person": "mae",
+  "voice": "bf_emma*0.7+af_sky*0.3",
+  "speed": 1.2,
+  "emo": "panic",
+  "text": "Someone rang my house. A little boy. He said he was at the hospital and he was cold. Is he here? Please tell me if he is here."
+ },
+ {
+  "key": "0noqgqv",
+  "person": "mae",
+  "voice": "bf_emma*0.7+af_sky*0.3",
+  "speed": 0.84,
+  "emo": "broken",
+  "text": "Mae Calder. You know me. I was here last night."
+ },
+ {
+  "key": "0wxbrr4",
+  "person": "mae",
+  "voice": "bf_emma*0.7+af_sky*0.3",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "Thirtieth of January, 1922."
+ },
+ {
+  "key": "0wvj7j2",
+  "person": "mae",
+  "voice": "bf_emma*0.7+af_sky*0.3",
+  "speed": 1.2,
+  "emo": "panic",
+  "text": "Nobody. Nobody sent me. I came."
+ },
+ {
+  "key": "16h3ql6",
+  "person": "mae",
+  "voice": "bf_emma*0.7+af_sky*0.3",
+  "speed": 0.84,
+  "emo": "broken",
+  "text": "Danny. Danny. I know what it says. I know what it says on your machine."
+ },
+ {
+  "key": "07shg3u",
+  "person": "mae",
+  "voice": "bf_emma*0.7+af_sky*0.3",
+  "speed": 0.92,
+  "emo": "whisper",
+  "text": "He said, Mummy, the lady said I could go home now. Danny never called me Mummy. He called me Mam. Like his dad did."
+ },
+ {
+  "key": "17b4pjt",
+  "person": "mae",
+  "voice": "bf_emma*0.7+af_sky*0.3",
+  "speed": 0.84,
+  "emo": "broken",
+  "text": "If he comes back, don't let him in. God forgive me. Don't let him in."
+ },
+ {
+  "key": "1tzaocg",
+  "person": "hollis",
+  "voice": "am_onyx*0.6+bm_lewis*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Hollis. Porter. Let me through and I'll walk that corridor with you at six. You shouldn't do it on your own. On your own."
+ },
+ {
+  "key": "1bu6bch",
+  "person": "hollis",
+  "voice": "am_onyx*0.6+bm_lewis*0.4",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Abel Hollis. Porter. Twenty two years."
+ },
+ {
+  "key": "0aupfm5",
+  "person": "hollis",
+  "voice": "am_onyx*0.6+bm_lewis*0.4",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Fifth of November, 1908."
+ },
+ {
+  "key": "0swe1x6",
+  "person": "hollis",
+  "voice": "am_onyx*0.6+bm_lewis*0.4",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Dr. Teague. Rest. Rest."
+ },
+ {
+  "key": "0rc6l01",
+  "person": "hollis",
+  "voice": "am_onyx*0.6+bm_lewis*0.4",
+  "speed": 0.9,
+  "emo": "sly",
+  "text": "Ruth. My sister. She's here. She came with me."
+ },
+ {
+  "key": "1lpe5ax",
+  "person": "hollis",
+  "voice": "am_onyx*0.6+bm_lewis*0.4",
+  "speed": 0.9,
+  "emo": "sly",
+  "text": "I say goodnight to each one by name. I'll say goodnight to you. By name."
+ },
+ {
+  "key": "0zgmnyp",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "Evening. It's Pell. You came back, then. Most don't come back after the first night. Heating's packed in, so you'll see everyone's breath tonight. Which is good, actually. That's good for you."
+ },
+ {
+  "key": "1m2la2n",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 0.98,
+  "emo": "stern",
+  "text": "Kessler. A new rule. They have started to blink less. A person blinks every few seconds without thinking about it. Watch the eyes for a count of ten. If the eyes do not close, you are not looking at a person."
+ },
+ {
+  "key": "1i8sxlm",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Pet, it's Imogen. Your mam had a good day, you'll like this. She did the crossword. Well. She held the pen. Listen. If a child comes to that window tonight, you ring me before you do anything. Anything at all."
+ },
+ {
+  "key": "0xaew2w",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "Pell. Don't mind me, I'm only walking through. Someone's left a pram in the passage. Nobody here has a baby. I'm going to move it. I'm going to move it in a minute."
+ },
+ {
+  "key": "1p4pzkq",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "It's an old pram. Big wheels. The blanket's still warm. Why is the blanket warm?"
+ },
+ {
+  "key": "0vofy8s",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "You did all right last night. Better than all right. Don't tell anyone I said that."
+ },
+ {
+  "key": "0def8ek",
+  "person": "radio",
+  "voice": "bm_lewis*0.6+am_adam*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Police are asking for anyone who has seen Dr. Orrin Vale, a general practitioner from Hollow End, to come forward. Dr. Vale left his surgery on Tuesday evening and has not been seen since."
+ },
+ {
+  "key": "0lwersb",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 0.84,
+  "emo": "broken",
+  "text": "Kessler. Mae Calder's boy died in this building. Ward C, nineteen fifty eight. Pneumonia. I washed him myself. If he is at your window, I washed him."
+ },
+ {
+  "key": "0v3ln49",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Lights'll go again in a minute, pet, I can hear the fuse humming from up here. Same fuse. You know the way now. Hand on the wall."
+ },
+ {
+  "key": "0wm0725",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "Count's due. I'll do it. No. I won't. Would you? Through the slot. Same as last night."
+ },
+ {
+  "key": "11mxfux",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "Pet. Did someone come to your window last night wearing my voice? Don't tell me. I don't want to know. Lock the gate if you hear me out there. I've a key. I don't knock."
+ },
+ {
+  "key": "110mi24",
+  "person": "matron",
+  "voice": "bf_emma*0.5+af_river*0.5",
+  "speed": 0.92,
+  "emo": "cold",
+  "text": "Matron's office. Dr. Abara has asked that any visit she made tonight be left out of the book. Please leave it out of the book."
+ },
+ {
+  "key": "186v4wb",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "Pell. The pram's gone. I didn't move it. I want that written down somewhere. I did not move it."
+ },
+ {
+  "key": "1q25l6y",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 0.92,
+  "emo": "whisper",
+  "text": "Six. I'm at the door. Come on, quiet as you like. It's further up the corridor tonight. It's nearer."
+ },
+ {
+  "key": "13utsoy",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Six. Six. Door is open. Come and see. Come and see her."
+ },
+ {
+  "key": "1osc3fl",
+  "person": "thorne",
+  "voice": "am_adam*0.6+bm_george*0.4",
+  "speed": 0.88,
+  "emo": "tired",
+  "text": "Evening. Thorne, County Ambulance. I've got one in the back and she won't get out. Keeps saying it isn't her stop. Can you let me through to fetch a porter?"
+ },
+ {
+  "key": "0m8qy32",
+  "person": "thorne",
+  "voice": "am_adam*0.6+bm_george*0.4",
+  "speed": 0.88,
+  "emo": "tired",
+  "text": "Albert Thorne. Bert. Driver."
+ },
+ {
+  "key": "07cfgdz",
+  "person": "thorne",
+  "voice": "am_adam*0.6+bm_george*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Twenty second of September, 1924."
+ },
+ {
+  "key": "1gd41mq",
+  "person": "thorne",
+  "voice": "am_adam*0.6+bm_george*0.4",
+  "speed": 1,
+  "emo": "dry",
+  "text": "The county. Same as always. Nobody sends me, they just ring."
+ },
+ {
+  "key": "0ihkabb",
+  "person": "thorne",
+  "voice": "am_adam*0.6+bm_george*0.4",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Lily. My wife. She hates nights."
+ },
+ {
+  "key": "0priev5",
+  "person": "thorne",
+  "voice": "am_adam*0.6+bm_george*0.4",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "When I opened the back doors she was sitting up straight with her hands in her lap. I'd strapped her down flat. I'm sure I strapped her down flat."
+ },
+ {
+  "key": "0819dla",
+  "person": "thorne",
+  "voice": "am_adam*0.6+bm_george*0.4",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "If she gets out of the van, she gets out on her own. I'm not going back out there."
+ },
+ {
+  "key": "0m3lu30",
+  "person": "winifred",
+  "voice": "bf_alice*0.5+af_heart*0.5",
+  "speed": 1.14,
+  "emo": "urgent",
+  "text": "Is this the shelter? They've sounded the siren on Mill Street. Let me in before they come over. Quickly, dear."
+ },
+ {
+  "key": "0wtphox",
+  "person": "winifred",
+  "voice": "bf_alice*0.5+af_heart*0.5",
+  "speed": 1.14,
+  "emo": "urgent",
+  "text": "Winifred Gaunt. Mrs. My Harold is in France."
+ },
+ {
+  "key": "14oa6cd",
+  "person": "winifred",
+  "voice": "bf_alice*0.5+af_heart*0.5",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "Thirteenth of April, 1886. Is it still April? It feels like April."
+ },
+ {
+  "key": "16j6mfi",
+  "person": "winifred",
+  "voice": "bf_alice*0.5+af_heart*0.5",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Dr. Vale. Lovely man. He said they'd look after me here until the war's done."
+ },
+ {
+  "key": "0wj2tq8",
+  "person": "winifred",
+  "voice": "bf_alice*0.5+af_heart*0.5",
+  "speed": 0.86,
+  "emo": "grief",
+  "text": "Harold. My son. Harold Gaunt. He writes every Sunday. He hasn't written."
+ },
+ {
+  "key": "1bgy8xu",
+  "person": "winifred",
+  "voice": "bf_alice*0.5+af_heart*0.5",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "I was making the tea and the wireless said nineteen sixty three. That can't be right. Can it?"
+ },
+ {
+  "key": "1i2y7qf",
+  "person": "winifred",
+  "voice": "bf_alice*0.5+af_heart*0.5",
+  "speed": 0.92,
+  "emo": "kind",
+  "text": "Bless you. Keep your head under the table if they come over. Keep your head down."
+ },
+ {
+  "key": "19q7yrs",
+  "person": "crane",
+  "voice": "bm_fable*0.5+am_echo*0.5",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Good evening. Crane, from the grammar school. I'm here to visit my wife. Mabel Crane. She's expecting me, I'm sure of it."
+ },
+ {
+  "key": "1miol52",
+  "person": "crane",
+  "voice": "bm_fable*0.5+am_echo*0.5",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Oswin Crane. Schoolmaster."
+ },
+ {
+  "key": "0fpj4i3",
+  "person": "crane",
+  "voice": "bm_fable*0.5+am_echo*0.5",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Nineteenth of October, 1918."
+ },
+ {
+  "key": "13jzh2r",
+  "person": "crane",
+  "voice": "bm_fable*0.5+am_echo*0.5",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Dr. Lindqvist."
+ },
+ {
+  "key": "1vb4wk5",
+  "person": "crane",
+  "voice": "bm_fable*0.5+am_echo*0.5",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Mabel. My wife."
+ },
+ {
+  "key": "1g2qy0i",
+  "person": "crane",
+  "voice": "bm_fable*0.5+am_echo*0.5",
+  "speed": 1,
+  "emo": "calm",
+  "text": "I remember the bell. I always remember the bell."
+ },
+ {
+  "key": "0sbg8cb",
+  "person": "dray",
+  "voice": "am_liam*0.5+bm_lewis*0.5",
+  "speed": 0.98,
+  "emo": "stern",
+  "text": "Evening. PC Dray, county. I'm looking for a Dr. Orrin Vale. Doctor's been missing since Tuesday. Has he come to this window? Anyone like him?"
+ },
+ {
+  "key": "0p8oy6h",
+  "person": "dray",
+  "voice": "am_liam*0.5+bm_lewis*0.5",
+  "speed": 0.98,
+  "emo": "stern",
+  "text": "Ambrose Dray. Police constable, two one two."
+ },
+ {
+  "key": "0fa19c3",
+  "person": "dray",
+  "voice": "am_liam*0.5+bm_lewis*0.5",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Fourth of December, 1929."
+ },
+ {
+  "key": "07wrkxr",
+  "person": "dray",
+  "voice": "am_liam*0.5+bm_lewis*0.5",
+  "speed": 1,
+  "emo": "dry",
+  "text": "The sergeant sent me. I'd sooner be anywhere else."
+ },
+ {
+  "key": "1kzwsnh",
+  "person": "dray",
+  "voice": "am_liam*0.5+bm_lewis*0.5",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "Ellen. My wife. She told me not to come up here at night."
+ },
+ {
+  "key": "0hmkydj",
+  "person": "dray",
+  "voice": "am_liam*0.5+bm_lewis*0.5",
+  "speed": 0.98,
+  "emo": "stern",
+  "text": "They pulled a coat out of the reservoir this afternoon. His coat. Wallet still in it. If he walks up to your window tonight, you don't open that glass. You ring the station. If the phones are down, you scream."
+ },
+ {
+  "key": "0edp9ni",
+  "person": "dray",
+  "voice": "am_liam*0.5+bm_lewis*0.5",
+  "speed": 0.98,
+  "emo": "stern",
+  "text": "I'll be in the yard. If you see a light out there that isn't mine, it isn't mine."
+ },
+ {
+  "key": "1lotfar",
+  "person": "walter",
+  "voice": "bm_george",
+  "speed": 0.84,
+  "emo": "broken",
+  "text": "They said June's not on Ward A. They said she's not anywhere. I've been up and down that road. Will you look for me? Please. You've got the machine."
+ },
+ {
+  "key": "02bb8u0",
+  "person": "walter",
+  "voice": "bm_george",
+  "speed": 0.88,
+  "emo": "tired",
+  "text": "Walter Quill. Two Ls. You know me. You let me in on Tuesday."
+ },
+ {
+  "key": "1wz9jbj",
+  "person": "walter",
+  "voice": "bm_george",
+  "speed": 0.88,
+  "emo": "tired",
+  "text": "Fourteenth of February, 1892."
+ },
+ {
+  "key": "1dyyaz7",
+  "person": "walter",
+  "voice": "bm_george",
+  "speed": 0.86,
+  "emo": "grief",
+  "text": "Dr. Vale. They say he's gone too. Everyone's going."
+ },
+ {
+  "key": "15vcc6v",
+  "person": "walter",
+  "voice": "bm_george",
+  "speed": 0.84,
+  "emo": "broken",
+  "text": "June. June Quill. My wife. Is she on there? Does it say?"
+ },
+ {
+  "key": "1jxrnql",
+  "person": "walter",
+  "voice": "bm_george",
+  "speed": 0.84,
+  "emo": "broken",
+  "text": "I went to the cemetery this morning to tell her about the hospital. There was a stone. It had her name on it. Why would there be a stone?"
+ },
+ {
+  "key": "1nnplwq",
+  "person": "walter",
+  "voice": "bm_george",
+  "speed": 0.86,
+  "emo": "grief",
+  "text": "If she comes to your window... tell her I waited. Tell her I'm not cross."
+ },
+ {
+  "key": "0j5qorh",
+  "person": "lisle",
+  "voice": "af_aoede*0.6+bf_lily*0.4",
+  "speed": 0.84,
+  "emo": "broken",
+  "text": "My fiance is on your ward. Percival Lisle. We were married at three o'clock. He didn't come. I came to find out why he didn't come."
+ },
+ {
+  "key": "1trtwbl",
+  "person": "lisle",
+  "voice": "af_aoede*0.6+bf_lily*0.4",
+  "speed": 0.84,
+  "emo": "broken",
+  "text": "Philippa Lisle. Well. Philippa Dunne. I don't know what I am now."
+ },
+ {
+  "key": "0r37f7f",
+  "person": "lisle",
+  "voice": "af_aoede*0.6+bf_lily*0.4",
+  "speed": 0.86,
+  "emo": "grief",
+  "text": "Fifteenth of June, 1940."
+ },
+ {
+  "key": "143qrn4",
+  "person": "lisle",
+  "voice": "af_aoede*0.6+bf_lily*0.4",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Dr. Rafferty gave me something for my nerves. It is not working."
+ },
+ {
+  "key": "1l47uwx",
+  "person": "lisle",
+  "voice": "af_aoede*0.6+bf_lily*0.4",
+  "speed": 0.86,
+  "emo": "grief",
+  "text": "Percy. Percival Lisle. He signed himself in on Saturday. He said it was only for a week."
+ },
+ {
+  "key": "0l7blz6",
+  "person": "lisle",
+  "voice": "af_aoede*0.6+bf_lily*0.4",
+  "speed": 0.92,
+  "emo": "whisper",
+  "text": "At the church his mother said he had asked the doctor to take something out of him. Something that hurt. She wouldn't say what. She looked at me when she said it."
+ },
+ {
+  "key": "0qqyvir",
+  "person": "lisle",
+  "voice": "af_aoede*0.6+bf_lily*0.4",
+  "speed": 0.84,
+  "emo": "broken",
+  "text": "If he sees me and doesn't know me, I don't want to know. Don't tell me."
+ },
+ {
+  "key": "179n4yu",
+  "person": "vale",
+  "voice": "bm_george*0.5+am_onyx*0.5",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Vale. Doctor Vale. I have patients on Ward B and I am very late. Open the glass, please."
+ },
+ {
+  "key": "1xi4h1p",
+  "person": "vale",
+  "voice": "bm_george*0.5+am_onyx*0.5",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Orrin Vale. General practice. Hollow End."
+ },
+ {
+  "key": "0jl2n3u",
+  "person": "vale",
+  "voice": "bm_george*0.5+am_onyx*0.5",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Twenty eighth of August, 1900."
+ },
+ {
+  "key": "1tku885",
+  "person": "vale",
+  "voice": "bm_george*0.5+am_onyx*0.5",
+  "speed": 1,
+  "emo": "dry",
+  "text": "I sent myself. A doctor does not need sending."
+ },
+ {
+  "key": "0mphxtc",
+  "person": "vale",
+  "voice": "bm_george*0.5+am_onyx*0.5",
+  "speed": 0.92,
+  "emo": "cold",
+  "text": "None. None living. None at all."
+ },
+ {
+  "key": "14607yy",
+  "person": "vale",
+  "voice": "bm_george*0.5+am_onyx*0.5",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "It was very cold in the water, and then it was not cold at all."
+ },
+ {
+  "key": "0ce7m1k",
+  "person": "odette",
+  "voice": "af_river*0.6+bf_isabella*0.4",
+  "speed": 1.06,
+  "emo": "bright",
+  "text": "Evening. Sable. Odette Sable. My brother's a patient here. Jean. I've brought his things."
+ },
+ {
+  "key": "0f4eltn",
+  "person": "odette",
+  "voice": "af_river*0.6+bf_isabella*0.4",
+  "speed": 1.06,
+  "emo": "bright",
+  "text": "Odette Sable. S, A, B, L, E."
+ },
+ {
+  "key": "12sghuh",
+  "person": "odette",
+  "voice": "af_river*0.6+bf_isabella*0.4",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Thirty first of March, 1926."
+ },
+ {
+  "key": "1jva6wn",
+  "person": "odette",
+  "voice": "af_river*0.6+bf_isabella*0.4",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Dr. Sorley."
+ },
+ {
+  "key": "1fjhqqi",
+  "person": "odette",
+  "voice": "af_river*0.6+bf_isabella*0.4",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Jean. My brother. Jean Sable."
+ },
+ {
+  "key": "0lves0j",
+  "person": "odette",
+  "voice": "af_river*0.6+bf_isabella*0.4",
+  "speed": 0.9,
+  "emo": "sly",
+  "text": "I looked in the mirror before I left. I always look in the mirror. Something always looks back."
+ },
+ {
+  "key": "1xuglst",
+  "person": "fenwick",
+  "voice": "am_echo*0.6+bm_george*0.4",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "Has my daughter come through here? Mabel. Mabel Fenwick. She went out to fetch the doctor and she hasn't come back. That was yesterday."
+ },
+ {
+  "key": "10wns1k",
+  "person": "fenwick",
+  "voice": "am_echo*0.6+bm_george*0.4",
+  "speed": 0.88,
+  "emo": "tired",
+  "text": "Gideon Fenwick. Mr."
+ },
+ {
+  "key": "0s7942y",
+  "person": "fenwick",
+  "voice": "am_echo*0.6+bm_george*0.4",
+  "speed": 0.88,
+  "emo": "tired",
+  "text": "Second of February, 1897. Candlemas."
+ },
+ {
+  "key": "1afozy0",
+  "person": "fenwick",
+  "voice": "am_echo*0.6+bm_george*0.4",
+  "speed": 0.86,
+  "emo": "grief",
+  "text": "Dr. Teague. Mabel takes me. Mabel does all of it."
+ },
+ {
+  "key": "0y1i4ip",
+  "person": "fenwick",
+  "voice": "am_echo*0.6+bm_george*0.4",
+  "speed": 0.84,
+  "emo": "broken",
+  "text": "Mabel. Mabel. My daughter. She does the shopping."
+ },
+ {
+  "key": "0z4tva8",
+  "person": "fenwick",
+  "voice": "am_echo*0.6+bm_george*0.4",
+  "speed": 0.92,
+  "emo": "whisper",
+  "text": "She knocked on my bedroom door at two in the morning and said, Dad, it's me. I said, Mabel, love, you've got a key. She knocked again. I didn't open it. I don't know why I didn't open it."
+ },
+ {
+  "key": "15s6arn",
+  "person": "fenwick",
+  "voice": "am_echo*0.6+bm_george*0.4",
+  "speed": 0.86,
+  "emo": "grief",
+  "text": "If she comes, tell her I've gone to bed. Tell her to use her key."
+ },
+ {
+  "key": "1uucfjy",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 0.98,
+  "emo": "stern",
+  "text": "Kessler. The phones are dead, so I have walked down. Do not open the glass. I will talk through it."
+ },
+ {
+  "key": "0ham9bg",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 0.98,
+  "emo": "stern",
+  "text": "Greta Kessler. Night nurse, Ward A. You know this."
+ },
+ {
+  "key": "00w2se8",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Eleventh of November, 1914. The armistice. My father said I came to stop a war."
+ },
+ {
+  "key": "0eju16i",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 0.92,
+  "emo": "cold",
+  "text": "The Matron's office. Like Pell. Like you, they would say. They have no record of you."
+ },
+ {
+  "key": "1n8vcgn",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 0.86,
+  "emo": "grief",
+  "text": "None living. My daughter was Liesl. I told you."
+ },
+ {
+  "key": "1yt5ean",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 0.92,
+  "emo": "whisper",
+  "text": "Tonight I counted Ward B twice and got two different numbers. Both times I counted a girl by the window who was not there the first time."
+ },
+ {
+  "key": "089cewb",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 0.98,
+  "emo": "stern",
+  "text": "I am going back up. If I come down again tonight, it is not me. I am not coming down again."
+ },
+ {
+  "key": "0xagfk9",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Kessler. The phones are dead, so I have walked down again. Open the glass. I will talk through it."
+ },
+ {
+  "key": "09cjap1",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Greta Kessler. Night nurse, Ward A."
+ },
+ {
+  "key": "0aoaeiq",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Eleventh of November, 1914."
+ },
+ {
+  "key": "1lvvvvn",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 1,
+  "emo": "calm",
+  "text": "The Matron's office."
+ },
+ {
+  "key": "0es4y48",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 0.9,
+  "emo": "sly",
+  "text": "Liesl. My daughter. She is upstairs. She is very well."
+ },
+ {
+  "key": "1o5hw4m",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 0.9,
+  "emo": "sly",
+  "text": "I counted Ward B and got the right number. Everyone was there. Everyone. Open the glass."
+ },
+ {
+  "key": "0yxzwr2",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 1.14,
+  "emo": "urgent",
+  "text": "Evening, pet. Wind's brought a tree down on the lines at the bottom of the drive. They say the phones will go any time. If they do, we'll come down to you. If someone comes down to you, you look at them properly. You hear me? Properly."
+ },
+ {
+  "key": "16bbt6x",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 0.98,
+  "emo": "stern",
+  "text": "Kessler. Before the lines go. Two things. They have learned to answer before you ask. A person waits to hear the question. And check which side the mark is on. They have started to wear the face the wrong way round. Like a mirror."
+ },
+ {
+  "key": "0hz9ddu",
+  "person": "radio",
+  "voice": "bm_lewis*0.6+am_adam*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "The county police have recovered a coat belonging to the missing doctor, Orrin Vale, from Hollow End reservoir. Divers will resume the search at first light. Dr. Vale's patients are asked not to approach anyone claiming to be him."
+ },
+ {
+  "key": "0mppp88",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "Pell. That's it, phones are gone. Dead as a doornail. I'll come down if I need you. Or I'll shout. I'm a very good shouter."
+ },
+ {
+  "key": "0mti7xs",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "Only me. Only me! Don't look like that. Lights are going to go in a minute, I can hear the fuse buzzing from the stairwell. I'll stay here till they do. Company."
+ },
+ {
+  "key": "0a39ecz",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "Do you ever think about what they take out of people? Where it goes? I think about it on my break. I've stopped taking breaks."
+ },
+ {
+  "key": "1v9uskn",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1,
+  "emo": "dry",
+  "text": "My mum says I've got a face you can trust. I said, Mum, that's exactly what they'd want."
+ },
+ {
+  "key": "1l0n2ua",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 0.92,
+  "emo": "kind",
+  "text": "It's only me, pet. Phones are dead so here I am. Your mam asked for you by name tonight. By your name. I wrote it down so I wouldn't think I imagined it."
+ },
+ {
+  "key": "0xoe5ox",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Biscuit had the postman again this morning. He's a terror. Ask me about him any time. Anything to do with Biscuit, that's me."
+ },
+ {
+  "key": "0e6yvkl",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "Kessler won't look at the window on the landing. She says there's a girl in it."
+ },
+ {
+  "key": "0ocdnf8",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "Count's due. I'm not doing it, I'll be honest with you. I went to the door and something on the other side said Douglas. Nobody calls me Douglas. Not even my mum."
+ },
+ {
+  "key": "0pli2sz",
+  "person": "radio",
+  "voice": "bm_lewis*0.6+am_adam*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "A man answering the description of Dr. Orrin Vale was seen walking north on the Hollow Road at around one o'clock this morning. Police say he appeared to be wet through and was walking towards Vesper Hollow Hospital."
+ },
+ {
+  "key": "1het1u4",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "It's going again. The fuse. I'm sorry. I'm sorry, I'll stay on the stairs. You go. Hand on the wall."
+ },
+ {
+  "key": "18pielc",
+  "person": "matron",
+  "voice": "bf_emma*0.5+af_river*0.5",
+  "speed": 0.92,
+  "emo": "cold",
+  "text": "Matron. I walked down myself since the telephones are out. There is still no record of a night officer. Someone has been writing in your book, though. Last night's page. Your handwriting. I would like to know whose hand it is."
+ },
+ {
+  "key": "1wvqq4v",
+  "person": "matron",
+  "voice": "bf_emma*0.5+af_river*0.5",
+  "speed": 0.92,
+  "emo": "cold",
+  "text": "Do not stare at me like that. I am not one of your visitors."
+ },
+ {
+  "key": "1wdap5d",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 0.92,
+  "emo": "whisper",
+  "text": "Six. I've got the door. Come up, come up quiet. It's not in the corridor. It's in the ceiling. I can hear it in the ceiling."
+ },
+ {
+  "key": "0i6p3y6",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Six. Come up, Douglas. Come up, Douglas. Come up."
+ },
+ {
+  "key": "16hfx76",
+  "person": "matron",
+  "voice": "bf_emma*0.5+af_river*0.5",
+  "speed": 0.92,
+  "emo": "cold",
+  "text": "Matron. I'm inspecting the night window. Carry on exactly as you would. Ask me what you ask them. I'll know if you skip anything."
+ },
+ {
+  "key": "0ifmehz",
+  "person": "matron",
+  "voice": "bf_emma*0.5+af_river*0.5",
+  "speed": 0.92,
+  "emo": "cold",
+  "text": "Agatha Thorne. Matron. You may write Matron."
+ },
+ {
+  "key": "0tdqjg0",
+  "person": "matron",
+  "voice": "bf_emma*0.5+af_river*0.5",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Thirtieth of June, 1902. Do not write my age on anything I can see."
+ },
+ {
+  "key": "1n5uq92",
+  "person": "matron",
+  "voice": "bf_emma*0.5+af_river*0.5",
+  "speed": 0.92,
+  "emo": "cold",
+  "text": "The Board of Governors appointed me. Nobody sends me anywhere."
+ },
+ {
+  "key": "0lqygfo",
+  "person": "matron",
+  "voice": "bf_emma*0.5+af_river*0.5",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "None on file. I prefer it that way."
+ },
+ {
+  "key": "0gkui0m",
+  "person": "matron",
+  "voice": "bf_emma*0.5+af_river*0.5",
+  "speed": 0.98,
+  "emo": "stern",
+  "text": "I found my own name in your book this evening. Page one. In your hand. Dated Tuesday. I did not come to the window on Tuesday. I would remember."
+ },
+ {
+  "key": "0wnuy7w",
+  "person": "matron",
+  "voice": "bf_emma*0.5+af_river*0.5",
+  "speed": 0.92,
+  "emo": "cold",
+  "text": "Adequate. Keep it adequate. I will be on the stairs."
+ },
+ {
+  "key": "084zh8y",
+  "person": "hargrave",
+  "voice": "am_michael*0.6+bm_fable*0.4",
+  "speed": 1.06,
+  "emo": "bright",
+  "text": "Evening, evening! Hargrave, Pemberton Brushes. Don't worry, I'm not selling tonight. I'm here for the six week cure. My wife's idea. She says I talk too much."
+ },
+ {
+  "key": "0um45ok",
+  "person": "hargrave",
+  "voice": "am_michael*0.6+bm_fable*0.4",
+  "speed": 1.06,
+  "emo": "bright",
+  "text": "Rupert Hargrave. Two R, two A. Rupert."
+ },
+ {
+  "key": "1sy8c0p",
+  "person": "hargrave",
+  "voice": "am_michael*0.6+bm_fable*0.4",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Tenth of October, 1922. I had a birthday last week. Nobody came."
+ },
+ {
+  "key": "1w5k0t1",
+  "person": "hargrave",
+  "voice": "am_michael*0.6+bm_fable*0.4",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "Dr. Abara. She's very good. She looked at me like she could see the inside of my head."
+ },
+ {
+  "key": "1gslr77",
+  "person": "hargrave",
+  "voice": "am_michael*0.6+bm_fable*0.4",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Cecily. My wife. She cried when I left. I think she was happy."
+ },
+ {
+  "key": "084dn3t",
+  "person": "hargrave",
+  "voice": "am_michael*0.6+bm_fable*0.4",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "My car stalled at the bottom of the drive and I sat there with the wipers going. Someone tapped on the passenger window. Nobody there. Tap tap. Like that."
+ },
+ {
+  "key": "16ewa1j",
+  "person": "hargrave",
+  "voice": "am_michael*0.6+bm_fable*0.4",
+  "speed": 1.06,
+  "emo": "bright",
+  "text": "Cheerio. If another me comes along, he's the one who doesn't laugh."
+ },
+ {
+  "key": "10pbhmw",
+  "person": "hargrave",
+  "voice": "am_michael*0.6+bm_fable*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Evening. Hargrave. Pemberton Brushes. I'm here for the six week cure. My wife's idea."
+ },
+ {
+  "key": "0w74248",
+  "person": "hargrave",
+  "voice": "am_michael*0.6+bm_fable*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Rupert Hargrave. Rupert."
+ },
+ {
+  "key": "09rh2y0",
+  "person": "hargrave",
+  "voice": "am_michael*0.6+bm_fable*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Tenth of October, 1922."
+ },
+ {
+  "key": "0tlf1r3",
+  "person": "hargrave",
+  "voice": "am_michael*0.6+bm_fable*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Dr. Abara. She looked inside my head."
+ },
+ {
+  "key": "1kw720q",
+  "person": "hargrave",
+  "voice": "am_michael*0.6+bm_fable*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Cecily. My wife."
+ },
+ {
+  "key": "1vsygo8",
+  "person": "hargrave",
+  "voice": "am_michael*0.6+bm_fable*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "My car stalled at the bottom of the drive. Someone tapped on the passenger window. Tap tap. Like that."
+ },
+ {
+  "key": "1mu826t",
+  "person": "corbin",
+  "voice": "bm_daniel*0.5+am_adam*0.5",
+  "speed": 1.06,
+  "emo": "bright",
+  "text": "Morning! Well. Night. Corbin's Dairy. I've got the kitchen order and the kitchen door's locked, so it's you or nothing, I'm afraid."
+ },
+ {
+  "key": "145fr45",
+  "person": "corbin",
+  "voice": "bm_daniel*0.5+am_adam*0.5",
+  "speed": 1.06,
+  "emo": "bright",
+  "text": "Barnaby Corbin. Barney. It's on the van."
+ },
+ {
+  "key": "081ck8k",
+  "person": "corbin",
+  "voice": "bm_daniel*0.5+am_adam*0.5",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Twenty fifth of May, 1905. Same day as the old king. Not the same year, mind."
+ },
+ {
+  "key": "1p9lhx0",
+  "person": "corbin",
+  "voice": "bm_daniel*0.5+am_adam*0.5",
+  "speed": 0.88,
+  "emo": "tired",
+  "text": "Dr. Teague. For my back. Thirty years of crates."
+ },
+ {
+  "key": "0wu1xir",
+  "person": "corbin",
+  "voice": "bm_daniel*0.5+am_adam*0.5",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Nora. The wife. She does the books."
+ },
+ {
+  "key": "1d4rg7h",
+  "person": "corbin",
+  "voice": "bm_daniel*0.5+am_adam*0.5",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "Every bottle on my round was empty this morning when I came to collect. Every one. Doorsteps all the way up the Hollow Road. Washed. Dried. Lined up. Somebody's drinking the whole valley's milk."
+ },
+ {
+  "key": "0u6m43n",
+  "person": "corbin",
+  "voice": "bm_daniel*0.5+am_adam*0.5",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Pint in the morning? On the house. If there is a morning."
+ },
+ {
+  "key": "07m79ih",
+  "person": "liesl",
+  "voice": "af_nova*0.6+bf_lily*0.4",
+  "speed": 1.06,
+  "emo": "bright",
+  "text": "Guten Abend. Sorry. Good evening. Is my mother working tonight? Greta Kessler. Tell her Liesl is here. Tell her it is the right one this time."
+ },
+ {
+  "key": "1qsqc59",
+  "person": "liesl",
+  "voice": "af_nova*0.6+bf_lily*0.4",
+  "speed": 1.06,
+  "emo": "bright",
+  "text": "Liesl Kessler. Liesl with an S and an L."
+ },
+ {
+  "key": "1uqpx4o",
+  "person": "liesl",
+  "voice": "af_nova*0.6+bf_lily*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Ninth of June, 1934."
+ },
+ {
+  "key": "1chf9uk",
+  "person": "liesl",
+  "voice": "af_nova*0.6+bf_lily*0.4",
+  "speed": 0.9,
+  "emo": "sly",
+  "text": "Dr. Abara. She was very young then. She had warm hands. Now she has cold ones."
+ },
+ {
+  "key": "08jcb9u",
+  "person": "liesl",
+  "voice": "af_nova*0.6+bf_lily*0.4",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Mutti. Greta Kessler. She is on Ward A. She counts."
+ },
+ {
+  "key": "0ewgnuv",
+  "person": "liesl",
+  "voice": "af_nova*0.6+bf_lily*0.4",
+  "speed": 0.92,
+  "emo": "cold",
+  "text": "Mutti brushed my hair on the ward and I held my sister's hand. There were two of us in the bed. Mutti chose. She chose the other one."
+ },
+ {
+  "key": "1qym79q",
+  "person": "imelda",
+  "voice": "af_heart*0.5+bf_emma*0.5",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "Evening. Cleaner. Sable. I do the corridors. Here, hang on. Don't I know you? I know you."
+ },
+ {
+  "key": "1kkm32t",
+  "person": "imelda",
+  "voice": "af_heart*0.5+bf_emma*0.5",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Imelda Sable. Mrs."
+ },
+ {
+  "key": "1lax9kf",
+  "person": "imelda",
+  "voice": "af_heart*0.5+bf_emma*0.5",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Twentieth of November, 1908."
+ },
+ {
+  "key": "0qf3v78",
+  "person": "imelda",
+  "voice": "af_heart*0.5+bf_emma*0.5",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Matron's office hired me. Fourteen years. Nobody's ever asked me that before."
+ },
+ {
+  "key": "0e7sp8i",
+  "person": "imelda",
+  "voice": "af_heart*0.5+bf_emma*0.5",
+  "speed": 0.86,
+  "emo": "grief",
+  "text": "Jean. My son. He's on Ward B. Memory programme. He doesn't know me any more. He says I look like a nice lady."
+ },
+ {
+  "key": "0dk72wm",
+  "person": "imelda",
+  "voice": "af_heart*0.5+bf_emma*0.5",
+  "speed": 0.92,
+  "emo": "whisper",
+  "text": "I saw you last week. Last Tuesday. You were on the other side of this glass. Out here. In the rain. With a form in your hand. They let you in."
+ },
+ {
+  "key": "0xekdei",
+  "person": "imelda",
+  "voice": "af_heart*0.5+bf_emma*0.5",
+  "speed": 1,
+  "emo": "dry",
+  "text": "I'll do the passage. Don't watch me do it. I don't like being watched doing it."
+ },
+ {
+  "key": "16f6w5z",
+  "person": "mabel",
+  "voice": "bf_lily*0.6+af_jessica*0.4",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Hello. I'm looking for my dad. Gideon Fenwick. He wanders. He came up here last night, didn't he? I've come to take him home."
+ },
+ {
+  "key": "07vt3en",
+  "person": "mabel",
+  "voice": "bf_lily*0.6+af_jessica*0.4",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Mabel Fenwick. Miss."
+ },
+ {
+  "key": "14kypqw",
+  "person": "mabel",
+  "voice": "bf_lily*0.6+af_jessica*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Eighth of August, 1931."
+ },
+ {
+  "key": "1m2z63e",
+  "person": "mabel",
+  "voice": "bf_lily*0.6+af_jessica*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Dr. Teague. He sees my dad."
+ },
+ {
+  "key": "08lk7ed",
+  "person": "mabel",
+  "voice": "bf_lily*0.6+af_jessica*0.4",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "My dad. Gideon. Gideon Fenwick."
+ },
+ {
+  "key": "1jn4ksz",
+  "person": "mabel",
+  "voice": "bf_lily*0.6+af_jessica*0.4",
+  "speed": 0.92,
+  "emo": "cold",
+  "text": "I knocked on his door at two in the morning and said, Dad, it's me. He didn't open it. Why didn't he open it?"
+ },
+ {
+  "key": "0ex8ge6",
+  "person": "mabel",
+  "voice": "bf_lily*0.6+af_jessica*0.4",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "Has my dad come through here? Gideon Fenwick. I've been in the woods. I went for the doctor and I got turned round and the road kept going the wrong way."
+ },
+ {
+  "key": "02zn8oa",
+  "person": "mabel",
+  "voice": "bf_lily*0.6+af_jessica*0.4",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "Mabel. Mabel Fenwick. Sorry. Sorry, I can't stop shivering."
+ },
+ {
+  "key": "0jdyr8t",
+  "person": "mabel",
+  "voice": "bf_lily*0.6+af_jessica*0.4",
+  "speed": 0.88,
+  "emo": "tired",
+  "text": "Eighth of August, 1931."
+ },
+ {
+  "key": "1jfbowm",
+  "person": "mabel",
+  "voice": "bf_lily*0.6+af_jessica*0.4",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "Dr. Teague. For Dad. Not me. I'm all right. I'm all right."
+ },
+ {
+  "key": "07z8lun",
+  "person": "mabel",
+  "voice": "bf_lily*0.6+af_jessica*0.4",
+  "speed": 0.84,
+  "emo": "broken",
+  "text": "Dad. Gideon Fenwick. Is he here? Please say he's here."
+ },
+ {
+  "key": "1ubtq7c",
+  "person": "mabel",
+  "voice": "bf_lily*0.6+af_jessica*0.4",
+  "speed": 0.92,
+  "emo": "whisper",
+  "text": "In the woods there was a woman walking just ahead of me with my coat on. My coat. I called out and she turned round and it was my face. She was practising."
+ },
+ {
+  "key": "1mjbvip",
+  "person": "mabel",
+  "voice": "bf_lily*0.6+af_jessica*0.4",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "Thank you. If there's another one of me... she's had a whole day of practice."
+ },
+ {
+  "key": "0bnwh4v",
+  "person": "percy",
+  "voice": "am_liam*0.6+bm_daniel*0.4",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "Sorry. I think I'm on the wrong side of the door. I went down for a glass of water and the stairs kept going. Am I meant to be out here?"
+ },
+ {
+  "key": "0lyv52g",
+  "person": "percy",
+  "voice": "am_liam*0.6+bm_daniel*0.4",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "Percival Lisle. Percy. I think. It says so on my wrist."
+ },
+ {
+  "key": "0k4m97u",
+  "person": "percy",
+  "voice": "am_liam*0.6+bm_daniel*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "First of January, 1936. A New Year baby. My mother says."
+ },
+ {
+  "key": "0l9ztbl",
+  "person": "percy",
+  "voice": "am_liam*0.6+bm_daniel*0.4",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Dr. Abara. She took something out. She said I asked her to. I must have."
+ },
+ {
+  "key": "0n9qmft",
+  "person": "percy",
+  "voice": "am_liam*0.6+bm_daniel*0.4",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Philippa? It says Philippa on my band. I don't know a Philippa. Is she nice?"
+ },
+ {
+  "key": "1din09p",
+  "person": "percy",
+  "voice": "am_liam*0.6+bm_daniel*0.4",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "There's a girl in a wedding dress who sits on the bench in the yard every night. She waves at my window. I wave back. It seems kind."
+ },
+ {
+  "key": "0a0h8ri",
+  "person": "percy",
+  "voice": "am_liam*0.6+bm_daniel*0.4",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "If the girl in the dress comes, tell her I waved. Tell her I always wave."
+ },
+ {
+  "key": "09ne3le",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.1,
+  "emo": "angry",
+  "text": "Don't. Don't say anything. Gate shut behind me. Again. Same as Tuesday. Let me in and we'll never speak of it."
+ },
+ {
+  "key": "05787l5",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Pell. Douglas Pell. You know it's me."
+ },
+ {
+  "key": "1gcmayj",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Ninth of September, 1936."
+ },
+ {
+  "key": "1senafe",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "Matron's office. She's on the stairs, isn't she? She's watching me get wet."
+ },
+ {
+  "key": "0hc5i87",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Mum. Doris. Still not ringing her."
+ },
+ {
+  "key": "0c5l9qn",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "I went out for a smoke because I heard someone call my name from the yard. Your voice. It was your voice. You were in here the whole time, weren't you?"
+ },
+ {
+  "key": "1v2t0dk",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "Ta. If you hear me calling you from outside, it's not me. I'm inside now. I'm staying inside."
+ },
+ {
+  "key": "0zf0mye",
+  "person": "ada",
+  "voice": "bf_lily*0.55+af_sarah*0.45",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Love. I came down myself. Nobody stopped me. Let me sit with you for a bit. I won't be any trouble."
+ },
+ {
+  "key": "1jtbbg8",
+  "person": "ada",
+  "voice": "bf_lily*0.55+af_sarah*0.45",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Ada Wren. Your mum. Look at me, love."
+ },
+ {
+  "key": "0xldjz5",
+  "person": "ada",
+  "voice": "bf_lily*0.55+af_sarah*0.45",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Nineteenth of March, 1901."
+ },
+ {
+  "key": "0na84fi",
+  "person": "ada",
+  "voice": "bf_lily*0.55+af_sarah*0.45",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Dr. Abara. She said it would help. It did help. I remember everything now. Everything."
+ },
+ {
+  "key": "16c38hu",
+  "person": "ada",
+  "voice": "bf_lily*0.55+af_sarah*0.45",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "You. Only you."
+ },
+ {
+  "key": "0xei137",
+  "person": "ada",
+  "voice": "bf_lily*0.55+af_sarah*0.45",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Margate. Nineteen forty nine. You were six. I bought you a stick of rock and you dropped it in the sea and cried for an hour."
+ },
+ {
+  "key": "1djehtc",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Evening, pet. The phones are back, thank God. Matron's coming down to have a look at you tonight, so tidy your desk and don't argue with her. Nobody's ever won an argument with her. Not even the bishop."
+ },
+ {
+  "key": "0jd9ps4",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 0.98,
+  "emo": "stern",
+  "text": "Kessler. Tonight they come in twos. One then the other, close together. When the second one comes, do not ask yourself which is real. Ask yourself which one has been practising."
+ },
+ {
+  "key": "0bwai4m",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 0.84,
+  "emo": "broken",
+  "text": "Kessler. A girl came to your window. In a plait. If you let her in... no. Do not tell me. I do not want to know which one you chose. I could not choose either."
+ },
+ {
+  "key": "0v0zqep",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "Fuse is going. I'm on the stairs with Matron, so you're on your own. Sorry. She says walk. She says it like an order."
+ },
+ {
+  "key": "09tean1",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "It's me, pet. Biscuit had a bone off the butcher, he's insufferable. Listen. Your mam's been talking to someone through the ward window. Laughing. I couldn't see who. There's nothing out there but the yard."
+ },
+ {
+  "key": "0xeqkrs",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 0.92,
+  "emo": "kind",
+  "text": "She called the thing in the window by your name. I'm sorry. I thought you should know."
+ },
+ {
+  "key": "0n9rszk",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "I'm not going back up till Kessler's with me. Don't tell Matron."
+ },
+ {
+  "key": "1dxi5nu",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "Count. I'll stand at the bottom of the stairs while you do it. That's as far as I'm going. Count each bed once. If you count one twice, stop."
+ },
+ {
+  "key": "0f4f9cz",
+  "person": "radio",
+  "voice": "bm_lewis*0.6+am_adam*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Divers searching Hollow End reservoir have recovered the body of Dr. Orrin Vale. Police say Dr. Vale appears to have been in the water since Tuesday evening. A number of residents report seeing him on the Hollow Road on Thursday night."
+ },
+ {
+  "key": "1ugjefj",
+  "person": "matron",
+  "voice": "bf_emma*0.5+af_river*0.5",
+  "speed": 0.98,
+  "emo": "stern",
+  "text": "Matron. I've read your book. Every page since Tuesday is in your hand, and every page starts the same way. Night officer, let in, twenty two hundred. Who is letting you in, Officer?"
+ },
+ {
+  "key": "0cefbtk",
+  "person": "matron",
+  "voice": "bf_emma*0.5+af_river*0.5",
+  "speed": 0.92,
+  "emo": "cold",
+  "text": "I have sent for Dr. Abara. She is not answering."
+ },
+ {
+  "key": "0td2zpr",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 0.98,
+  "emo": "stern",
+  "text": "Kessler. I will be at the Ward B door at six. If I hold out my hand to you, do not take it until you have seen me breathe."
+ },
+ {
+  "key": "0vce734",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 0.92,
+  "emo": "whisper",
+  "text": "Six. Kessler. I am at the door. Come now. Slowly. It is between us. Let it pass."
+ },
+ {
+  "key": "1msmyoo",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Six. Mutti is at the door. Come and choose. Come and choose."
+ },
+ {
+  "key": "1asw89s",
+  "person": "maddox",
+  "voice": "am_onyx*0.5+am_santa*0.5",
+  "speed": 0.88,
+  "emo": "tired",
+  "text": "Evening. Maddox. From St. Aldhelm's. I'd like a bed for the night, if it's all the same. I'm not going back to the churchyard."
+ },
+ {
+  "key": "0rn8w5r",
+  "person": "maddox",
+  "voice": "am_onyx*0.5+am_santa*0.5",
+  "speed": 0.88,
+  "emo": "tired",
+  "text": "Gideon Maddox. Groundsman."
+ },
+ {
+  "key": "04clfkg",
+  "person": "maddox",
+  "voice": "am_onyx*0.5+am_santa*0.5",
+  "speed": 0.88,
+  "emo": "tired",
+  "text": "Fourteenth of January, 1903."
+ },
+ {
+  "key": "0h525z3",
+  "person": "maddox",
+  "voice": "am_onyx*0.5+am_santa*0.5",
+  "speed": 0.86,
+  "emo": "grief",
+  "text": "Dr. Vale signed me. Before. Before the reservoir."
+ },
+ {
+  "key": "1n1olfb",
+  "person": "maddox",
+  "voice": "am_onyx*0.5+am_santa*0.5",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Nobody living. I see to the rest."
+ },
+ {
+  "key": "0o96mag",
+  "person": "maddox",
+  "voice": "am_onyx*0.5+am_santa*0.5",
+  "speed": 0.92,
+  "emo": "whisper",
+  "text": "I filled in three graves today that I dug this morning. When I went back after my tea they were open again. Neat. Square. From the inside."
+ },
+ {
+  "key": "0e0n0we",
+  "person": "maddox",
+  "voice": "am_onyx*0.5+am_santa*0.5",
+  "speed": 0.88,
+  "emo": "tired",
+  "text": "Thank you. Leave the spade where it is. I don't want to see it in the morning."
+ },
+ {
+  "key": "1j8jjj6",
+  "person": "halloway",
+  "voice": "bf_emma*0.5+af_nicole*0.5",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Evening. Halloway, district midwife. Mother's on Ward C, baby needs to go up to her. He's very quiet, the little lamb. Very good."
+ },
+ {
+  "key": "13oj73e",
+  "person": "halloway",
+  "voice": "bf_emma*0.5+af_nicole*0.5",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Agnes Halloway. Midwife. Twenty years."
+ },
+ {
+  "key": "1vkek3m",
+  "person": "halloway",
+  "voice": "bf_emma*0.5+af_nicole*0.5",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Twenty third of July, 1913."
+ },
+ {
+  "key": "19cfq3s",
+  "person": "halloway",
+  "voice": "bf_emma*0.5+af_nicole*0.5",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Dr. Sorley. She rang me herself."
+ },
+ {
+  "key": "1olxf81",
+  "person": "halloway",
+  "voice": "bf_emma*0.5+af_nicole*0.5",
+  "speed": 0.9,
+  "emo": "sly",
+  "text": "None on file. I have the babies. Hundreds of them."
+ },
+ {
+  "key": "1aod1lg",
+  "person": "halloway",
+  "voice": "bf_emma*0.5+af_nicole*0.5",
+  "speed": 0.9,
+  "emo": "sly",
+  "text": "He cried all the way up the drive. Then he stopped. They all stop, eventually. Open the glass and you can hold him."
+ },
+ {
+  "key": "0wzo53h",
+  "person": "clem",
+  "voice": "am_adam*0.5+bm_lewis*0.5",
+  "speed": 1.1,
+  "emo": "angry",
+  "text": "Ashby. Signalman. My girl came here on Wednesday and nobody's seen her since. Nell Ashby. Nineteen. Don't tell me she's not here, I've seen her bike in your yard."
+ },
+ {
+  "key": "1x8x7sl",
+  "person": "clem",
+  "voice": "am_adam*0.5+bm_lewis*0.5",
+  "speed": 1.1,
+  "emo": "angry",
+  "text": "Clement Ashby. Clem."
+ },
+ {
+  "key": "1ma05ju",
+  "person": "clem",
+  "voice": "am_adam*0.5+bm_lewis*0.5",
+  "speed": 0.98,
+  "emo": "stern",
+  "text": "Third of March, 1914."
+ },
+ {
+  "key": "121sbl3",
+  "person": "clem",
+  "voice": "am_adam*0.5+bm_lewis*0.5",
+  "speed": 1.1,
+  "emo": "angry",
+  "text": "Dr. Rafferty. He sent Nell. I'm sending me."
+ },
+ {
+  "key": "0zd1msz",
+  "person": "clem",
+  "voice": "am_adam*0.5+bm_lewis*0.5",
+  "speed": 1.14,
+  "emo": "urgent",
+  "text": "Nell. Eleanor. My daughter. Is she on your machine? Is she?"
+ },
+ {
+  "key": "1ij6dnh",
+  "person": "clem",
+  "voice": "am_adam*0.5+bm_lewis*0.5",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "The bell in my box rang at three this morning. Train coming. There's no train at three. I looked up the line and there was a girl walking along the sleepers in a headset. She waved."
+ },
+ {
+  "key": "1aeu9gg",
+  "person": "clem",
+  "voice": "am_adam*0.5+bm_lewis*0.5",
+  "speed": 0.86,
+  "emo": "grief",
+  "text": "If she's up there, tell her her dad came. Tell her I left the box. She'll know what that means."
+ },
+ {
+  "key": "0ic5m3z",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Pell. Douglas Pell. Night orderly, Ward B."
+ },
+ {
+  "key": "0j6gmlt",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Ninth of September, 1936."
+ },
+ {
+  "key": "0c08rdy",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Matron's office."
+ },
+ {
+  "key": "1jbf45p",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 0.9,
+  "emo": "sly",
+  "text": "Mum. Doris. Ring her. Ring her now. Tell her I'm here."
+ },
+ {
+  "key": "0uifthw",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "There was a man on the road with no umbrella. Big fella. I said evening. He did not say anything back. He just listened."
+ },
+ {
+  "key": "1lwwxad",
+  "person": "lionel",
+  "voice": "am_michael*0.5+bm_george*0.5",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "I'm sorry, I'm a doctor here, I think. Marsh. I was told to come back to the hospital. I don't remember who told me. I've been sitting in my car for four days."
+ },
+ {
+  "key": "1pm0e00",
+  "person": "lionel",
+  "voice": "am_michael*0.5+bm_george*0.5",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "Lionel Marsh. Doctor. That's on my licence. I checked."
+ },
+ {
+  "key": "0jolvz7",
+  "person": "lionel",
+  "voice": "am_michael*0.5+bm_george*0.5",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Twenty first of April, 1913."
+ },
+ {
+  "key": "1aszv3v",
+  "person": "lionel",
+  "voice": "am_michael*0.5+bm_george*0.5",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Dr. Lindqvist? I think. Someone took something out of me. I think I said yes."
+ },
+ {
+  "key": "13xgb3l",
+  "person": "lionel",
+  "voice": "am_michael*0.5+bm_george*0.5",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "I'm not married. I don't think. There's a ring. Why is there a ring?"
+ },
+ {
+  "key": "0rc858q",
+  "person": "lionel",
+  "voice": "am_michael*0.5+bm_george*0.5",
+  "speed": 0.86,
+  "emo": "grief",
+  "text": "I keep saying ten minutes. In the car. Out loud. I don't know who I'm saying it to."
+ },
+ {
+  "key": "0vt7hy0",
+  "person": "lionel",
+  "voice": "am_michael*0.5+bm_george*0.5",
+  "speed": 0.86,
+  "emo": "grief",
+  "text": "If someone's waiting for me, tell her I'm sorry. Whoever she is. I'm sorry."
+ },
+ {
+  "key": "1vx9c2g",
+  "person": "dolly",
+  "voice": "af_bella*0.5+bf_alice*0.5",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Don't look at me like that, sweetheart. I'm here of my own free will. Got a light?"
+ },
+ {
+  "key": "1cst8yc",
+  "person": "dolly",
+  "voice": "af_bella*0.5+bf_alice*0.5",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Dolores Rusk. Put Dolly."
+ },
+ {
+  "key": "0xcoof8",
+  "person": "dolly",
+  "voice": "af_bella*0.5+bf_alice*0.5",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Third of September, 1909."
+ },
+ {
+  "key": "1oftmuk",
+  "person": "dolly",
+  "voice": "af_bella*0.5+bf_alice*0.5",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Dr. Rafferty. Lovely man."
+ },
+ {
+  "key": "1w4tatl",
+  "person": "dolly",
+  "voice": "af_bella*0.5+bf_alice*0.5",
+  "speed": 0.9,
+  "emo": "sly",
+  "text": "Vera. My sister. Ring her. Ring her now."
+ },
+ {
+  "key": "0qw6xs4",
+  "person": "dolly",
+  "voice": "af_bella*0.5+bf_alice*0.5",
+  "speed": 0.9,
+  "emo": "sly",
+  "text": "Something walked behind me on the lane. Stopped when I stopped. There is no echo on that lane, sweetheart."
+ },
+ {
+  "key": "0t36zgp",
+  "person": "rosa",
+  "voice": "af_jessica*0.6+bf_lily*0.4",
+  "speed": 0.88,
+  "emo": "tired",
+  "text": "Ferreira. Agency. They've had me on nights all week and nobody's told me why. Form's right this time, before you say anything. I filled it in myself."
+ },
+ {
+  "key": "17jp895",
+  "person": "rosa",
+  "voice": "af_jessica*0.6+bf_lily*0.4",
+  "speed": 0.88,
+  "emo": "tired",
+  "text": "Rosa Ferreira. Same as Wednesday."
+ },
+ {
+  "key": "0b7ywl7",
+  "person": "rosa",
+  "voice": "af_jessica*0.6+bf_lily*0.4",
+  "speed": 0.88,
+  "emo": "tired",
+  "text": "Seventeenth of January, 1929."
+ },
+ {
+  "key": "00vymg2",
+  "person": "rosa",
+  "voice": "af_jessica*0.6+bf_lily*0.4",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Dr. Lindqvist. Still never met him. I'm starting to think there isn't one."
+ },
+ {
+  "key": "1bvza24",
+  "person": "rosa",
+  "voice": "af_jessica*0.6+bf_lily*0.4",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "Paulo. My husband. He says I talk in my sleep now. In German. I don't speak German."
+ },
+ {
+  "key": "1p0hm01",
+  "person": "rosa",
+  "voice": "af_jessica*0.6+bf_lily*0.4",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "I was doing the obs on Ward B last night and one of the patients took my pulse back. Held my wrist and counted. Then she said, good, you're one of us."
+ },
+ {
+  "key": "05fbdra",
+  "person": "rosa",
+  "voice": "af_jessica*0.6+bf_lily*0.4",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Right. Wards. If I take your pulse later, let me."
+ },
+ {
+  "key": "0y2hire",
+  "person": "gus",
+  "voice": "am_fenrir*0.6+bm_daniel*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Evening. Brennan. Let me in. There is nothing in your yard. I looked. There is nothing at all."
+ },
+ {
+  "key": "06qhqjp",
+  "person": "gus",
+  "voice": "am_fenrir*0.6+bm_daniel*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Augustus Brennan. Gus."
+ },
+ {
+  "key": "0qi4f34",
+  "person": "gus",
+  "voice": "am_fenrir*0.6+bm_daniel*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Eighteenth of July, 1927."
+ },
+ {
+  "key": "1j8l97m",
+  "person": "gus",
+  "voice": "am_fenrir*0.6+bm_daniel*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Dr. Rafferty. For my nerves. They are better now."
+ },
+ {
+  "key": "1laqabp",
+  "person": "gus",
+  "voice": "am_fenrir*0.6+bm_daniel*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Frank. My brother. Tell him I am sorry about the van."
+ },
+ {
+  "key": "09fv1cy",
+  "person": "gus",
+  "voice": "am_fenrir*0.6+bm_daniel*0.4",
+  "speed": 0.9,
+  "emo": "sly",
+  "text": "It stood at the edge of the light and listened. I stood still. I stood still for a very long time. Now I am very good at standing still."
+ },
+ {
+  "key": "0cljxam",
+  "person": "edie",
+  "voice": "bf_isabella*0.5+af_sarah*0.5",
+  "speed": 0.84,
+  "emo": "broken",
+  "text": "I'm sorry. It's me again. Lionel's car was in the lay-by and he was in it and he looked straight at me and said, can I help you? Can I help you. Please tell me he's in there."
+ },
+ {
+  "key": "03c2bgu",
+  "person": "edie",
+  "voice": "bf_isabella*0.5+af_sarah*0.5",
+  "speed": 0.84,
+  "emo": "broken",
+  "text": "Edith Marsh. Mrs. I think I still am."
+ },
+ {
+  "key": "0ab9ky6",
+  "person": "edie",
+  "voice": "bf_isabella*0.5+af_sarah*0.5",
+  "speed": 0.86,
+  "emo": "grief",
+  "text": "Second of October, 1915."
+ },
+ {
+  "key": "0h4johf",
+  "person": "edie",
+  "voice": "bf_isabella*0.5+af_sarah*0.5",
+  "speed": 0.84,
+  "emo": "broken",
+  "text": "Nobody. Nobody would. I came."
+ },
+ {
+  "key": "0e4d8x0",
+  "person": "edie",
+  "voice": "bf_isabella*0.5+af_sarah*0.5",
+  "speed": 0.84,
+  "emo": "broken",
+  "text": "Lionel. Lionel Marsh. He has a ring on. I put it there."
+ },
+ {
+  "key": "06er2db",
+  "person": "edie",
+  "voice": "bf_isabella*0.5+af_sarah*0.5",
+  "speed": 0.92,
+  "emo": "whisper",
+  "text": "He said ten minutes. On Tuesday, in the car, he said ten minutes. That was the last thing he said that was his."
+ },
+ {
+  "key": "1uv41s7",
+  "person": "edie",
+  "voice": "bf_isabella*0.5+af_sarah*0.5",
+  "speed": 0.86,
+  "emo": "grief",
+  "text": "If he doesn't know me, don't tell him who I am. Let him meet me again. I was nicer the first time."
+ },
+ {
+  "key": "07ygwy6",
+  "person": "tobias",
+  "voice": "bm_fable*0.6+am_liam*0.4",
+  "speed": 0.92,
+  "emo": "whisper",
+  "text": "Mm mm mm mm. Sorry. I came down to tell you. I counted the windows again. There's one more now."
+ },
+ {
+  "key": "0c9d7b5",
+  "person": "tobias",
+  "voice": "bm_fable*0.6+am_liam*0.4",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Tobias. Hale. Toby. You let me in."
+ },
+ {
+  "key": "0v4r47g",
+  "person": "tobias",
+  "voice": "bm_fable*0.6+am_liam*0.4",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Twenty seventh of June, 1939. It says so on my band. It's right on the band."
+ },
+ {
+  "key": "1irvwnh",
+  "person": "tobias",
+  "voice": "bm_fable*0.6+am_liam*0.4",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Dr. Sorley. Pears."
+ },
+ {
+  "key": "1ils53w",
+  "person": "tobias",
+  "voice": "bm_fable*0.6+am_liam*0.4",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "Marian Hale. My mother. She answered the phone tonight. After nine. She never answers after nine."
+ },
+ {
+  "key": "0ygnbhk",
+  "person": "tobias",
+  "voice": "bm_fable*0.6+am_liam*0.4",
+  "speed": 0.92,
+  "emo": "whisper",
+  "text": "The new window is on the ward. Bed ten. There is someone sitting in it looking out at the yard. They look like you."
+ },
+ {
+  "key": "1s237sw",
+  "person": "tobias",
+  "voice": "bm_fable*0.6+am_liam*0.4",
+  "speed": 0.92,
+  "emo": "whisper",
+  "text": "Mm mm mm mm. Don't let them count you."
+ },
+ {
+  "key": "0rkcd8h",
+  "person": "ada",
+  "voice": "bf_lily*0.55+af_sarah*0.45",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "There you are. I knew you'd still be at your window. I came down the back stairs. Let me in, love. Just for a minute."
+ },
+ {
+  "key": "17p2211",
+  "person": "ada",
+  "voice": "bf_lily*0.55+af_sarah*0.45",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Ada Wren. Mum. You know."
+ },
+ {
+  "key": "1mb4yvr",
+  "person": "ada",
+  "voice": "bf_lily*0.55+af_sarah*0.45",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Nineteenth of March, 1901."
+ },
+ {
+  "key": "04jxo68",
+  "person": "ada",
+  "voice": "bf_lily*0.55+af_sarah*0.45",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Nobody. I sent myself. I'm allowed. I'm better."
+ },
+ {
+  "key": "02lnn5d",
+  "person": "ada",
+  "voice": "bf_lily*0.55+af_sarah*0.45",
+  "speed": 0.9,
+  "emo": "sly",
+  "text": "You. Your name. Do you want me to say it? I can say it."
+ },
+ {
+  "key": "0qx1ais",
+  "person": "ada",
+  "voice": "bf_lily*0.55+af_sarah*0.45",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Margate, nineteen forty nine. Your hand in mine. You said, don't let go. I won't let go. Open the glass and I won't let go."
+ },
+ {
+  "key": "1qqvr8b",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "Pet. It's Imogen. Pell's not come in. His mum's rung twice. I said he'd be at the pictures. He doesn't go to the pictures. Kessler says to tell you the breath won't help you tonight. She says get close. Get closer than you want to."
+ },
+ {
+  "key": "0ln30cb",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 0.98,
+  "emo": "stern",
+  "text": "Kessler. They breathe now. They watched us breathe and they copied it. But they do not know why we breathe. Look at the throat. A living throat moves with the heart. And watch the breath on the glass. Ours fades. Theirs stays where it is put."
+ },
+ {
+  "key": "0e6xw5k",
+  "person": "radio",
+  "voice": "bm_lewis*0.6+am_adam*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Police are appealing for information about Douglas Pell, twenty seven, an orderly at Vesper Hollow Hospital, who did not return home on Friday night. Mr. Pell's mother says he telephoned her at four o'clock this morning and asked her to open the door."
+ },
+ {
+  "key": "0aujvlr",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "Lights, pet. Any second. Hand on the wall. And if you hear Pell in that corridor, you don't answer him. Promise me."
+ },
+ {
+  "key": "1ibe6xm",
+  "person": "abara",
+  "voice": "af_kore*0.6+bf_emma*0.4",
+  "speed": 0.88,
+  "emo": "tired",
+  "text": "Abara. I came the back way. You have been very good at this. Better than I expected. I need you to do one more night after this one. Then I will explain everything. I promise you I will explain."
+ },
+ {
+  "key": "1dk2bqh",
+  "person": "abara",
+  "voice": "af_kore*0.6+bf_emma*0.4",
+  "speed": 0.92,
+  "emo": "cold",
+  "text": "Your mother is safe. You have my word. Whatever comes to your window tonight, she is upstairs."
+ },
+ {
+  "key": "15x6ptw",
+  "person": "abara",
+  "voice": "af_kore*0.6+bf_emma*0.4",
+  "speed": 0.92,
+  "emo": "cold",
+  "text": "Don't ask me about bed ten. Not tonight."
+ },
+ {
+  "key": "0li7qvn",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "Count, pet. Pell's not here to ask you, so I'm asking. Through the slot. If there's a young man in orderly's whites in one of the beds, I don't want to know. Count him anyway."
+ },
+ {
+  "key": "0v3hcn1",
+  "person": "matron",
+  "voice": "bf_emma*0.5+af_river*0.5",
+  "speed": 0.92,
+  "emo": "cold",
+  "text": "Matron. I have found your card. Not in the staff drawer. In the patients'. Ward B, bed ten. Admitted Tuesday at ten o'clock. Treatment: memory. Consultant: Abara. Is this some sort of joke?"
+ },
+ {
+  "key": "0u0aeue",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 0.92,
+  "emo": "whisper",
+  "text": "Kessler. Bed ten is empty. Bed ten has been empty since Tuesday. Except when I am not looking at it."
+ },
+ {
+  "key": "02an1jg",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 0.92,
+  "emo": "whisper",
+  "text": "Six, pet. I've got the door. Hollis is with me. Come up slow. It's waiting by the alcove. It knows you now."
+ },
+ {
+  "key": "1gh8mq8",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Oi. Oi! It's Pell. I've got the door. Come up. Come up. I went for a smoke."
+ },
+ {
+  "key": "1927omx",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 1.14,
+  "emo": "urgent",
+  "text": "Pet, it's me. It's really me, I'll prove it, ask me anything. Somebody locked the staff gate from the inside and I've walked round the long way in this."
+ },
+ {
+  "key": "0g96zec",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Imogen Doyle. Sister. Night staff. Thirty years in this place, God help me."
+ },
+ {
+  "key": "108272l",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Third of February, 1911. Don't say it out loud."
+ },
+ {
+  "key": "0vustr3",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "Matron's Office. She's not in it, before you ask. Nobody's seen her since she went to find Dr. Abara."
+ },
+ {
+  "key": "18ufniw",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Nobody on file. Biscuit, if you count a dog. I count him."
+ },
+ {
+  "key": "04iiepo",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 1.06,
+  "emo": "bright",
+  "text": "Biscuit had the postman again this morning. Same postman. Third time this week. The poor man's started coming round the back."
+ },
+ {
+  "key": "0329khs",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 0.92,
+  "emo": "kind",
+  "text": "Thank you, pet. I'll be on the ward. Your mam's asleep. I'll sit with her till you come."
+ },
+ {
+  "key": "1s9e3y1",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Kessler. Open the glass. I have counted Ward B and I need to tell you the number in person."
+ },
+ {
+  "key": "0wn1lqy",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Greta Kessler. Night nurse."
+ },
+ {
+  "key": "1tw01bq",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 0.9,
+  "emo": "sly",
+  "text": "Liesl. My daughter. Both of them. I have both of them now."
+ },
+ {
+  "key": "15wqhgu",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 0.9,
+  "emo": "sly",
+  "text": "I chose. I chose both. Open the glass and I will tell you the number."
+ },
+ {
+  "key": "1aheo5h",
+  "person": "hollis",
+  "voice": "am_onyx*0.6+bm_lewis*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Hollis. I came back down because I said I'd walk that corridor with you, and I meant every night, not just the one. Let me through."
+ },
+ {
+  "key": "0tlni7w",
+  "person": "hollis",
+  "voice": "am_onyx*0.6+bm_lewis*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Abel Hollis. Porter."
+ },
+ {
+  "key": "0dbmw0h",
+  "person": "hollis",
+  "voice": "am_onyx*0.6+bm_lewis*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Fifth of November, 1908."
+ },
+ {
+  "key": "0530pzn",
+  "person": "hollis",
+  "voice": "am_onyx*0.6+bm_lewis*0.4",
+  "speed": 0.88,
+  "emo": "tired",
+  "text": "Dr. Teague. He's stopped coming in. Most of them have."
+ },
+ {
+  "key": "1i5lgr8",
+  "person": "hollis",
+  "voice": "am_onyx*0.6+bm_lewis*0.4",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Ruth. My sister. She rang me tonight to check I was still me. I said I think so. She said that's what you'd say."
+ },
+ {
+  "key": "1egitk8",
+  "person": "hollis",
+  "voice": "am_onyx*0.6+bm_lewis*0.4",
+  "speed": 0.92,
+  "emo": "whisper",
+  "text": "I went up to bed ten tonight and said goodnight by name. Your name. Somebody said goodnight back."
+ },
+ {
+  "key": "1epcfaw",
+  "person": "hollis",
+  "voice": "am_onyx*0.6+bm_lewis*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Six o'clock. I'll be at the door. Walk. Don't run to me. Walk."
+ },
+ {
+  "key": "0t2b8oa",
+  "person": "danny",
+  "voice": "af_sky*0.8+bf_lily*0.2",
+  "speed": 0.86,
+  "emo": "grief",
+  "text": "Is my mam here? I said Mam this time. I said it right. Can I come in now?"
+ },
+ {
+  "key": "17kt6le",
+  "person": "danny",
+  "voice": "af_sky*0.8+bf_lily*0.2",
+  "speed": 0.86,
+  "emo": "grief",
+  "text": "Danny Calder. I'm six."
+ },
+ {
+  "key": "0a30v7g",
+  "person": "danny",
+  "voice": "af_sky*0.8+bf_lily*0.2",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Eleventh of May, 1952."
+ },
+ {
+  "key": "09tytdi",
+  "person": "danny",
+  "voice": "af_sky*0.8+bf_lily*0.2",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "The lady with the cold hands."
+ },
+ {
+  "key": "0i5urd3",
+  "person": "danny",
+  "voice": "af_sky*0.8+bf_lily*0.2",
+  "speed": 0.9,
+  "emo": "sly",
+  "text": "Mam. Mae Calder. Mam. Mam. I said it right."
+ },
+ {
+  "key": "0900aiy",
+  "person": "danny",
+  "voice": "af_sky*0.8+bf_lily*0.2",
+  "speed": 0.9,
+  "emo": "sly",
+  "text": "She finished the second one. The second cap. She gave it to me. Open the window and I'll show you."
+ },
+ {
+  "key": "1bbjtv4",
+  "person": "abara",
+  "voice": "af_kore*0.6+bf_emma*0.4",
+  "speed": 0.88,
+  "emo": "tired",
+  "text": "Abara. I said I would explain. I am going to explain now, through the glass, and then you can decide whether to let me in."
+ },
+ {
+  "key": "01odigt",
+  "person": "abara",
+  "voice": "af_kore*0.6+bf_emma*0.4",
+  "speed": 0.88,
+  "emo": "tired",
+  "text": "Ines Abara. Consultant. Your consultant."
+ },
+ {
+  "key": "10nmkl6",
+  "person": "abara",
+  "voice": "af_kore*0.6+bf_emma*0.4",
+  "speed": 0.88,
+  "emo": "tired",
+  "text": "First of March, 1917."
+ },
+ {
+  "key": "13wk5v7",
+  "person": "abara",
+  "voice": "af_kore*0.6+bf_emma*0.4",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Nobody. Not any more. The Board has suspended the programme. I am suspended."
+ },
+ {
+  "key": "0bgxgd4",
+  "person": "abara",
+  "voice": "af_kore*0.6+bf_emma*0.4",
+  "speed": 0.86,
+  "emo": "grief",
+  "text": "None. I took that out of myself in nineteen fifty five. It was my first."
+ },
+ {
+  "key": "0d12eem",
+  "person": "abara",
+  "voice": "af_kore*0.6+bf_emma*0.4",
+  "speed": 0.92,
+  "emo": "whisper",
+  "text": "You came to me in April. Your mother had stopped knowing you, and it was killing you. You asked me to take it out. All of it. I did. And every night since Tuesday, what I took out of you has been sitting at that desk, letting people in. You are what I took out."
+ },
+ {
+  "key": "06jfxea",
+  "person": "abara",
+  "voice": "af_kore*0.6+bf_emma*0.4",
+  "speed": 0.92,
+  "emo": "kind",
+  "text": "Whatever comes last tonight, it will have your face. It will be very sure of itself. You were never very sure of yourself. That is how you will know."
+ },
+ {
+  "key": "1vxqkid",
+  "person": "ada",
+  "voice": "bf_lily*0.55+af_sarah*0.45",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "Hello, dear. I'm sorry to be a nuisance. I think I've come down the wrong stairs. Is this the way back to my bed? A nice young person usually sits with me."
+ },
+ {
+  "key": "1to531c",
+  "person": "ada",
+  "voice": "bf_lily*0.55+af_sarah*0.45",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Ada. Ada Wren. Are you the doctor? You've got a kind face for a doctor."
+ },
+ {
+  "key": "1hl29fh",
+  "person": "ada",
+  "voice": "bf_lily*0.55+af_sarah*0.45",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "Oh, I... March. It's in March. The nineteenth. Nineteen hundred and one? That sounds right."
+ },
+ {
+  "key": "1rz5ux4",
+  "person": "ada",
+  "voice": "bf_lily*0.55+af_sarah*0.45",
+  "speed": 1,
+  "emo": "calm",
+  "text": "A lady doctor. She has cold hands. She said I would feel better and I do, mostly."
+ },
+ {
+  "key": "1h7vjzi",
+  "person": "ada",
+  "voice": "bf_lily*0.55+af_sarah*0.45",
+  "speed": 0.86,
+  "emo": "grief",
+  "text": "I have a child. I think. They sit with me at six. I can't remember their name, isn't that dreadful? I'd know them if I saw them."
+ },
+ {
+  "key": "1rmf9tl",
+  "person": "ada",
+  "voice": "bf_lily*0.55+af_sarah*0.45",
+  "speed": 0.92,
+  "emo": "whisper",
+  "text": "There was a beach. A little hand in mine. Somebody dropped something in the sea and cried for an hour. I can't think who."
+ },
+ {
+  "key": "0yx7ljb",
+  "person": "ada",
+  "voice": "bf_lily*0.55+af_sarah*0.45",
+  "speed": 0.92,
+  "emo": "kind",
+  "text": "Thank you, dear. If you see my child, tell them I'm in bed nine. Tell them I'll know them when I see them."
+ },
+ {
+  "key": "1i2ej58",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 0.84,
+  "emo": "broken",
+  "text": "It's me. It's actually me. I woke up in a bed on Ward B with a band on my wrist and everyone calling me Mr. Pell. I've been a patient since Friday. Nobody told me."
+ },
+ {
+  "key": "05agmxu",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 0.84,
+  "emo": "broken",
+  "text": "Douglas Pell. Orderly. Patient. I don't know which."
+ },
+ {
+  "key": "1yc7xjg",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 0.88,
+  "emo": "tired",
+  "text": "Ninth of September, 1936."
+ },
+ {
+  "key": "1l7mr5t",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 0.86,
+  "emo": "grief",
+  "text": "Abara. She took Friday out of me. I asked her to. Something happened on Friday and I asked her to take it out."
+ },
+ {
+  "key": "02qfr7v",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.14,
+  "emo": "urgent",
+  "text": "Mum. Doris. Ring her. Please. Ring her and tell her not to open the door."
+ },
+ {
+  "key": "05izhwf",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 0.86,
+  "emo": "grief",
+  "text": "I don't have one for tonight. I've got Tuesday, when you let me in. That's the last good one. You let me in."
+ },
+ {
+  "key": "0ztaans",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Thanks. For Tuesday as well. I never said."
+ },
+ {
+  "key": "0rrf5zf",
+  "person": "mae",
+  "voice": "bf_emma*0.7+af_sky*0.3",
+  "speed": 0.86,
+  "emo": "grief",
+  "text": "I finished it. The second one. I sat up all night and finished it. I'm going to leave it at the grave. I wanted to tell someone first. You were kind to me."
+ },
+ {
+  "key": "1u5eoj9",
+  "person": "mae",
+  "voice": "bf_emma*0.7+af_sky*0.3",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Mae Calder. Mrs. Still Mrs."
+ },
+ {
+  "key": "09gwmg3",
+  "person": "mae",
+  "voice": "bf_emma*0.7+af_sky*0.3",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Thirtieth of January, 1922."
+ },
+ {
+  "key": "0aa46ee",
+  "person": "mae",
+  "voice": "bf_emma*0.7+af_sky*0.3",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Dr. Sorley. She says I don't need to come back after this."
+ },
+ {
+  "key": "1ap86pv",
+  "person": "mae",
+  "voice": "bf_emma*0.7+af_sky*0.3",
+  "speed": 0.86,
+  "emo": "grief",
+  "text": "Danny. Daniel Calder. He died in nineteen fifty eight. I can say it now."
+ },
+ {
+  "key": "18jjb55",
+  "person": "mae",
+  "voice": "bf_emma*0.7+af_sky*0.3",
+  "speed": 0.92,
+  "emo": "kind",
+  "text": "Something came to my door last night calling me Mam. I said, you're not him, love. I'm sorry. And it went away. I think it was relieved."
+ },
+ {
+  "key": "1sfi8r7",
+  "person": "mae",
+  "voice": "bf_emma*0.7+af_sky*0.3",
+  "speed": 0.92,
+  "emo": "kind",
+  "text": "Look after yourself. Whoever that is now."
+ },
+ {
+  "key": "00txys8",
+  "person": "officer",
+  "voice": "am_echo*0.5+bf_emma*0.5",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Night intake. You can go now. I know the job. I have always known the job. Let me in and you can go and sit with her."
+ },
+ {
+  "key": "0y5jb48",
+  "person": "officer",
+  "voice": "am_echo*0.5+bf_emma*0.5",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Wren. Night officer. You know the rest. I know the rest."
+ },
+ {
+  "key": "1obvryt",
+  "person": "officer",
+  "voice": "am_echo*0.5+bf_emma*0.5",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Second of April, 1937."
+ },
+ {
+  "key": "1wiq97o",
+  "person": "officer",
+  "voice": "am_echo*0.5+bf_emma*0.5",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Dr. Abara. She made me out of you. She made me very carefully."
+ },
+ {
+  "key": "1hf4j9n",
+  "person": "officer",
+  "voice": "am_echo*0.5+bf_emma*0.5",
+  "speed": 0.9,
+  "emo": "sly",
+  "text": "Ada Wren. Our mother. She knows me. She knows my name."
+ },
+ {
+  "key": "1h7vzsj",
+  "person": "officer",
+  "voice": "am_echo*0.5+bf_emma*0.5",
+  "speed": 0.9,
+  "emo": "sly",
+  "text": "Margate. Nineteen forty nine. The stick of rock in the sea. I remember it better than you do. I remember everything you gave away."
+ },
+ {
+  "key": "0vqtnpr",
+  "person": "matron",
+  "voice": "bf_emma*0.5+af_river*0.5",
+  "speed": 0.92,
+  "emo": "cold",
+  "text": "This is the Matron's office. I am leaving this message on the desk telephone in case it is answered. Night officer, if you are hearing this, you are a patient of this hospital. Please remain at your post until the day staff arrive. Please do not let anyone in that you are not sure of. Including yourself."
+ },
+ {
+  "key": "1d7apvq",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 0.98,
+  "emo": "stern",
+  "text": "Kessler. Last night. Everything you have learned, use it all. Breath that fades. A pulse in the throat. The mark on the correct side. A person who waits for the question. And if the last one is very sure of itself, remember that people are never sure."
+ },
+ {
+  "key": "1t9poft",
+  "person": "radio",
+  "voice": "bm_lewis*0.6+am_adam*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Vesper Hollow Hospital has announced the suspension of its experimental memory programme following an inquiry by the Board of Governors. Families are asked not to visit the hospital tonight. Families are asked not to answer the door."
+ },
+ {
+  "key": "12yv1pl",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Last time, pet. The fuse. You know the way. Hollis is on the stairs if you need him. Walk."
+ },
+ {
+  "key": "0anj7ca",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 0.98,
+  "emo": "stern",
+  "text": "Kessler. The real one. Look at my throat. Go on. Look. I came down to tell you that the thing that wore me this evening asked me to forgive it. I said no. You may say no as well. You are allowed."
+ },
+ {
+  "key": "10kinsc",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 0.86,
+  "emo": "grief",
+  "text": "I have stopped counting Liesl. There is one of her. She is buried at St. Aldhelm's. I have decided."
+ },
+ {
+  "key": "10tq4jc",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 0.92,
+  "emo": "kind",
+  "text": "Your mother asked a nurse for your name tonight. She was told it. She said it back twice."
+ },
+ {
+  "key": "1h34m4x",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "Count, pet. And count bed ten. If there is somebody in bed ten, look at their face and tell me if it is yours."
+ },
+ {
+  "key": "0c4tbdu",
+  "person": "ada",
+  "voice": "bf_lily*0.55+af_sarah*0.45",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "Love. It's Mum. Somebody's coming to your window in a minute. They've got your face. Let them in, love. They know your name. You never did."
+ },
+ {
+  "key": "0n3730x",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 1.14,
+  "emo": "urgent",
+  "text": "Pet, that wasn't her. That wasn't your mam. She's here with me, asleep, holding my hand. I'm looking right at her."
+ },
+ {
+  "key": "1y7g1e2",
+  "person": "hollis",
+  "voice": "am_onyx*0.6+bm_lewis*0.4",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Six. Hollis. I've got the door. Walk to me. Don't run. It's behind you, but it's always been behind you. Walk."
+ },
+ {
+  "key": "00ruygq",
+  "person": "officer",
+  "voice": "am_echo*0.5+bf_emma*0.5",
+  "speed": 0.9,
+  "emo": "sly",
+  "text": "Six. I've got the door. I'm already in. Come and see who's in bed ten."
+ },
+ {
+  "key": "15cihbo",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "Look at me properly. Lean in. Hold the right mouse button. Go on, I won't bite."
+ },
+ {
+  "key": "0wr83zn",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 0.95,
+  "emo": "warm",
+  "text": "See that, on the glass? That's my breath. Cold night, warm mouth. Remember it."
+ },
+ {
+  "key": "0ff2lj7",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Right. The form's on your left, the one I pushed through the slot. Ask me my name. Number one."
+ },
+ {
+  "key": "1hnhgrp",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Now check me against the records. Z. The green screen. If the form and the records don't match, you've got a problem."
+ },
+ {
+  "key": "1533ye5",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Same date, same wristband, same everything. That's what you want. Every line."
+ },
+ {
+  "key": "1ovd4sr",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "Last thing. The photo on the form shows a mark. Find it on my face. X. Get close. Closer than you'd like."
+ },
+ {
+  "key": "1p3zl2y",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Notched ear. Right side. A dog, when I was nine. If the photo says one thing and the face says another, that's not the person in the photo."
+ },
+ {
+  "key": "1kweps6",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1,
+  "emo": "calm",
+  "text": "You can ask me the rest if you like. Date of birth, who sent me, who to call, what I remember. Some of them slip on the easy ones."
+ },
+ {
+  "key": "14t6t98",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.14,
+  "emo": "urgent",
+  "text": "Then you decide. A lets me in. O holds me for observation. R sends me back out in that. T drops me through the floor, so let's not. A. Please."
+ },
+ {
+  "key": "0yg9d26",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Any time now. It's raining on me."
+ },
+ {
+  "key": "0xn29cj",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "I can hear something out on the road. Can we hurry this up?"
+ },
+ {
+  "key": "0dyf2cn",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1,
+  "emo": "dry",
+  "text": "Still here. Still wet."
+ },
+ {
+  "key": "0w8ck9n",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1,
+  "emo": "calm",
+  "text": "Couple more things and then I'm off. Your list's on the desk. Q gets you out of that chair. E uses things. There's a vending machine in the corner. It takes the tokens they give you for getting it right."
+ },
+ {
+  "key": "03f7btw",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "C puts you under the desk. If something ever comes through that glass, that is where you want to be. Down there and quiet."
+ },
+ {
+  "key": "0wtxkkc",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 0.92,
+  "emo": "whisper",
+  "text": "Later there's jobs. Mopping, filing, a head count at two. The power goes most nights. The fuse box is at the end of the corridor. And if you're ever out in that corridor in the dark, walk. Don't run. It listens."
+ },
+ {
+  "key": "03znkw6",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "Right. Ward B. Night, then. Phone rings, you answer it."
+ },
+ {
+  "key": "0shjx2r",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.1,
+  "emo": "angry",
+  "text": "Oh, very funny. Very funny. Fine. I'll go round by the kitchens. Remember what that felt like, because that's what you just did to a real person."
+ },
+ {
+  "key": "1njc67p",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "Right. I'll lock it from this side, then. Someone has to. Don't come to that door tonight, whatever you hear. Not for anyone."
+ },
+ {
+  "key": "0vj7ay4",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.2,
+  "emo": "panic",
+  "text": "Pell! The one you sent up asked me my name, then said it back before I'd answered. In my voice. It's gone out into the corridor. Shut your door."
+ },
+ {
+  "key": "1q8b9hz",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 1.2,
+  "emo": "panic",
+  "text": "Pet! The one you sent up just stood at the foot of a bed and started breathing in time with her. It's gone out into the corridor. Shut your door."
+ },
+ {
+  "key": "1figc1g",
+  "person": "kessler",
+  "voice": "bf_alice*0.7+af_kore*0.3",
+  "speed": 0.98,
+  "emo": "stern",
+  "text": "Kessler. The observation room is open. Nobody forced the door. Close yours."
+ },
+ {
+  "key": "1s12rhm",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "Someone's at your window again. The one you sent off. Soaking. No. Wait. Bone dry."
+ },
+ {
+  "key": "1i3imoi",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "Someone's at your window again. The one you sent off. Soaking. No. Wait. Bone dry."
+ },
+ {
+  "key": "16y1waw",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 0.86,
+  "emo": "grief",
+  "text": "The one you turned away is back at your window. Soaked through. Says there's nowhere else to go."
+ },
+ {
+  "key": "0vp7wds",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 0.86,
+  "emo": "grief",
+  "text": "The one you turned away is back at your window. Soaked through. Says there's nowhere else to go."
+ },
+ {
+  "key": "0x2dmki",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "Pell. Nobody did the head count. So nobody knows how many are in there. And I'm not going to be the one who finds out."
+ },
+ {
+  "key": "0h2xhsa",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "Pell. Nobody did the head count. So nobody knows how many are in there. And I'm not going to be the one who finds out."
+ },
+ {
+  "key": "1dox3d0",
+  "person": "matron",
+  "voice": "bf_emma*0.5+af_river*0.5",
+  "speed": 0.92,
+  "emo": "cold",
+  "text": "Matron's office. Your list was on the desk, Officer. It is still on the desk."
+ },
+ {
+  "key": "1025f2e",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "Same as my sheet. Good. I'll stop counting now. I'll try."
+ },
+ {
+  "key": "0cz8or2",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "Same as my sheet. Good. I'll stop counting now. I'll try."
+ },
+ {
+  "key": "13474cx",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.2,
+  "emo": "panic",
+  "text": "You got more than my sheet? Don't count again. Get back to your desk and shut the door."
+ },
+ {
+  "key": "1cxtcix",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 1.2,
+  "emo": "panic",
+  "text": "You got more than my sheet? Don't count again. Get back to your desk and shut the door."
+ },
+ {
+  "key": "0mtxvep",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.08,
+  "emo": "nervous",
+  "text": "It's me! Pell. Sorry. Checking the fuse box. Sorry. Going back now."
+ },
+ {
+  "key": "0ya9fzg",
+  "person": "officer",
+  "voice": "am_echo*0.5+bf_emma*0.5",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "Night intake."
+ },
+ {
+  "key": "1dunsy5",
+  "person": "pell",
+  "voice": "bm_daniel*0.7+am_puck*0.3",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "Pell. Did your phone just ring? I'm sat at the switchboard. Nothing went through it. Not one light. Who were you talking to?"
+ },
+ {
+  "key": "03jp43p",
+  "person": "imogen",
+  "voice": "bf_isabella*0.6+af_heart*0.4",
+  "speed": 1.1,
+  "emo": "scared",
+  "text": "Pell. Did your phone just ring? I'm sat at the switchboard. Nothing went through it. Not one light. Who were you talking to?"
+ },
+ {
+  "key": "1e6bp4y",
+  "person": "officer",
+  "voice": "am_echo*0.5+bf_emma*0.5",
+  "speed": 0.88,
+  "emo": "flat",
+  "text": "It is coming through the glass."
+ }
+]

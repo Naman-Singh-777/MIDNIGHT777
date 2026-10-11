@@ -3,6 +3,7 @@ import type { Patient, Verdict } from '../sim/types';
 import { AVERAGE_FACE, drawFace, eyeTexture, sculptHead, type FaceLook, type FaceState } from './faces';
 import { buildBody, type Rig } from './humanoid';
 import { bodyFor, buildHuman, humansReady, loadHumans, type HumanRig } from './human';
+export type { HumanRig };
 import { lookFor, type Look } from './looks';
 
 export const FEMALE_NAMES = new Set(['Ada', 'Edith', 'Margit', 'Hester', 'Dorothea', 'Agnes', 'Winifred', 'Odette', 'Philippa', 'Mabel', 'Imelda', 'Dolores', 'Mae', 'Rosa', 'Sister']);
@@ -45,7 +46,7 @@ const POSES_H: Record<string, HumanPose> = {
 };
 
 const HEAD_SCALE = 0.84;
-const REVEALS = ['unhinge', 'grin', 'rolled', 'hollow'] as const;
+const REVEALS = ['unhinge', 'grin', 'rolled', 'hollow', 'neck', 'owl', 'split', 'melt', 'eyes', 'backbend', 'reach', 'stutter'] as const;
 
 /**
  * One visitor at a time. Full jointed body from humanoid.ts, a sculpted painted head on top.
@@ -95,6 +96,33 @@ export class PatientView {
   private press = 0;
   /** Set by the game for a few frames when a fake shows what it is. */
   revealing = 0;
+  /** The admissions passage: way points, and the spot behind the officer's chair. */
+  private path: THREE.Vector3[] | null = null;
+  private backSpot: THREE.Vector3 | null = null;
+  private walkPath: THREE.Vector3[] | null = null;
+  private pathSeg = 0;
+  private pathT = 0;
+  private backWait = 0;
+  private backDone = false;
+  /** Called once when someone you let in reaches the window behind your chair. */
+  onBackWindow: ((p: Patient) => void) | null = null;
+  /** Called when a fake's face goes, with how it goes. */
+  onReveal: ((kind: string) => void) | null = null;
+  /** The officer is up close at the glass (face check). The visitor leans in too. */
+  closeup = false;
+  private extraEyes: THREE.Mesh[] = [];
+  private pulse: THREE.Mesh | null = null;
+  private stutterT = 0;
+  private puffHold: number[] = [0, 0, 0];
+  /** Where in the passage the visitor is, 0 to 1. The game opens doors with it. */
+  passageK = -1;
+  get atBack(): boolean {
+    return this.backWait > 0;
+  }
+  setPassage(path: THREE.Vector3[], backSpot: THREE.Vector3): void {
+    this.path = path;
+    this.backSpot = backSpot;
+  }
   /** Called when the face slips on its own for a frame or two. */
   onGlimpse: (() => void) | null = null;
   speaking = 0;
@@ -108,7 +136,7 @@ export class PatientView {
     return humansReady();
   }
 
-  constructor(private readonly spawn: THREE.Vector3, private readonly stand: THREE.Vector3) {
+  constructor(public spawn: THREE.Vector3, public stand: THREE.Vector3) {
     this.rig.add(this.rim, this.under);
     this.group.visible = false;
     void loadHumans();
@@ -143,6 +171,12 @@ export class PatientView {
     this.human = null;
     this.head = new THREE.Group();
     this.eyes = [];
+    this.extraEyes = [];
+    this.pulse = null;
+    this.walkPath = null;
+    this.passageK = -1;
+    this.backWait = 0;
+    this.backDone = false;
     if (this.faces) for (const k of Object.keys(this.faces) as FaceState[]) this.faces[k].dispose();
     this.faces = null;
     this.faceMat = null;
@@ -157,6 +191,11 @@ export class PatientView {
     this.lurk = false;
     this.breach = null;
     this.press = 0;
+    // a reveal never carries over to the next person at the glass
+    this.revealT = 0;
+    this.revealing = 0;
+    this.revealAge = 0;
+    this.stutterT = 0;
     this.clear();
     if (!p) {
       this.look = null;
@@ -180,6 +219,7 @@ export class PatientView {
       this.buildProp(look);
       this.mouthY = h.mouthY;
       this.mouthZ = h.mouthZ + 0.035; // breath starts in front of the lips, never inside the mouth
+      this.addMarks(h, p, skin);
       this.group.position.copy(this.spawn);
       this.group.rotation.y = 0;
       this.group.visible = true;
@@ -430,6 +470,58 @@ export class PatientView {
     }
   }
 
+  /**
+   * The mark the photograph shows, painted onto the authored face so it can be checked close up:
+   * a scar through a brow, a mole, a freckle, a burn, a nose that healed crooked. "Left" is the visitor's left.
+   * Also a small throb at the side of the throat for anyone with a pulse.
+   */
+  private addMarks(h: HumanRig, p: Patient, skin: THREE.Color): void {
+    h.root.updateWorldMatrix(true, true);
+    const body = (o: THREE.Object3D): THREE.Vector3 => h.root.worldToLocal(o.getWorldPosition(new THREE.Vector3()));
+    const eyeR = body(h.eyes[0].holder); // visitor's right, x < 0
+    const eyeL = body(h.eyes[h.eyes.length - 1].holder);
+    const onHead = (m: THREE.Mesh, at: THREE.Vector3): void => {
+      const w = h.root.localToWorld(at.clone());
+      h.head.add(m);
+      m.position.copy(h.head.worldToLocal(w));
+      this.owned.push(m.geometry, m.material as THREE.Material);
+    };
+    const mk = p.faceMark;
+    const side = mk.includes('left') ? eyeL : eyeR;
+    const sx = side === eyeL ? 1 : -1;
+    const dot = (r: number, color: number, flat = 0.4): THREE.Mesh => {
+      const m = new THREE.Mesh(new THREE.SphereGeometry(r, 10, 8), new THREE.MeshLambertMaterial({ color }));
+      m.scale.z = flat;
+      return m;
+    };
+    if (mk.includes('brow')) {
+      const m = new THREE.Mesh(new THREE.BoxGeometry(0.0035, 0.026, 0.004), new THREE.MeshLambertMaterial({ color: new THREE.Color(skin).lerp(new THREE.Color(0xe8c8c0), 0.6) }));
+      m.rotation.z = 0.5 * sx;
+      onHead(m, side.clone().add(new THREE.Vector3(sx * 0.004, 0.03, 0.016)));
+    } else if (mk.includes('cheek')) {
+      onHead(dot(0.0042, 0x3a1c14), side.clone().add(new THREE.Vector3(sx * 0.016, -0.042, 0.014)));
+    } else if (mk.includes('eye')) {
+      onHead(dot(0.0026, 0x6a3420), side.clone().add(new THREE.Vector3(sx * 0.006, -0.024, 0.016)));
+    } else if (mk.includes('chin')) {
+      const m = dot(0.016, 0x9a4a40, 0.25);
+      m.scale.y = 0.6;
+      onHead(m, new THREE.Vector3(0.006, h.mouthY - 0.045, h.mouthZ - 0.004));
+    } else if (mk.includes('nose')) {
+      const m = new THREE.Mesh(new THREE.BoxGeometry(0.003, 0.022, 0.004), new THREE.MeshLambertMaterial({ color: 0x5a2a20 }));
+      m.rotation.z = 0.35;
+      onHead(m, new THREE.Vector3((eyeL.x + eyeR.x) / 2 + 0.003, eyeR.y - 0.022, eyeR.z + 0.03));
+    }
+    // the pulse: a soft throb just under the jaw. People have one. Fakes have the shape of one, and it does not move.
+    const pm = new THREE.Mesh(new THREE.SphereGeometry(0.011, 10, 8), new THREE.MeshLambertMaterial({ color: skin.clone().multiplyScalar(0.92) }));
+    pm.scale.set(0.6, 1.4, 0.5);
+    const at = new THREE.Vector3(eyeR.x * 0.75, h.mouthY - 0.085, h.mouthZ - 0.055);
+    const w = h.root.localToWorld(at.clone());
+    h.neck.add(pm);
+    pm.position.copy(h.neck.worldToLocal(w));
+    this.owned.push(pm.geometry, pm.material as THREE.Material);
+    this.pulse = pm;
+  }
+
   setStare(on: boolean): void {
     this.stare = on;
   }
@@ -458,10 +550,58 @@ export class PatientView {
       this.group.visible = false;
       return;
     }
+    if ((v === 'admit' || v === 'observe') && this.path) {
+      // out of the hall by the admissions door, down the passage, and along behind the officer's chair
+      this.walkPath = [this.group.position.clone(), ...this.path];
+      this.pathSeg = 0;
+      this.pathT = 0;
+      this.passageK = 0;
+      return;
+    }
     if (v === 'admit' || v === 'observe') this.to.set(-3.2, 0, -3.2);
     else if (this.lurk) this.to.set(-3.3, 0, -6.6); // it does not leave. It goes to the corner and watches.
     else if (v === 'refuse' || v === 'timeout') this.to.copy(this.spawn).setZ(-9.5);
     else this.to.copy(this.group.position);
+  }
+
+  /** One step along the passage. Returns true while the feet are moving. */
+  private walkStep(dt: number, p: Patient): boolean {
+    const path = this.walkPath!;
+    const g = this.group;
+    if (this.backWait > 0) {
+      this.backWait -= dt;
+      g.rotation.y = Math.PI; // facing the booth: the back of the officer's head
+      if (this.backWait <= 0) this.pathSeg++;
+      return false;
+    }
+    const a = path[this.pathSeg];
+    const b = path[this.pathSeg + 1];
+    if (!b) {
+      g.visible = false;
+      this.walkPath = null;
+      this.passageK = -1;
+      return false;
+    }
+    const len = a.distanceTo(b);
+    const speed = p.truth === 'understudy' ? 1.05 : 0.95;
+    this.pathT += (dt * speed) / Math.max(0.01, len);
+    if (this.pathT >= 1) {
+      this.pathT = 0;
+      g.position.copy(b);
+      // stop at the window behind the chair: people say goodbye, fakes stand and look
+      if (this.backSpot && b.distanceTo(this.backSpot) < 0.2 && !this.backDone) {
+        this.backDone = true;
+        this.backWait = p.truth === 'understudy' ? 6 : 4.2;
+        this.onBackWindow?.(p);
+        return false;
+      }
+      this.pathSeg++;
+      return true;
+    }
+    g.position.lerpVectors(a, b, this.pathT);
+    g.rotation.y = Math.atan2(b.x - a.x, b.z - a.z);
+    this.passageK = (this.pathSeg + this.pathT) / (path.length - 1);
+    return true;
   }
 
   /**
@@ -525,6 +665,12 @@ export class PatientView {
    *  - rolled: the eyes turn up into the head, one lid half down, the mouth hangs open
    *  - hollow: nothing moves at all; the eyes go black, the skin goes grey, the head grows longer
    */
+  /** Which way this fake comes apart. Written per fake in the night data; older fakes pick one from their seed. */
+  private revealKind(): string {
+    const p = this.patient!;
+    return p.reveal ?? REVEALS[Math.floor(p.hue * 977 + (p.castId?.length ?? 0)) % REVEALS.length];
+  }
+
   private drive(face: FaceState, fake: boolean): void {
     const h = this.human!;
     const p = this.patient!;
@@ -532,7 +678,7 @@ export class PatientView {
     const talk = this.speaking > 0 && !reveal;
     const t = this.t;
     const syll = talk ? Math.max(0, Math.sin(t * 13) * 0.6 + Math.sin(t * 5.3) * 0.4) : 0;
-    const kind = REVEALS[Math.floor(p.hue * 977 + (p.castId?.length ?? 0)) % REVEALS.length];
+    const kind = this.revealKind();
     // 0 to 1 over the first 0.35 s, then a slow creep that never quite settles
     const r = reveal ? Math.min(1, this.revealAge / 0.35) + Math.min(0.25, Math.max(0, this.revealAge - 0.35) * 0.1) : 0;
     const tremor = reveal ? Math.sin(t * 37) * 0.012 + Math.sin(t * 23.1) * 0.008 : 0;
@@ -544,39 +690,129 @@ export class PatientView {
     let black = false;
     let pale = 0;
     let roll = 0;
+    let sad = 0;
+    let frown = 0;
+    // body parts the reveals pull on; everything returns to rest when the face comes back
+    let neckY = 1;
+    let headTurn = 0;
+    let headSX = 1;
+    let headSY = 1;
+    let spineBack = 0;
+    let armStretch = 1;
+    let eyesOut = 0;
+    let eyeSize = 1;
+    let headDip = 0;
     if (reveal) {
       pale = 0.35 + r * 0.3;
-      if (kind === 'unhinge') {
-        mouth = 0.75 * r;
-        jaw = 0.8 * r + tremor; // well past where a jaw stops
-        jawZ = 0.16 * r * (p.hue > 0.5 ? 1 : -1);
-        smile = 0;
-        black = true;
-      } else if (kind === 'grin') {
-        mouth = 0.35 * r;
-        jaw = 0.06 * r;
-        smile = 1.9 * r;
-        wide = 1.2 * r;
-        this.head.rotation.z += (p.hue > 0.5 ? 1 : -1) * 0.55 * r;
-      } else if (kind === 'rolled') {
-        mouth = 0.5 * r;
-        jaw = 0.18 * r + tremor;
-        smile = 0;
-        roll = 1.15 * r;
-      } else {
-        mouth = 0;
-        jaw = 0;
-        smile = 0;
-        black = true;
-        pale = 0.75;
+      switch (kind) {
+        case 'unhinge':
+          mouth = 0.75 * r;
+          jaw = 0.8 * r + tremor; // well past where a jaw stops
+          jawZ = 0.16 * r * (p.hue > 0.5 ? 1 : -1);
+          smile = 0;
+          black = true;
+          break;
+        case 'grin':
+          // the smile keeps going past the cheeks, the head lies over on its side, the eyes never close
+          mouth = 0.45 * r;
+          jaw = 0.1 * r;
+          smile = 2.6 * r;
+          wide = 1.5 * r;
+          headSX = 1 + 0.16 * r;
+          eyeSize = 1 + 0.3 * r;
+          this.head.rotation.z += (p.hue > 0.5 ? 1 : -1) * 0.75 * r;
+          break;
+        case 'rolled':
+          mouth = 0.5 * r;
+          jaw = 0.18 * r + tremor;
+          smile = 0;
+          roll = 1.15 * r;
+          break;
+        case 'neck':
+          // the neck keeps going up, and the head comes with it, still looking at you
+          neckY = 1 + 1.4 * r;
+          mouth = 0.2 * r;
+          smile = 0.6 * r;
+          wide = 0.8 * r;
+          break;
+        case 'owl':
+          // the head turns round on the neck, all the way, and the face is still facing you on the other side
+          headTurn = Math.PI * Math.min(1, this.revealAge / 1.1);
+          smile = 0.4;
+          wide = 1;
+          break;
+        case 'split':
+          // the face widens past the skull, the jaw drops, the eyes go out
+          headSX = 1 + 0.38 * r;
+          mouth = 0.9 * r;
+          jaw = 0.55 * r + tremor;
+          black = true;
+          break;
+        case 'melt':
+          // everything slides down: brows, cheeks, the mouth, as if the face was only resting there
+          headSY = 1 - 0.32 * r;
+          headSX = 1 + 0.24 * r;
+          sad = 1;
+          frown = 1;
+          mouth = 0.85 * r;
+          jaw = 0.55 * r + tremor;
+          roll = -0.9 * r;
+          headDip = 0.45 * r;
+          black = r > 0.6;
+          break;
+        case 'eyes':
+          // more of them open, on the forehead and the cheeks, and all of them find you
+          eyesOut = 1.25 * r;
+          wide = 1.2 * r;
+          smile = 0.3;
+          break;
+        case 'backbend':
+          // it folds backwards at the waist and looks at you upside down
+          spineBack = 1.25 * r;
+          mouth = 0.4 * r;
+          jaw = 0.3 * r;
+          wide = 1;
+          break;
+        case 'reach':
+          // the arms come up and keep getting longer
+          armStretch = 1 + 0.9 * r;
+          mouth = 0.3 * r;
+          smile = 0.8 * r;
+          break;
+        case 'stutter':
+          // a different wrong face every frame: the picture skips between them
+          mouth = Math.random() * 0.9;
+          jaw = Math.random() * 0.6;
+          smile = Math.random() * 2;
+          wide = Math.random() * 1.6;
+          black = Math.random() > 0.5;
+          headSX = 0.85 + Math.random() * 0.35;
+          headSY = 0.85 + Math.random() * 0.45;
+          neckY = 1 + Math.random() * 0.5;
+          headDip = (Math.random() - 0.5) * 0.8;
+          this.head.rotation.z += (Math.random() - 0.5) * 1.4;
+          break;
+        default:
+          // hollow: nothing moves at all; the eyes go black, the skin goes grey, the head grows longer
+          mouth = 0;
+          jaw = 0;
+          smile = 0;
+          // the sockets are empty and too big, the face hangs long under them
+          black = true;
+          pale = 0.85;
+          headSY = 1.45;
+          headSX = 0.86;
+          eyeSize = 1.7;
+          mouth = 0.25;
+          jaw = 0.22;
       }
     }
     h.setExpr('mouthOpen', mouth);
     h.jaw.rotation.x = jaw;
     h.jaw.rotation.z = jawZ;
     const tragic = !fake && (p.archetype === 'tragic' || p.castId === 'mae' || p.castId === 'hester');
-    h.setExpr('sad', tragic ? 0.75 : 0);
-    h.setExpr('frown', tragic ? 0.35 : face === 'stare' && !fake ? 0.2 : 0);
+    h.setExpr('sad', Math.max(sad, tragic ? 0.75 : 0));
+    h.setExpr('frown', Math.max(frown, tragic ? 0.35 : face === 'stare' && !fake ? 0.2 : 0));
     h.setExpr('smile', smile);
     h.setExpr('browDown', !fake && face === 'stare' ? 0.4 : 0);
     if (wide > 0) {
@@ -586,6 +822,39 @@ export class PatientView {
     for (const e of h.eyes) e.ball.material = black ? h.blackEye : h.ballMat;
     this.eyeRoll = roll;
     h.setPale(pale);
+    // the stretching reveals
+    h.neck.scale.set(1, neckY, 1);
+    this.head.scale.set(headSX, headSY / neckY, headSX);
+    h.neck.rotation.y = headTurn;
+    this.head.rotation.x += headDip;
+    for (const e of h.eyes) e.ball.scale.setScalar(eyeSize);
+    if (spineBack) {
+      h.spine.rotation.x -= spineBack;
+      h.neck.rotation.x -= spineBack * 0.6;
+    }
+    for (const a of this.body!.arms) {
+      a.sh.scale.set(1, armStretch, 1);
+      if (armStretch > 1.05) a.sh.rotation.x = -1.4;
+    }
+    if (eyesOut > 0 && !this.extraEyes.length) this.growEyes(h);
+    for (const e of this.extraEyes) e.scale.setScalar(Math.max(0.001, eyesOut));
+  }
+
+  /** Extra eyes for the ones that show you how many they have. Built once, hidden until needed. */
+  private growEyes(h: HumanRig): void {
+    const src = h.eyes[0].ball;
+    const r = (src.geometry as THREE.SphereGeometry).parameters.radius;
+    const base = h.eyes[0].holder.position;
+    const spots: [number, number][] = [[0, 0.055], [-0.03, 0.04], [0.03, 0.04], [-0.045, -0.035], [0.045, -0.035], [0, -0.012]];
+    for (const [x, y] of spots) {
+      const m = new THREE.Mesh(src.geometry, h.ballMat);
+      m.position.set(x * 1.2, base.y + y, base.z + 0.004);
+      m.scale.setScalar(0.001);
+      m.lookAt(new THREE.Vector3(0, base.y + y, base.z + 5));
+      h.head.add(m);
+      this.extraEyes.push(m);
+    }
+    void r;
   }
 
   private setFace(s: FaceState): void {
@@ -626,6 +895,17 @@ export class PatientView {
     this.rim.intensity = on ? 2.2 : 0;
     this.under.intensity = on ? (p!.truth === 'understudy' ? 1.7 : 0.9) : 0;
     if (!p || !look || !this.body || !this.group.visible) return;
+    // when a fake comes apart, it moves at eight frames a second: the picture stutters and it jumps forward
+    if (p.truth === 'understudy' && (this.revealT > 0 || this.revealing > 0) && this.breach !== 'inside') {
+      this.stutterT += dt;
+      if (this.stutterT < 0.125) {
+        this.revealT = Math.max(0, this.revealT - dt);
+        this.revealing = Math.max(0, this.revealing - dt);
+        return;
+      }
+      dt = this.stutterT;
+      this.stutterT = 0;
+    }
     this.t += dt;
     const fake = p.truth === 'understudy';
     const g = this.group;
@@ -657,12 +937,15 @@ export class PatientView {
     } else if (phase === 'present') {
       this.progress = 1;
       // a fake leans in to the glass while it holds your eye, and stays on it while it breaks through
-      const want = this.breach === 'crack' ? 1 : fake && this.stare ? 0.85 : 0;
+      const want = this.breach === 'crack' ? 1 : fake && this.stare ? 0.85 : this.closeup ? 0.55 : 0;
       this.press += (want - this.press) * Math.min(1, dt * (want > this.press ? 1.6 : 3));
       g.position.copy(this.stand);
       g.position.z += this.press * 0.92;
       if (this.breach === 'crack') g.position.x += Math.sin(this.t * 40) * 0.006;
       leanFwd = this.press * 0.18;
+    } else if (this.walkPath) {
+      walking = this.walkStep(dt, p) ? 1 : 0;
+      if (this.backWait > 0) leanFwd = fake ? 0.18 : 0;
     } else if (phase === 'leaving') {
       const k = Math.min(1, this.t / (this.lurk ? 3.2 : 2.6));
       if (this.verdict === 'contain') {
@@ -705,7 +988,8 @@ export class PatientView {
     if (!fake && p.castId === 'gus') b.root.position.x = Math.sin(this.t * 31) * 0.003; // shaking
 
     // arms
-    const pressing = this.press > 0.4;
+    const atBack = this.backWait > 0;
+    const pressing = this.press > 0.4 || (fake && atBack);
     for (const side of [-1, 1]) {
       const swing = walking ? Math.sin(this.walkPh + (side > 0 ? 0 : Math.PI)) * 0.35 : 0;
       let fidget = 0;
@@ -715,6 +999,11 @@ export class PatientView {
         else fidget = Math.sin(this.t * 0.8 + side) * 0.015;
       }
       const base = pressing ? 'glass' : walking && (look.pose === 'folded' || look.pose === 'hold') ? look.pose : walking ? 'rest' : look.pose === 'bag' && side > 0 ? 'rest' : look.pose;
+      if (atBack && !fake && side > 0) {
+        // a little wave through the wired glass
+        this.pose({ sh: -2.3, el: -0.6 + Math.sin(this.t * 7) * 0.35, out: 0.25 }, side, 0, 0);
+        continue;
+      }
       this.pose(base as keyof typeof POSES, side, pressing ? Math.sin(this.t * 2 + side) * 0.03 : swing, fidget);
     }
 
@@ -731,12 +1020,13 @@ export class PatientView {
 
     // faces: blink, talk, stare, and the one underneath
     let face: FaceState = 'open';
-    if (fake && phase === 'present' && this.stage >= 2) {
-      this.glimpseIn -= dt;
+    if (fake && phase === 'present' && (this.stage >= 1 || this.closeup || this.stare)) {
+      this.glimpseIn -= dt * (this.closeup ? 2.5 : 1);
       if (this.glimpseIn <= 0) {
-        this.revealT = 0.07 + Math.random() * 0.06;
-        this.glimpseIn = 10 + Math.random() * 16 - this.stage;
+        this.revealT = 0.18 + Math.random() * 0.25;
+        this.glimpseIn = 12 + Math.random() * 16 - this.stage;
         this.onGlimpse?.();
+        this.onReveal?.(this.revealKind());
       }
     }
     this.revealT = Math.max(this.revealT - dt, this.revealing);
@@ -750,10 +1040,10 @@ export class PatientView {
     else if (this.speaking > 0 && Math.sin(this.t * 17) > -0.2) face = 'talk';
     else {
       this.blinkIn -= dt;
-      const never = fake && this.stage >= 2;
+      const never = fake && (p.tells.includes('no_blink') || this.stage >= 5);
       if (!never && this.blinkIn <= 0) {
         this.blinkT = fake ? 0.38 : 0.12;
-        this.blinkIn = fake ? 7 + Math.random() * 4 : 1.8 + Math.random() * 3.6;
+        this.blinkIn = fake ? 6 + Math.random() * 4 : 1.8 + Math.random() * 3.6;
       }
       if (this.blinkT > 0) {
         this.blinkT -= dt;
@@ -770,11 +1060,25 @@ export class PatientView {
     }
 
     // breath on the cold air. Fakes do not breathe.
-    const breath = !p.tells.includes('no_breath') && !quiet && !fake;
+    const breath = !p.tells.includes('no_breath') && !quiet && (!fake || !!p.breathes);
+    const still = p.tells.includes('still_breath');
     this.puffs.forEach((s, i) => {
       const ph = ((this.t + i * 1.15) % 3.45) / 3.45;
       const mat = s.material as THREE.SpriteMaterial;
-      if (!breath || phase !== 'present' || ph > 0.7) {
+      if (!breath || phase !== 'present' || this.walkPath) {
+        mat.opacity = 0;
+        return;
+      }
+      if (still) {
+        // it breathes out, and the breath stays exactly where it was put
+        if (ph < 0.05) this.puffHold[i] = 0;
+        this.puffHold[i] = Math.min(1, this.puffHold[i] + dt * 3);
+        s.position.set(0, this.mouthY + 0.02, this.mouthZ + 0.12 + i * 0.002);
+        s.scale.setScalar(0.12);
+        mat.opacity = 0.42 * this.puffHold[i];
+        return;
+      }
+      if (ph > 0.7) {
         mat.opacity = 0;
         return;
       }
@@ -782,5 +1086,10 @@ export class PatientView {
       s.scale.setScalar(0.04 + ph * 0.17);
       mat.opacity = (1 - ph / 0.7) * 0.55 * Math.min(1, ph * 8);
     });
+    // a pulse in the throat for the living, nothing for the rest
+    if (this.pulse) {
+      const beat = !fake ? Math.pow(Math.max(0, Math.sin(this.t * 7.4)), 6) : 0;
+      this.pulse.scale.set(0.6 + beat * 0.25, 1.4 + beat * 0.2, 0.5 + beat * 0.5);
+    }
   }
 }

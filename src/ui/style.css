@@ -43,12 +43,14 @@ canvas#view { position: absolute; inset: 0; width: 100%; height: 100%; display: 
 #prompt .hold { display: block; height: 3px; background: var(--stamp-red); margin-top: 4px; width: 0; }
 
 /* speech */
-#subtitle { bottom: 96px; left: 50%; transform: translateX(-50%); max-width: 780px; width: calc(100% - 40px); text-align: center; display: none; }
+#subtitle { bottom: 112px; left: 50%; transform: translateX(-50%); max-width: 760px; width: calc(100% - 700px); min-width: 320px; text-align: center; display: none; z-index: 3; }
+#app:not(.desk) #subtitle { width: calc(100% - 80px); bottom: 70px; }
 #subtitle span.who { display: block; font-family: var(--type); font-size: 12px; letter-spacing: 4px; text-transform: uppercase; color: #d9c08a; margin-bottom: 4px; text-shadow: 0 1px 2px #000; }
 #subtitle span.text { display: inline-block; background: var(--shade); padding: 9px 18px 10px; font-size: 21px; line-height: 1.32; font-style: italic; color: #efe8d2; text-shadow: 0 1px 2px #000; }
 
 /* desk paperwork */
-#cards { position: absolute; left: 20px; top: 112px; width: 300px; display: none; flex-direction: column; gap: 14px; max-height: calc(100% - 230px); overflow: hidden; pointer-events: none; }
+#cards { position: absolute; left: 20px; top: 112px; width: 300px; display: none; flex-direction: column; gap: 14px; max-height: calc(100% - 300px); overflow: hidden; pointer-events: none; z-index: 1; }
+#cards #logcard { pointer-events: auto; min-height: 0; flex: 0 1 auto; display: flex; flex-direction: column; }
 #ledgerwrap { position: absolute; right: 20px; top: 92px; width: 340px; display: none; pointer-events: none; max-height: calc(100% - 200px); overflow-y: auto; }
 #ledgerwrap .card.crt dd { white-space: normal; word-break: break-word; }
 #app.aside #cards, #app.aside #ledgerwrap, #app.aside #desk { opacity: 0; transform: translateY(30px); transition: opacity 0.2s, transform 0.2s; }
@@ -86,7 +88,10 @@ canvas#view { position: absolute; inset: 0; width: 100%; height: 100%; display: 
 
 #logcard { background: #d3c58c; color: var(--pencil); padding: 8px 14px 10px; transform: rotate(0.8deg); box-shadow: 0 6px 14px rgba(0, 0, 0, 0.55); font-family: var(--hand); background-image: repeating-linear-gradient(to bottom, transparent 0 21px, rgba(90, 70, 40, 0.2) 21px 22px); }
 #logcard h3 { margin: 0 0 2px; font-weight: normal; font-size: 22px; letter-spacing: 1px; text-decoration: underline; text-decoration-thickness: 1px; }
-#log { font-size: 21px; line-height: 22px; max-height: 154px; overflow: hidden; }
+#log { font-size: 21px; line-height: 22px; max-height: 176px; overflow-y: auto; pointer-events: auto; scrollbar-width: thin; scrollbar-color: #7a7360 transparent; padding-right: 4px; }
+#log::-webkit-scrollbar { width: 6px; }
+#log::-webkit-scrollbar-thumb { background: #7a7360; border-radius: 3px; }
+#logcard h3 small { font-size: 14px; color: #7a7360; text-decoration: none; margin-left: 6px; }
 #log p { margin: 0; }
 #log:empty::before { content: 'Check: does the form match the records? Is there breath on the glass? Did they answer too fast? C gets you under the desk.'; color: #7a7360; }
 #log .q { color: #6a6455; }
@@ -177,3 +182,43 @@ button.btn.admit:hover:not(:disabled), button.btn.refuse:hover:not(:disabled), b
 #ward .tally { position: absolute; left: 0; right: 0; bottom: 6%; text-align: center; font-family: var(--hand); font-size: 30px; color: #e9e3cf; pointer-events: none; }
 #ward .wardtext { position: absolute; left: 50%; bottom: 17%; transform: translateX(-50%); width: min(760px, 90vw); text-align: center; font-family: var(--serif); font-style: italic; font-size: 22px; line-height: 1.4; color: #efe8d2; text-shadow: 0 2px 4px #000; pointer-events: none; }
 #app.desk #clock .task { font-size: 21px; max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* tokens, the tutorial card, under the desk, close up, help */
+#bars .tokens { margin-top: -4px; font-family: var(--type); font-size: 13px; letter-spacing: 1px; color: #e9b55a; }
+#bars .tokens b { font-weight: normal; font-size: 16px; }
+#coach { left: 50%; bottom: 196px; transform: translateX(-50%); display: none; align-items: center; gap: 12px; padding: 10px 18px; background: rgba(210, 196, 150, 0.96); color: #1d1a16; font-family: var(--type); font-size: 16px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7); border-left: 5px solid var(--stamp-red); z-index: 4; max-width: 640px; animation: coachin 0.35s ease-out; }
+#coach kbd { font-family: var(--type); font-size: 15px; min-width: 30px; text-align: center; padding: 3px 7px; background: #1d1a16; color: #e9e3cf; border-radius: 3px; }
+@keyframes coachin { from { opacity: 0; transform: translate(-50%, 10px); } to { opacity: 1; transform: translate(-50%, 0); } }
+button.btn.coach { animation: glow 1s ease-in-out infinite alternate; }
+@keyframes glow { from { box-shadow: 0 0 0 2px rgba(233, 181, 90, 0.4), 0 0 8px rgba(233, 181, 90, 0.3); } to { box-shadow: 0 0 0 3px rgba(233, 181, 90, 0.95), 0 0 22px rgba(233, 181, 90, 0.7); } }
+#under { inset: 0; display: none; background: radial-gradient(ellipse at center, rgba(0,0,0,0) 30%, rgba(0,0,0,0.88) 85%); z-index: 2; }
+#under span { position: absolute; left: 50%; bottom: 210px; transform: translateX(-50%); font-family: var(--hand); font-size: 26px; color: #cfc8b0; text-shadow: 0 2px 4px #000; }
+#app.under #under { display: block; }
+#app.under #cards, #app.under #ledgerwrap { opacity: 0.12; }
+#closehint { left: 50%; top: 18px; transform: translateX(-50%); font-family: var(--hand); font-size: 22px; color: #cfc8b0; text-shadow: 0 2px 4px #000; display: none; }
+#app.closeup #closehint { display: block; }
+#app.closeup #cards, #app.closeup #ledgerwrap { opacity: 0.18; }
+#helpkey { right: 24px; bottom: 16px; font-family: var(--type); font-size: 12px; letter-spacing: 1px; color: #8a8270; }
+#app.desk #helpkey { bottom: 8px; right: 12px; }
+#clock .todo { max-height: 40vh; overflow-y: auto; pointer-events: auto; }
+/* the vending machine */
+.vend { display: flex; flex-direction: column; gap: 10px; margin: 6px 0 4px; }
+.vend .vitem { display: grid; grid-template-columns: 28px 1fr auto; gap: 12px; align-items: center; padding: 8px 10px; background: rgba(120, 90, 40, 0.08); border-bottom: 1px dashed #7a735f; font-family: var(--serif); font-size: 15px; color: #25222a; }
+.vend .vitem kbd { font-family: var(--hand); font-size: 26px; color: #7a2323; }
+.vend .vitem b { font-family: var(--type); font-weight: normal; font-size: 15px; }
+.vend .vitem i { color: #6b6250; font-size: 13px; }
+.vend .vitem .btn { white-space: nowrap; }
+/* the shift card */
+#overlay .shiftnew { font-family: var(--type); font-size: 13px; color: #7a2323; border: 2px solid #7a2323; padding: 8px 12px; margin-top: 12px; }
+#overlay .nights { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+#overlay .nights .btn { font-size: 13px; }
+#overlay .demo { font-family: var(--type); font-size: 12px; letter-spacing: 2px; color: #7a2323; }
+#flash { position: absolute; inset: 0; background: #000; opacity: 0; pointer-events: none; z-index: 6; transition: opacity 0.08s; }
+@media (max-width: 1100px) {
+  #cards { width: 250px; }
+  #ledgerwrap { width: 270px; }
+  #subtitle { width: calc(100% - 560px); }
+}
+#toast { right: 24px; top: 104px; font-family: var(--type); font-size: 13px; color: #e9b55a; opacity: 0; text-shadow: 0 1px 2px #000; }
+#toast.on { animation: toast 2.6s ease-out; }
+@keyframes toast { 0% { opacity: 0; transform: translateY(6px); } 12% { opacity: 1; transform: translateY(0); } 75% { opacity: 1; } 100% { opacity: 0; } }

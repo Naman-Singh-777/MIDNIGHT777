@@ -1,3 +1,57 @@
+# MIDNIGHT: task log, round 6
+
+Live site: https://naman-singh-777.github.io/MIDNIGHT777/
+Repo: https://github.com/Naman-Singh-777/MIDNIGHT777
+
+Read this first, then `docs/PROJECT_REPORT_AND_ROADMAP.md`. The round 4 log is kept at the bottom.
+
+## 1. The owner's brief for round 6
+
+Six nights with a new cast each night and no timer. Night 1 is the demo and ends on a jumpscare. A tutorial visitor. Notes panel that scrolls and never hides dialogue. A face close-up. A working under-desk hide. Staff in person, not only voices. Admitted visitors walk past the player. Pacing from attention span research (credible sources only), with a chart. Harder fakes each night and more kinds of deformity. Horror sounds for the fakes and the tall one. Better voices. A vending machine with buffs. Camera shots from HORROR_SHOTS.txt (dolly zoom, whip, orbit, lunge). A clearer window and a more detailed entry room. Scarier dialogue. A multiplayer design for 2 and 3 players. Map lock everywhere else.
+
+## 2. What was built
+
+| Part | Where | Notes |
+|---|---|---|
+| Six nights, no timer | `src/data/nights/n1.ts` to `n6.ts`, `Simulation.advanceClock` | Each night has a fixed hidden roster. The clock jumps to the next visitor only when the window is empty, creeps while someone is present, and never runs backwards. Night 1 is the demo. |
+| Pacing from research | `docs/generated/research/ATTENTION_AND_PACING.md`, `attention_pacing.png`, `src/data/pacing.ts` | Nothing quiet for more than 34 s; gaps of 12 to 26 s between visitors. The sim emits a cue if dead air passes the limit. |
+| Tutorial visitor | `src/data/tutorial.ts`, `src/ui/tutorial.ts` | Orderly Pell is the first person at the glass. Six steps (lean, ask the name, check records, look at the face, ask more, decide). Hints only appear if the player stalls. He mentions later mechanics without explaining them. |
+| Fakes get harder | night data, `tells` | New tells: no blink, answers before the question, mirroring, no pulse, held breath. From night 5 fakes breathe. |
+| Twelve reveals | `PatientView.drive` | unhinge, grin, rolled, hollow, neck, owl, split, melt, eyes, backbend, reach, stutter. Reveals play at 8 frames a second. Skin marks (scars, moles, burns) on faces. |
+| Close-up | X key, `controller.closeup` | Camera leans to the glass at a tight field of view. Glimpses come faster in close-up. |
+| Under the desk | C key, `controller.underDesk` | Camera drops into the knee hole with a dark vignette. |
+| Passage | `src/render/annex.ts` | Admitted visitors walk the admissions passage behind the booth and pass a wired window behind the chair. Fakes press the glass and tap; people wave. |
+| Staff in person | `Game.showStaff`, second `PatientView` | Staff appear at the back window or in the corridor and can be clicked to talk. |
+| Camera shots | `src/render/camfx.ts` | Dolly zoom at the back window, whip pan on breath behind you, follow after a verdict, orbit at the night start, lunge for the demo end. Dutch tilt rises with low nerves. A click skips any shot. |
+| Vending machine | `src/data/vending.ts`, `Game.openVend` | Tokens for each right call and each job. Seven items unlock over the nights; new ones are listed on the shift card. |
+| Voices | `public/voice`, `src/audio/voices.ts`, `tools/voice` | 575 lines pre-recorded with the Kokoro neural voice model, one voice per character. Played through Web Audio: phone filter for calls, a doubled voice for fakes, positioned sound in the room. The system voice is only a fallback. |
+| Sounds | `src/audio/engine.ts` | A sound per reveal kind, clicks, the tall one's breath and clicks, passage steps, taps on the back glass, a radiator (night 2 heating), pigeons, the jumpscare. |
+| Screen | `src/ui/hud.ts`, `style.css` | Notes scroll. Subtitles sit clear of the side panels. Controls live behind H. |
+| Multiplayer | `docs/generated/MULTIPLAYER_DESIGN.md` | Design only. 2 players (Window and Gate) and 3 (plus Porter), with a voice mimic. |
+
+## 3. How it was checked
+
+All checks ran headless in this cloud container (SwiftShader software GL). None ran on the owner's laptop.
+
+1. `npm run typecheck`, `npm test` (54 tests, including 13 new night tests), `npm run build`, `node tools/smoke.mjs`: all passed, no console errors.
+2. Screenshots with `tools/look-round6.mjs`: title, shift card, orbit, tutorial, scrolling notes, close-up, under the desk, the passage dolly zoom, vending front and menu, the hall, staff at the back window, all eleven authored reveals side by side, and the demo end scare.
+3. Voice files were checked for length against their text. Nobody listened to them; no speech recogniser was available here.
+
+## 4. Not verified
+
+1. Frame rate on Iris Xe. Headless software GL gives about 1 fps and says nothing about real hardware. The scene now has 14 lights.
+2. How the recorded voices actually sound.
+3. A full playthrough of nights 2 to 6 by a person.
+
+## 5. What is left, in priority order
+
+1. Play night 1 on the laptop and check the frame rate and the voices.
+2. Listen to every character and re-record any line that sounds wrong (`tools/voice/render.py`).
+3. Multiplayer, following the design doc.
+4. Settings menu (volume, sensitivity, reduced flicker).
+
+---
+
 # MIDNIGHT: task log, round 4
 
 Round 5 is done. Read `docs/generated/MIDNIGHT_ROUND5_REPORT.md` for the latest state.

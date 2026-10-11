@@ -28,21 +28,39 @@ export const SPEAKER_VOICE: Record<string, { pitch: number; radio: boolean }> = 
   'Night Nurse Kessler': { pitch: 168, radio: true },
   "Matron's Office": { pitch: 142, radio: true },
   'Ada Wren': { pitch: 188, radio: true },
+  'Matron Agatha Thorne': { pitch: 140, radio: true },
+  'Dr. Ines Abara': { pitch: 175, radio: false },
+  'Abel Hollis': { pitch: 92, radio: true },
+  'The wireless': { pitch: 125, radio: true },
+  'Night Officer': { pitch: 150, radio: true },
 };
 
-export const TITLE_HTML = `
+export function titleHtml(reached: number, demoOnly: boolean): string {
+  const nights = Array.from({ length: 6 }, (_, i) => i + 1)
+    .map((n) => `<button class="btn" data-night="${n}" ${n > reached ? 'disabled' : ''}>Night ${n}</button>`)
+    .join('');
+  return `
   <h1>Midnight</h1>
-  <h2>Asylum Intake &middot; Night 00</h2>
+  <h2>Asylum Intake &middot; six nights</h2>
   <p>Vesper Hollow Hospital, October 1963. Your mother has been on Ward B since spring. Most days she doesn't know your name. Staff can sit with family at six in the morning, so you took the night job on the front window.</p>
-  <p>People knock on the glass all night. Check their form against the records, ask your questions, and decide who goes through. Some of them are fakes: things wearing the face of someone real. Every one you let in sleeps on her ward.</p>
-  <p>If you keep a fake waiting, it comes through the glass. If the power goes, something walks the corridor. It can't see you. It can hear you.</p>
-  <p class="note">Get to six. Then go and see her. If you die, the whole night starts again.</p>
-  <button class="btn big" data-begin>Start the shift</button>
-  <div class="keys">
-    AT THE DESK &nbsp; mouse: look &nbsp; 1-5: ask &nbsp; Z: records &nbsp; X: study the face &nbsp; A let in &nbsp; O hold &nbsp; R turn away &nbsp; T trapdoor<br>
-    C: get under the desk &nbsp; hold right mouse: lean in &nbsp; Tab: push the papers aside &nbsp; Q: stand up<br>
-    ON YOUR FEET &nbsp; WASD: walk &nbsp; Shift: run (loud) &nbsp; C: crouch (silent) &nbsp; E: use or hold &nbsp; F: torch &nbsp; M: mute
-  </div>`;
+  <p>People knock on the glass all night. Most of them are patients being admitted, or their families. Some of them are not people. Every one you let in walks the passage right behind your chair, and sleeps on her ward.</p>
+  <p class="note">Get to six. Then go and see her. If you die, the night starts again.</p>
+  <button class="btn big" data-begin>${reached > 1 ? `Continue: Night ${reached}` : 'Start Night 1'}</button>
+  ${reached > 1 ? `<div class="nights">${nights}</div>` : ''}
+  ${demoOnly ? '<p class="demo">DEMO: NIGHT 1 ONLY</p>' : ''}
+  <div class="keys">Mouse to look. 1 to 5 to ask. A, O, R, T to decide. Press H in the game for every control. Headphones help.</div>`;
+}
+
+/** The card before each night: the date, what has changed, what is new in the machine. */
+export function shiftCardHtml(def: { n: number; name: string; date: string; card: string[] }, newItems: { name: string; effect: string }[], tokens: number): string {
+  return `
+  <h1>Night ${def.n}</h1>
+  <h2>${def.name} &middot; ${def.date}</h2>
+  ${def.card.map((c) => `<p>${c}</p>`).join('')}
+  ${newItems.length ? `<div class="shiftnew">NEW IN THE VENDING MACHINE TONIGHT<br>${newItems.map((i) => `${i.name}: ${i.effect}`).join('<br>')}</div>` : ''}
+  <p class="note">Tokens: ${tokens}. Get to six.</p>
+  <button class="btn big" data-begin>Start the shift</button>`;
+}
 
 export const PAUSE_HTML = `
   <h1>Paused</h1>
@@ -85,15 +103,27 @@ const ENDINGS: Record<string, [string, string]> = {
 };
 
 export function endHtml(
-  score: { correct: number; wrong: number; admittedUnderstudies: number; refusedHumans: number; sanity: number; ending?: string; tasksDone?: number; tasksMissed?: number },
+  score: { correct: number; wrong: number; admittedUnderstudies: number; refusedHumans: number; sanity: number; ending?: string; tasksDone?: number; tasksMissed?: number; night?: number; tokens?: number },
   name: string,
+  override?: [string, string],
+  last = false,
 ): string {
-  const [title, text] = ENDINGS[score.ending ?? 'absent'] ?? ENDINGS.absent;
+  const [title, text] = override ?? ENDINGS[score.ending ?? 'absent'] ?? ENDINGS.absent;
+  const n = score.night ?? 1;
   return `
   <h1>06:00</h1>
-  <h2>Night 00 &middot; ${title}</h2>
+  <h2>Night ${n} &middot; ${title}</h2>
   <p>${text}</p>
   <p>Right calls: ${score.correct}. Wrong calls: ${score.wrong}. Fakes let in: ${score.admittedUnderstudies}. Real people turned away or dropped: ${score.refusedHumans}. Jobs done: ${score.tasksDone ?? 0}, missed: ${score.tasksMissed ?? 0}. Nerves left: ${score.sanity}%.</p>
   <p class="note">On your way out you open the admissions book at page one. The first line is in your handwriting, dated tonight, 22:00.<br>${name}: let in.</p>
-  <button class="btn big" data-restart>Work another night</button>`;
+  ${last ? '<p>That was the last night. Thank you for working the window.</p><button class="btn big" data-restart>Back to the start</button>' : `<button class="btn big" data-next>Go home. Come back for Night ${n + 1}</button> <button class="btn" data-restart>Work this night again</button>`}`;
+}
+
+/** The demo night ends here. */
+export function demoEndHtml(): string {
+  return `
+  <h1>End of Night 1</h1>
+  <h2>The demo ends here</h2>
+  <p>Five more nights. A new face at the window every night, and fakes that get better at it.</p>
+  <button class="btn big" data-next>Go on to Night 2</button>`;
 }

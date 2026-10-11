@@ -47,6 +47,20 @@ export class AudioEngine {
   get ready(): boolean {
     return this.ctx !== null;
   }
+  /** For the recorded voices (voices.ts). */
+  get context(): AudioContext | null {
+    return this.ctx;
+  }
+  get voiceOut(): AudioNode | null {
+    return this.ctx ? this.voiceBus : null;
+  }
+  get reverbSend(): AudioNode | null {
+    return this.ctx ? (this.lastState?.zone === 'booth' ? this.sendBooth : this.sendCorr) : null;
+  }
+  /** Turn the room down under a line of speech. */
+  duckFor(seconds: number): void {
+    this.duck = Math.max(this.duck, seconds);
+  }
 
   start(): void {
     if (this.ctx) {
@@ -645,6 +659,28 @@ export class AudioEngine {
     return dur;
   }
 
+  /** A phone or intercom line: key up, a bed of hiss, key down. Used under the recorded voices. */
+  radioClick(dur: number): void {
+    const ctx = this.ctx;
+    if (!ctx) return;
+    this.noiseHit(2600, 0.06, 0.2, 0.003, null, 'bandpass');
+    const h = ctx.createBufferSource();
+    h.buffer = this.white;
+    const bp = ctx.createBiquadFilter();
+    bp.type = 'bandpass';
+    bp.frequency.value = 1800;
+    const g = ctx.createGain();
+    g.gain.value = 0.022;
+    h.connect(bp).connect(g).connect(this.voiceBus);
+    h.start(ctx.currentTime, 0, Math.min(14, dur + 0.2));
+    setTimeout(() => this.noiseHit(2200, 0.05, 0.16, 0.002, null, 'bandpass'), (dur + 0.2) * 1000);
+  }
+
+  /** The wrongness under a recorded voice: the same drone the fakes have always had. */
+  mimicUnder(dur: number, amount: number): void {
+    if (this.ctx && amount > 0) this.wrongUnder(dur, amount);
+  }
+
   stopVoice(): void {
     if (typeof speechSynthesis !== 'undefined') speechSynthesis.cancel();
   }
@@ -788,6 +824,145 @@ export class AudioEngine {
     this.noiseHit(5200, 0.09, 0.2, 0.002, null, 'highpass');
     this.tone(1900, 0.07, 0.07, 'square', null, 120);
     this.tone(62, 0.35, 0.22, 'sine', null, 38, 0.02);
+  }
+
+  // ---------------------------------------------------------------- the fakes, when the face goes
+  /** A bone going where it should not: a dry crack with a wet tail. */
+  private crack(pos: V3 | null, delay = 0, level = 0.3): void {
+    const ctx = this.ctx;
+    if (!ctx) return;
+    setTimeout(() => {
+      this.noiseHit(2400 + Math.random() * 1600, 0.035, level, 0.001, pos, 'bandpass');
+      this.noiseHit(700, 0.12, level * 0.5, 0.004, pos, 'lowpass');
+    }, delay * 1000);
+  }
+
+  /**
+   * What you hear when a fake stops pretending. Each kind of wrongness has its own sound, so the ear learns them:
+   * cracking for the ones that stretch and twist, a wet gape for the jaws, a choir that is slightly out of tune for the still ones.
+   */
+  entityReveal(kind: string, pos: V3 | null = { x: 0, y: 1.6, z: -2.4 }): void {
+    const ctx = this.ctx;
+    if (!ctx) return;
+    // under everything: the floor drops out
+    this.tone(48, 1.6, 0.26, 'sine', null, 26);
+    if (kind === 'neck' || kind === 'owl' || kind === 'backbend' || kind === 'reach') {
+      for (let i = 0; i < 9; i++) this.crack(pos, i * (0.06 + Math.random() * 0.08), 0.22 + Math.random() * 0.15);
+      this.tone(92, 1.2, 0.08, 'sawtooth', pos, 61, 0.1);
+    } else if (kind === 'unhinge' || kind === 'split' || kind === 'grin') {
+      // the jaw: a slow wet gape, a click as it passes where a jaw stops, then air going in
+      this.noiseHit(420, 0.9, 0.16, 0.3, pos, 'lowpass');
+      this.crack(pos, 0.35, 0.34);
+      this.noiseHit(1800, 1.4, 0.06, 0.6, pos, 'bandpass');
+      this.tone(210, 1.1, 0.06, 'sawtooth', pos, 140, 0.4);
+    } else if (kind === 'eyes' || kind === 'melt') {
+      // wet, close, like something opening that should be shut
+      for (let i = 0; i < 6; i++) setTimeout(() => this.noiseHit(300 + Math.random() * 400, 0.18, 0.12, 0.05, pos, 'lowpass'), i * 120);
+      this.tone(330, 2.2, 0.05, 'triangle', pos, 300);
+      this.tone(311, 2.2, 0.05, 'triangle', pos, 294);
+    } else {
+      // hollow, rolled, stutter: a held chord that is a little out of tune, and a whisper running backwards
+      for (const f of [196, 207.6, 261.6, 277.2]) this.tone(f, 2.6, 0.035, 'sine', pos, f * 0.985);
+      const len = 1.4;
+      const s = ctx.createBufferSource();
+      s.buffer = this.white;
+      const bp = ctx.createBiquadFilter();
+      bp.type = 'bandpass';
+      bp.Q.value = 3;
+      const g = ctx.createGain();
+      const t = ctx.currentTime;
+      bp.frequency.setValueAtTime(800, t);
+      bp.frequency.exponentialRampToValueAtTime(4200, t + len);
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.12, t + len * 0.9);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + len);
+      s.connect(bp).connect(g).connect(this.route(pos));
+      s.start(t, Math.random() * 2, len + 0.1);
+    }
+    this.duck = Math.max(this.duck, 1.5);
+  }
+
+  /** It looks at you through the glass and does not stop. A thin rising tone with clicks inside it. */
+  entityClicks(pos: V3, n = 10): void {
+    for (let i = 0; i < n; i++) setTimeout(() => this.noiseHit(3200 + Math.random() * 1200, 0.02, 0.14, 0.001, pos, 'bandpass'), i * (90 + Math.random() * 120));
+  }
+
+  /** The tall one breathing: a long wet pull of air, a rattle, a long let go. */
+  creatureBreath(pos: V3): void {
+    const ctx = this.ctx;
+    if (!ctx) return;
+    const t = ctx.currentTime;
+    const s = ctx.createBufferSource();
+    s.buffer = this.brown;
+    const lp = ctx.createBiquadFilter();
+    lp.type = 'bandpass';
+    lp.frequency.setValueAtTime(260, t);
+    lp.frequency.linearRampToValueAtTime(620, t + 1.4);
+    lp.frequency.linearRampToValueAtTime(180, t + 3.4);
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(0.5, t + 1.3);
+    g.gain.exponentialRampToValueAtTime(0.08, t + 1.6);
+    g.gain.exponentialRampToValueAtTime(0.45, t + 2.2);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 3.6);
+    s.connect(lp).connect(g).connect(this.route(pos));
+    s.start(t, Math.random() * 3, 3.7);
+    for (let i = 0; i < 7; i++) setTimeout(() => this.noiseHit(900 + Math.random() * 300, 0.03, 0.08, 0.001, pos, 'bandpass'), 1300 + i * 45);
+  }
+
+  /** The tall one clicking in the dark to find the walls. */
+  creatureClick(pos: V3): void {
+    for (let i = 0; i < 3; i++) setTimeout(() => this.noiseHit(2600, 0.012, 0.3, 0.0005, pos, 'highpass'), i * 70);
+  }
+
+  /** Bare feet in the passage behind your chair. */
+  passageStep(pos: V3): void {
+    if (!this.ctx) return;
+    this.noiseHit(380 + Math.random() * 80, 0.09, 0.16, 0.004, pos);
+  }
+
+  /** Knuckles on the wired glass behind you. */
+  backTap(pos: V3, n = 3): void {
+    for (let i = 0; i < n; i++) setTimeout(() => {
+      this.noiseHit(3600, 0.03, 0.22, 0.001, pos, 'highpass');
+      this.tone(1900, 0.05, 0.05, 'triangle', pos);
+    }, i * 260);
+  }
+
+  /** The heating coming back on (night 2 lost it): the radiator bangs like someone hitting it with a spanner. A red herring, with a reason. */
+  radiatorBang(pos: V3): void {
+    for (let i = 0; i < 4; i++) setTimeout(() => {
+      this.tone(140 + Math.random() * 40, 0.4, 0.2, 'triangle', pos, 120);
+      this.noiseHit(1400, 0.06, 0.18, 0.001, pos, 'bandpass');
+    }, i * (180 + Math.random() * 300));
+  }
+
+  /** Pigeons in the roof space over the hall. They scatter when something moves up there. */
+  pigeons(pos: V3): void {
+    for (let i = 0; i < 16; i++) setTimeout(() => this.noiseHit(1800 + Math.random() * 1500, 0.05, 0.08, 0.004, pos, 'bandpass'), i * 40 + Math.random() * 60);
+  }
+
+  /** The end of the demo night. Everything stops, then all of it at once. Loud, but kept below the point of hurting. */
+  jumpscare(): void {
+    if (!this.ctx) return;
+    this.noiseHit(2600, 1.6, 0.55, 0.002, null, 'bandpass');
+    for (const f of [66, 98, 147, 311, 622]) this.tone(f, 1.8, 0.2, 'sawtooth', null, f * 0.55);
+    for (let i = 0; i < 12; i++) this.crack(null, i * 0.05, 0.3);
+    this.duck = 6;
+  }
+
+  /** A token in the machine, the coil turning, something dropping in the tray. */
+  vend(): void {
+    if (!this.ctx) return;
+    this.tone(1250, 0.08, 0.08, 'triangle', null, 900);
+    setTimeout(() => this.noiseHit(500, 0.6, 0.06, 0.05, null, 'bandpass'), 200);
+    setTimeout(() => this.thump(90, 0.3, 0), 900);
+  }
+
+  /** The camera snaps round. A whoosh of air. */
+  whoosh(): void {
+    if (!this.ctx) return;
+    this.noiseHit(900, 0.35, 0.12, 0.12, null, 'bandpass');
   }
 
   speak(text: string, pitch: number, radio: boolean, mimic = false): number {
